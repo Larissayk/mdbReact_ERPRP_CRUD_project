@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background-color: #e9f2fc;
+}
+
+.circle-btn {
+    border-radius: 50%;
+    position: fixed;
+    bottom: 45px;
+    right: 25px;
+}
+
+.main-body {
+    margin-top: 5rem;
+    padding-top: 5rem;
+}
+
+.card-header {
+    background-color: #47bebe;
+    color: white;
+    align-items: center;
+    text-align: center;
+    padding: 0, 0, 2rem, 0;
+    margin: 5rem, 0, 4rem, 0;
+    border-bottom: none;
+    z-index: 1;
+    display: flex;
+    position: relative;
+    bottom: 3rem;
+}
+
+.list-group-item {
+    border:none;
+}
+
+.read-only {
+    background-color: #f5f4f4
+}
