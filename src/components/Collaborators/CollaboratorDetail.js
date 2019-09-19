@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-class ProviderDetails extends Component {
+class CollaboratorDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,13 +28,13 @@ class ProviderDetails extends Component {
   }
 
   componentDidMount() {
-    this.getProvider();
+    this.getCollaborator();
   }
 
-  getProvider() {
-    let providerId = this.props.match.params.id;
+  getCollaborator() {
+    let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${providerId}`)
+      .get(`http://localhost/api/Fornecedores/${collaboratorId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -44,9 +44,9 @@ class ProviderDetails extends Component {
   }
 
   onDelete() {
-    let providerId = this.state.details.ID;
+    let collaboratorId = this.state.details.ID;
     axios
-      .delete(`http://localhost/api/Fornecedores/${providerId}`)
+      .delete(`http://localhost/api/Fornecedores/${collaboratorId}`)
       .then(response => {
         this.props.history.push("/Providers");
       })
@@ -66,7 +66,7 @@ class ProviderDetails extends Component {
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
           <MDBCardBody>
-            <Link className="float-right mr-2 mt-2" to="/Providers">
+            <Link className="float-right mr-2 mt-2" to="/Collaborators">
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
             <MDBCardHeader
@@ -97,6 +97,16 @@ class ProviderDetails extends Component {
                     onClick={this.toggle("2")}
                     role="tab"
                   >
+                    Dados Profissionais
+                  </MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <MDBNavLink
+                    to="#"
+                    active={this.state.activeItem === "3"}
+                    onClick={this.toggle("3")}
+                    role="tab"
+                  >
                     Dados Financeiros
                   </MDBNavLink>
                 </MDBNavItem>
@@ -105,153 +115,199 @@ class ProviderDetails extends Component {
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
                   <MDBRow className="mt-4">
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="status">
-                        Status:{" "}
+                    <MDBCol md="6" className="form-group">
+                      <label className="grey-text" htmlFor="collabNick">
+                        Apelido:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="status"
+                        id="collabNick"
                         value={this.state.details.STATUS}
                       />
                     </MDBCol>
-                    <MDBCol md="4" className="form-group ">
-                      <label className="grey-text" htmlFor="startDate">
+                    <MDBCol md="2" className="form-group ">
+                      <label className="grey-text" htmlFor="collabBday">
+                        Data Nascimento:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabBday"
+                        value={this.state.details.DT_INICIO}
+                      />
+                    </MDBCol>
+                    <MDBCol md="2" className="form-group ">
+                      <label className="grey-text" htmlFor="collabStartDt">
                         Data de início:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="startDate"
-                        value={this.state.details.DT_INICIO}
+                        id="collabStartDt"
+                        value={this.state.details.DT_FIM}
                       />
                     </MDBCol>
-                    <MDBCol md="4" className="form-group ">
-                      <label className="grey-text" htmlFor="endDate">
+                    <MDBCol md="2" className="form-group ">
+                      <label className="grey-text" htmlFor="collabEndDt">
                         Data de término:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="endDate"
+                        id="collabEndDt"
                         value={this.state.details.DT_FIM}
                       />
                     </MDBCol>
                   </MDBRow>
                   <MDBRow>
                     <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="cnpj">
-                        CNPJ:{" "}
+                      <label className="grey-text" htmlFor="collabEmail">
+                        Email:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="cnpj"
+                        id="collabEmail"
                         value={this.state.details.CNPJ}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="phone">
+                      <label className="grey-text" htmlFor="collabPhone">
                         Telefone:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="phone"
+                        id="collabPhone"
                         value={this.state.details.TEL_COM}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="mobile">
+                      <label className="grey-text" htmlFor="collabMobile">
                         Celular:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="mobile"
+                        id="collabMobile"
+                        value={this.state.details.CEL_COM}
+                      />
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBRow>
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="collabCpf">
+                        CPF:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabCpf"
+                        value={this.state.details.CNPJ}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label className="grey-text" htmlFor="collabRg">
+                        RG:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabRg"
+                        value={this.state.details.TEL_COM}
+                      />
+                    </MDBCol>
+                    <MDBCol md="2" className="form-group">
+                      <label className="grey-text" htmlFor="collabEmis">
+                        Órgão Emis.:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabEmis"
+                        value={this.state.details.CEL_COM}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label className="grey-text" htmlFor="collabCtps">
+                        CTPS:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabCtps"
                         value={this.state.details.CEL_COM}
                       />
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   <MDBRow>
-                    <MDBCol md="6" className="form-group">
-                      <label className="grey-text" htmlFor="address">
+                    <MDBCol md="8" className="form-group">
+                      <label className="grey-text" htmlFor="collabAddress">
                         Endereço:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="address"
+                        id="collabAddress"
                         value={this.state.details.END_EMPRESA}
                       />
                     </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="neighborhood">
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="collabNeighborhood">
                         Bairro:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="neighborhood"
+                        id="collabNeighborhood"
                         value={this.state.details.BAIRRO}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="municipality">
-                        Município:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="minicipality"
-                        value={this.state.details.MUNICIPIO}
                       />
                     </MDBCol>
                   </MDBRow>
                   <MDBRow className="mb-2">
                     <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="city">
-                        Cidade:{" "}
+                      <label className="grey-text" htmlFor="collabMunicipality">
+                        Município:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="city"
-                        value={this.state.details.CIDADE}
+                        id="collabMunicipality"
+                        value={this.state.details.MUNICIPIO}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="state">
+                      <label className="grey-text" htmlFor="collabState">
                         Estado:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="state"
+                        id="collabState"
                         value={this.state.details.ESTADO}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="country">
+                      <label className="grey-text" htmlFor="collabCountry">
                         País:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="country"
+                        id="collabCountry"
                         value={this.state.details.PAIS}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="cep">
+                      <label className="grey-text" htmlFor="collabZipcode">
                         CEP:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="cep"
+                        id="collabZipcode"
                         value={this.state.details.CEP}
                       />
                     </MDBCol>
@@ -260,150 +316,163 @@ class ProviderDetails extends Component {
 
                 <MDBTabPane tabId="2" role="tabpanel">
                   <MDBRow className="mt-4">
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="accountType">
-                        Tipo de conta:{" "}
+                    <MDBCol md="5" className="form-group">
+                      <label className="grey-text" htmlFor="collabProvider">
+                        Nome do Fornecedor:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="accountType "
+                        id="collabProvider "
                         value={this.state.details.TIPO}
                       />
                     </MDBCol>
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="collabEmailCorp">
+                        Email Corporativo:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabEmailCorp"
+                        value={this.state.details.BCO}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label className="grey-text" htmlFor="collabContract">
+                        Tipo de Contrato:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabContract"
+                        value={this.state.details.NOME_BANCO}
+                      />
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBRow className="mb-2">
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="collabRole">
+                        Função:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabRole"
+                        value={this.state.details.AG}
+                      />
+                    </MDBCol>
+
                     <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="bankCode">
+                      <label className="grey-text" htmlFor="collabRoleLevel">
+                        Nível:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabRoleLevel"
+                        value={this.state.details.CC}
+                      />
+                    </MDBCol>
+                    <MDBCol md="6" className="form-group">
+                      <label className="grey-text" htmlFor="collanManag">
+                        Gestor Responsável:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collanManag"
+                        value={this.state.details.CCM}
+                      />
+                    </MDBCol>
+                  </MDBRow>
+                </MDBTabPane>
+                <MDBTabPane tabId="3" role="tabpanel">
+                  <MDBRow className="mt-4">
+                    <MDBCol md="3" className="form-group">
+                      <label className="grey-text" htmlFor="collabAcountT">
+                        Tipo de Conta:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabAcountT"
+                        value={this.state.details.CERT_MUN}
+                      />
+                    </MDBCol>
+
+                    <MDBCol md="6" className="form-group">
+                      <label className="grey-text" htmlFor="collabBusinessName">
+                        Razão Social:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabBusinessName"
+                        value={this.state.details.CERT_EST}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label className="grey-text" htmlFor="collabCnpj">
+                        CNPJ:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabCnpj"
+                        value={this.state.details.CERT_FED}
+                      />
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBRow className="mb-2">
+                    <MDBCol md="2" className="form-group">
+                      <label className="grey-text" htmlFor="collabBankCode">
                         Cód. Banco:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="bankCode"
-                        value={this.state.details.BCO}
+                        id="collabBankCode"
+                        value={this.state.details.IE}
                       />
                     </MDBCol>
-                    <MDBCol md="6" className="form-group">
-                      <label className="grey-text" htmlFor="bank">
-                        Banco:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="bank"
-                        value={this.state.details.NOME_BANCO}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="agency">
+                    <MDBCol md="2" className="form-group">
+                      <label className="grey-text" htmlFor="collabBAgency">
                         Agência:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="agency"
-                        value={this.state.details.AG}
+                        id="collabBAgency"
+                        value={this.state.details.SIMPLES}
                       />
                     </MDBCol>
-
-                    <MDBCol md="5" className="form-group">
-                      <label className="grey-text" htmlFor="AccountNumb">
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="collabBank">
+                        Banco:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabBank"
+                        value={this.state.details.RETER_ISS_SP}
+                      />
+                    </MDBCol>
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="collabCC">
                         Nº Conta:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="AccountNumb"
-                        value={this.state.details.CC}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="ccm">
-                        CCM:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="ccm"
-                        value={this.state.details.CCM}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="certMunicipal">
-                        Certidão Municipal:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="certMunicipal"
-                        value={this.state.details.CERT_MUN}
-                      />
-                    </MDBCol>
-
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="certState">
-                        Certidão Estadual:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="certState"
-                        value={this.state.details.CERT_EST}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="certFederal">
-                        Certidão Federal:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="certFederal"
-                        value={this.state.details.CERT_FED}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="ie">
-                        IE:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="ie"
-                        value={this.state.details.IE}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="simples">
-                        Simples:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="simples"
-                        value={this.state.details.SIMPLES}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="issSP">
-                        Reter ISS-SP:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="issSP"
+                        id="collabCC"
                         value={this.state.details.RETER_ISS_SP}
                       />
                     </MDBCol>
                   </MDBRow>
                 </MDBTabPane>
                 <MDBBtn
-                  href={`/Providers/edit/${this.state.details.ID}`}
+                  href={`/Collaborators/edit/${this.state.details.ID}`}
                   className="deep-orange darken-3 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
@@ -422,7 +491,7 @@ class ProviderDetails extends Component {
         </MDBCard>
         <MDBBtn
           size="lg"
-          href="/Providers/add"
+          href="/Collaborators/add"
           className="px-3 py-3 btn deep-orange darken-3 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
@@ -431,4 +500,4 @@ class ProviderDetails extends Component {
     );
   }
 }
-export default ProviderDetails;
+export default CollaboratorDetails;

@@ -18,55 +18,55 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-class AddProvider extends Component {
+class AddCollaborator extends Component {
   state = {
     activeItem: "1"
   };
 
-  addProvider(newProvider) {
+  AddCollaborator(newCollaborator) {
     axios
       .request({
-        method: 'POST',
+        method: "POST",
         url: "http://localhost/api/Fornecedores/",
-        data: newProvider
+        data: newCollaborator
       })
       .then(response => {
-        this.props.history.push("/Providers");
+        this.props.history.push("/Collaborators");
       })
       .catch(err => console.log(err));
   }
 
   onSubmit(e) {
-    const newProvider = {
+    const newCollaborator = {
       NOME_EMPRESA: this.refs.name.value,
       STATUS: this.refs.status.value,
-    //   END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value,
-    //   DT_INICIO: this.refs.startDate.value,
-    //   DT_FIM: this.refs.endDate.value,
-    //   BAIRRO: this.refs.neighborhood.value,
-    //   MUNICIPIO: this.refs.municipality.value,
-    //   CIDADE: this.refs.city.value,
-    //   ESTADO: this.refs.state.value,
-    //   PAIS: this.refs.country.value,
-    //   CEP: this.refs.cep.value,
-    //   TEL_COM: this.refs.phone.value,
-    //   CEL_COM: this.refs.mobile.value,
-    //   SIMPLES: this.refs.simples.value,
-    //   RETER_ISS_SP: this.refs.issSP.value,
-    //   CERT_MUN: this.refs.certMunicipal.value,
-    //   CERT_EST: this.refs.certState.value,
-    //   CERT_FED: this.refs.certFederal.value,
-    //   IE: this.refs.ie.value,
-    //   CCM: this.refs.ccm.value,
-    //   TIPO: this.refs.accountType.value,
-    //   BCO: this.refs.bankCode.value,
-    //   NOME_BANCO: this.refs.bank.value,
-    //   AG: this.refs.agency.value,
-    //   CC: this.refs.accountNumb.value
+      //   END_EMPRESA: this.refs.adress.value,
+      CNPJ: this.refs.cnpj.value
+      //   DT_INICIO: this.refs.startDate.value,
+      //   DT_FIM: this.refs.endDate.value,
+      //   BAIRRO: this.refs.neighborhood.value,
+      //   MUNICIPIO: this.refs.municipality.value,
+      //   CIDADE: this.refs.city.value,
+      //   ESTADO: this.refs.state.value,
+      //   PAIS: this.refs.country.value,
+      //   CEP: this.refs.cep.value,
+      //   TEL_COM: this.refs.phone.value,
+      //   CEL_COM: this.refs.mobile.value,
+      //   SIMPLES: this.refs.simples.value,
+      //   RETER_ISS_SP: this.refs.issSP.value,
+      //   CERT_MUN: this.refs.certMunicipal.value,
+      //   CERT_EST: this.refs.certState.value,
+      //   CERT_FED: this.refs.certFederal.value,
+      //   IE: this.refs.ie.value,
+      //   CCM: this.refs.ccm.value,
+      //   TIPO: this.refs.accountType.value,
+      //   BCO: this.refs.bankCode.value,
+      //   NOME_BANCO: this.refs.bank.value,
+      //   AG: this.refs.agency.value,
+      //   CC: this.refs.accountNumb.value
     };
-    this.addProvider(newProvider);
-    console.log(newProvider);
+    this.addProvider(newCollaborator);
+    console.log(newCollaborator);
     e.preventDefault();
   }
 
@@ -83,7 +83,7 @@ class AddProvider extends Component {
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
           <MDBCardBody>
-            <Link className="float-right mr-2 mt-2" to="/Providers">
+            <Link className="float-right mr-2 mt-2" to="/Collaborators">
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
             <MDBCardHeader
@@ -91,7 +91,7 @@ class AddProvider extends Component {
               style={{ width: "20rem", height: "5rem" }}
             >
               <MDBCardTitle className="pl-4 mb-0">
-                Adicionar Fornecedor
+                Novo Colaborador
               </MDBCardTitle>
             </MDBCardHeader>
 
@@ -114,6 +114,16 @@ class AddProvider extends Component {
                     onClick={this.toggle("2")}
                     role="tab"
                   >
+                    Dados Profissionais
+                  </MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <MDBNavLink
+                    to="#"
+                    active={this.state.activeItem === "3"}
+                    onClick={this.toggle("3")}
+                    role="tab"
+                  >
                     Dados Financeiros
                   </MDBNavLink>
                 </MDBNavItem>
@@ -124,168 +134,191 @@ class AddProvider extends Component {
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
                       <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="name">
-                          Nome:{" "}
+                        <label className="grey-text" htmlFor="collabNick">
+                          Apelido:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="NOME_EMPRESA"
-                          ref="name"
+                          ref="collabNick"
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="status">
-                          Status:{" "}
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabBday">
+                          Data Nascimento:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="STATUS"
-                          ref="status"
+                          ref="collabBday"
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="startDate">
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabStartDt">
                           Data de início:{" "}
                         </label>
                         <input
-                          className="form-control"
+                          className="form-control "
                           type="text"
-                          name="DT_INICIO"
-                          ref="startDate"
+                          ref="collabStartDt"
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="endDate">
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabEndDt">
                           Data de término:{" "}
                         </label>
                         <input
-                          className="form-control"
+                          className="form-control "
                           type="text"
-                          name="DT_FIM"
-                          ref="endDate"
+                          ref="collabEndDt"
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="cnpj">
-                          CNPJ:{" "}
+                        <label className="grey-text" htmlFor="collabEmail">
+                          Email:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="CNPJ"
-                          ref="cnpj"
+                          ref="collabEmail"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="phone">
+                        <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="TEL_COM"
-                          ref="phone"
+                          ref="collabPhone"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="mobile">
+                        <label className="grey-text" htmlFor="collabMobile">
                           Celular:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="CEL_COM"
-                          ref="mobile"
+                          ref="collabMobile"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabCpf">
+                          CPF:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCpf"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabRg">
+                          RG:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabRg"
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabEmis">
+                          Órgão Emis.:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabEmis"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabCtps">
+                          CTPS:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCtps"
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
                     <MDBRow>
-                      <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="address">
+                      <MDBCol md="8" className="form-group">
+                        <label className="grey-text" htmlFor="collabAddress">
                           Endereço:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="END_EMPRESA"
-                          ref="address"
+                          ref="collabAddress"
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="neighborhood">
+                      <MDBCol md="4" className="form-group">
+                        <label
+                          className="grey-text"
+                          htmlFor="collabNeighborhood"
+                        >
                           Bairro:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="BAIRRO"
-                          ref="neighborhood"
+                          ref="collabNeighborhood"
                         />
                       </MDBCol>
+                    </MDBRow>
+                    <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="municipality">
+                        <label
+                          className="grey-text"
+                          htmlFor="collabMunicipality"
+                        >
                           Município:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="MUNICIPIO"
-                          ref="minicipality"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="city">
-                          Cidade:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="CIDADE"
-                          ref="city"
+                          ref="collabMunicipality"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="state">
+                        <label className="grey-text" htmlFor="collabState">
                           Estado:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="ESTADO"
-                          ref="state"
+                          ref="collabState"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="country">
+                        <label className="grey-text" htmlFor="collabCountry">
                           País:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="PAIS"
-                          ref="country"
+                          ref="collabCountry"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cep">
+                        <label className="grey-text" htmlFor="collabZipcode">
                           CEP:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="CEP"
-                          ref="cep"
+                          ref="collabZipcode"
                         />
                       </MDBCol>
                     </MDBRow>
-
                     <MDBBtn
                       type="submit"
                       value="Save"
@@ -299,144 +332,149 @@ class AddProvider extends Component {
                 <MDBTabPane tabId="2" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="accountType">
-                          Tipo de conta:{" "}
+                      <MDBCol md="5" className="form-group">
+                        <label className="grey-text" htmlFor="collabProvider">
+                          Nome do Fornecedor:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="TIPO"
-                          ref="accountType"
+                          ref="collabProvider "
                         />
                       </MDBCol>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabEmailCorp">
+                          Email Corporativo:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabEmailCorp"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabContract">
+                          Tipo de Contrato:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabContract"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow className="mb-2">
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabRole">
+                          Função:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabRole"
+                        />
+                      </MDBCol>
+
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="bankCode">
+                        <label className="grey-text" htmlFor="collabRoleLevel">
+                          Nível:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabRoleLevel"
+                        />
+                      </MDBCol>
+                      <MDBCol md="6" className="form-group">
+                        <label className="grey-text" htmlFor="collanManag">
+                          Gestor Responsável:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collanManag"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                  </form>
+                </MDBTabPane>
+                <MDBTabPane tabId="3" role="tabpanel">
+                  <form onSubmit={this.onSubmit.bind(this)}>
+                    <MDBRow className="mt-4">
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabAcountT">
+                          Tipo de Conta:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabAcountT"
+                        />
+                      </MDBCol>
+
+                      <MDBCol md="6" className="form-group">
+                        <label
+                          className="grey-text"
+                          htmlFor="collabBusinessName"
+                        >
+                          Razão Social:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabBusinessName"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabCnpj">
+                          CNPJ:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCnpj"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow className="mb-2">
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabBankCode">
                           Cód. Banco:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="BCO"
-                          ref="bankCode"
+                          ref="collabBankCode"
                         />
                       </MDBCol>
-                      <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="bank">
-                          Banco:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="NOME_BANCO"
-                          ref="bank"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="agency">
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabBAgency">
                           Agência:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="AG"
-                          ref="agency"
+                          ref="collabBAgency"
                         />
                       </MDBCol>
-
-                      <MDBCol md="5" className="form-group">
-                        <label className="grey-text" htmlFor="AccountNumb">
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabBank">
+                          Banco:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabBank"
+                        />
+                      </MDBCol>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabCC">
                           Nº Conta:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="CC"
-                          ref="AccountNumb"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="ccm">
-                          CCM:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="CCM"
-                          ref="ccm"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="certMunicipal">
-                          Certidão Municipal:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="CERT_MUN"
-                          ref="certMunicipal"
-                        />
-                      </MDBCol>
-
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="certState">
-                          Certidão Estadual:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="CERT_EST"
-                          ref="certState"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="certFederal">
-                          Certidão Federal:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="CERT_FED"
-                          ref="certFederal"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow className="mb-2 ">
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="ie">
-                          IE:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="IE"
-                          ref="ie"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="simples">
-                          Simples:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="SIMPLES"
-                          ref="simples"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="issSP">
-                          Reter ISS-SP:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          name="RETER_ISS_SP"
-                          ref="issSP"
+                          ref="collabCC"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -457,4 +495,4 @@ class AddProvider extends Component {
     );
   }
 }
-export default AddProvider;
+export default AddCollaborator;

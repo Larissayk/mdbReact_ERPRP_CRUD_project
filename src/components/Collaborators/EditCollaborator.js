@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-class EditProvider extends Component {
+class EditCollaborator extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,13 +55,13 @@ class EditProvider extends Component {
   }
 
   componentDidMount() {
-    this.getProviderDetails();
+    this.getCollaboratorDetails();
   }
 
-  getProviderDetails() {
-    let providerId = this.props.match.params.id;
+  getCollaboratorDetails() {
+    let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${providerId}`)
+      .get(`http://localhost/api/Fornecedores/${collaboratorId}`)
       .then(response => {
         this.setState(
           {
@@ -101,13 +101,13 @@ class EditProvider extends Component {
       .catch(err => console.log(err));
   }
 
-  editProvider(newProvider) {
+  editProvider(newCollaborator) {
     //console.log(newProvider);
     axios
       .request({
         method: "PUT",
         url: `http://localhost/api/Fornecedores/${this.state.ID}`,
-        data: newProvider
+        data: newCollaborator
       })
       .then(response => {
         this.props.history.push("/Providers");
@@ -116,11 +116,11 @@ class EditProvider extends Component {
   }
 
   onSubmit(e) {
-    const newProvider = {
+    const newCollaborator = {
       NOME_EMPRESA: this.refs.name.value,
       STATUS: this.refs.status.value,
       // END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value,
+      CNPJ: this.refs.cnpj.value
       // DT_INICIO: this.refs.startDate.value,
       // DT_FIM: this.refs.endDate.value,
       // BAIRRO: this.refs.neighborhood.value,
@@ -144,9 +144,9 @@ class EditProvider extends Component {
       // AG: this.refs.agency.value,
       // CC: this.refs.accountNumb.value
     };
-    this.editProvider(newProvider);
+    this.editProvider(newCollaborator);
     e.preventDefault();
-    console.log(newProvider);
+    console.log(newCollaborator);
   }
 
   handleInputChange(e) {
@@ -172,7 +172,7 @@ class EditProvider extends Component {
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
           <MDBCardBody>
-            <Link className="float-right mr-2 mt-2" to="/Providers">
+            <Link className="float-right mr-2 mt-2" to="/Collaborators">
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
             <MDBCardHeader
@@ -180,7 +180,7 @@ class EditProvider extends Component {
               style={{ width: "17rem", height: "5rem" }}
             >
               <MDBCardTitle className="pl-4 mb-0">
-                Editar Fornecedor
+                Editar Dados do Colaborador
               </MDBCardTitle>
             </MDBCardHeader>
             <MDBContainer>
@@ -202,6 +202,16 @@ class EditProvider extends Component {
                     onClick={this.toggle("2")}
                     role="tab"
                   >
+                    Dados Profissionais
+                  </MDBNavLink>
+                </MDBNavItem>
+                <MDBNavItem>
+                  <MDBNavLink
+                    to="#"
+                    active={this.state.activeItem === "3"}
+                    onClick={this.toggle("3")}
+                    role="tab"
+                  >
                     Dados Financeiros
                   </MDBNavLink>
                 </MDBNavItem>
@@ -212,53 +222,49 @@ class EditProvider extends Component {
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
                       <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="name">
-                          Nome:{" "}
+                        <label className="grey-text" htmlFor="collabNick">
+                          Apelido:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="NOME_EMPRESA"
-                          ref="name"
+                          ref="collabNick"
                           value={this.state.NOME_EMPRESA}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="status">
-                          Status:{" "}
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabBday">
+                          Data Nascimento:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="STATUS"
-                          ref="status"
+                          ref="collabBday"
                           value={this.state.STATUS}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="startDate">
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabStartDt">
                           Data de início:{" "}
                         </label>
                         <input
                           className="form-control "
                           type="text"
-                          name="DT_INICIO"
-                          ref="startDate"
+                          ref="collabStartDt"
                           value={this.state.DT_INICIO}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="endDate">
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabEndDt">
                           Data de término:{" "}
                         </label>
                         <input
                           className="form-control "
                           type="text"
-                          name="DT_FIM"
-                          ref="endDate"
+                          ref="collabEndDt"
                           value={this.state.DT_FIM}
                           onChange={this.handleInputChange}
                         />
@@ -266,142 +272,177 @@ class EditProvider extends Component {
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="cnpj">
-                          CNPJ:{" "}
+                        <label className="grey-text" htmlFor="collabEmail">
+                          Email:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CNPJ"
-                          ref="cnpj"
+                          ref="collabEmail"
                           value={this.state.CNPJ}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="phone">
+                        <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="TEL_COM"
-                          ref="phone"
+                          ref="collabPhone"
                           value={this.state.TEL_COM}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="mobile">
+                        <label className="grey-text" htmlFor="collabMobile">
                           Celular:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CEL_COM"
-                          ref="mobile"
+                          ref="collabMobile"
                           value={this.state.CEL_COM}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabCpf">
+                          CPF:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCpf"
+                          value={this.state.END_EMPRESA}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabRg">
+                          RG:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabRg"
+                          value={this.state.BAIRRO}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabEmis">
+                          Órgão Emis.:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabEmis"
+                          value={this.state.MUNICIPIO}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabCtps">
+                          CTPS:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCtps"
+                          value={this.state.CIDADE}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
                     <MDBRow>
-                      <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="address">
+                      <MDBCol md="8" className="form-group">
+                        <label className="grey-text" htmlFor="collabAddress">
                           Endereço:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="END_EMPRESA"
-                          ref="address"
-                          value={this.state.END_EMPRESA}
+                          ref="collabAddress"
+                          value={this.state.ESTADO}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="neighborhood">
+                      <MDBCol md="4" className="form-group">
+                        <label
+                          className="grey-text"
+                          htmlFor="collabNeighborhood"
+                        >
                           Bairro:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="BAIRRO"
-                          ref="neighborhood"
-                          value={this.state.BAIRRO}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="municipality">
-                          Município:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="MUNICIPIO"
-                          ref="minicipality"
-                          value={this.state.MUNICIPIO}
+                          ref="collabNeighborhood"
+                          value={this.state.PAIS}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="city">
-                          Cidade:{" "}
+                        <label
+                          className="grey-text"
+                          htmlFor="collabMunicipality"
+                          value={this.state.CEP}
+                          onChange={this.handleInputChange}
+                        >
+                          Município:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CIDADE"
-                          ref="city"
-                          value={this.state.CIDADE}
+                          ref="collabMunicipality"
+                          value={this.state.TIPO}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="state">
+                        <label className="grey-text" htmlFor="collabState">
                           Estado:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="ESTADO"
-                          ref="state"
-                          value={this.state.ESTADO}
+                          ref="collabState"
+                          value={this.state.BCO}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="country">
+                        <label className="grey-text" htmlFor="collabCountry">
                           País:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="PAIS"
-                          ref="country"
-                          value={this.state.PAIS}
+                          ref="collabCountry"
+                          value={this.state.NOME_BANCO}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cep">
+                        <label className="grey-text" htmlFor="collabZipcode">
                           CEP:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CEP"
-                          ref="cep"
-                          value={this.state.CEP}
+                          ref="collabZipcode"
+                          value={this.state.AG}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
-
                     <MDBBtn
                       type="submit"
                       value="Save"
@@ -411,169 +452,175 @@ class EditProvider extends Component {
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
+
                 <MDBTabPane tabId="2" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="accountType">
-                          Tipo de conta:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="TIPO "
-                          ref="accountType"
-                          value={this.state.TIPO}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="bankCode">
-                          Cód. Banco:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="BCO"
-                          ref="bankCode"
-                          value={this.state.BCO}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="bank">
-                          Banco:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="NOME_BANCO"
-                          ref="bank"
-                          value={this.state.NOME_BANCO}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="agency">
-                          Agência:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="AG"
-                          ref="agency"
-                          value={this.state.AG}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-
                       <MDBCol md="5" className="form-group">
-                        <label className="grey-text" htmlFor="AccountNumb">
-                          Nº Conta:{" "}
+                        <label className="grey-text" htmlFor="collabProvider">
+                          Nome do Fornecedor:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CC"
-                          ref="AccountNumb"
+                          ref="collabProvider "
                           value={this.state.CC}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="ccm">
-                          CCM:{" "}
+                        <label className="grey-text" htmlFor="collabEmailCorp">
+                          Email Corporativo:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CCM"
-                          ref="ccm"
+                          ref="collabEmailCorp"
                           value={this.state.CCM}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="certMunicipal">
-                          Certidão Municipal:{" "}
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabContract">
+                          Tipo de Contrato:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="CERT_MUN"
-                          ref="certMunicipal"
+                          ref="collabContract"
                           value={this.state.CERT_MUN}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="certState">
-                          Certidão Estadual:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="CERT_EST"
-                          ref="certState"
-                          value={this.state.CERT_EST}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="certFederal">
-                          Certidão Federal:{" "}
-                        </label>
-                        <input
-                          className="form-control "
-                          type="text"
-                          name="CERT_FED"
-                          ref="certFederal"
-                          value={this.state.CERT_FED}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="ie">
-                          IE:{" "}
+                        <label className="grey-text" htmlFor="collabRole">
+                          Função:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="IE"
-                          ref="ie"
+                          ref="collabRole"
+                          value={this.state.CERT_EST}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabRoleLevel">
+                          Nível:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabRoleLevel"
+                          value={this.state.CERT_FED}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="6" className="form-group">
+                        <label className="grey-text" htmlFor="collanManag">
+                          Gestor Responsável:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collanManag"
                           value={this.state.IE}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="simples">
-                          Simples:{" "}
+                    </MDBRow>
+                  </form>
+                </MDBTabPane>
+                <MDBTabPane tabId="3" role="tabpanel">
+                  <form onSubmit={this.onSubmit.bind(this)}>
+                    <MDBRow className="mt-4">
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabAcountT">
+                          Tipo de Conta:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="SIMPLES"
-                          ref="simples"
+                          ref="collabAcountT"
                           value={this.state.SIMPLES}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="issSP">
-                          Reter ISS-SP:{" "}
+
+                      <MDBCol md="6" className="form-group">
+                        <label
+                          className="grey-text"
+                          htmlFor="collabBusinessName"
+                        >
+                          Razão Social:{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className="form-control"
                           type="text"
-                          name="RETER_ISS_SP"
-                          ref="issSP"
+                          ref="collabBusinessName"
+                          value={this.state.RETER_ISS_SP}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabCnpj">
+                          CNPJ:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCnpj"
+                          value={this.state.RETER_ISS_SP}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow className="mb-2">
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabBankCode">
+                          Cód. Banco:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabBankCode"
+                          value={this.state.RETER_ISS_SP}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="collabBAgency">
+                          Agência:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabBAgency"
+                          value={this.state.RETER_ISS_SP}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabBank">
+                          Banco:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabBank"
+                        />
+                      </MDBCol>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="collabCC">
+                          Nº Conta:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabCC"
                           value={this.state.RETER_ISS_SP}
                           onChange={this.handleInputChange}
                         />
@@ -592,15 +639,8 @@ class EditProvider extends Component {
             </MDBContainer>
           </MDBCardBody>
         </MDBCard>
-        <MDBBtn
-          size="lg"
-          href="/Providers/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
-        >
-          <MDBIcon size="lg" className="text-white" icon="plus" />
-        </MDBBtn>
       </MDBContainer>
     );
   }
 }
-export default EditProvider;
+export default EditCollaborator;

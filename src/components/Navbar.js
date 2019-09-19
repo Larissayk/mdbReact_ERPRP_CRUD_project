@@ -54,8 +54,20 @@ class Navbar extends Component {
                     <span className="mr-2">Cadastros</span>
                   </MDBDropdownToggle>
                   <MDBDropdownMenu className="dropdown-default">
+                    <MDBDropdownItem href="/Collaborators">
+                      Colaboradores
+                    </MDBDropdownItem>
                     <MDBDropdownItem href="/Providers">
                       Fornecedores
+                    </MDBDropdownItem>
+                    <MDBDropdownItem href="/CollabDeals">
+                      Dados de Negociação
+                    </MDBDropdownItem>
+                    <MDBDropdownItem href="/NFsExit">
+                      NF-Saída
+                    </MDBDropdownItem>
+                    <MDBDropdownItem href="/NFsInbound">
+                      NF-Entrada
                     </MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>

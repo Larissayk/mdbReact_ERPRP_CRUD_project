@@ -7,10 +7,12 @@ import {
   MDBCard,
   MDBCardBody,
   MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBIcon,
+  MDBBtn
 } from "mdbreact";
 import axios from "axios";
-import ProviderItem from "./ProviderItem";
+import CollaboratorDealItem from "./CollabDealItem";
 
 class CollaboratorDeals extends Component {
   constructor() {
@@ -20,8 +22,8 @@ class CollaboratorDeals extends Component {
     };
   }
 
-  componentDidMount() {CollaboratorsDeal
-    this.get();
+  componentDidMount() {
+    this.getCollaboratorsDeal();
   }
 
   getCollaboratorsDeal() {
@@ -43,7 +45,7 @@ class CollaboratorDeals extends Component {
           <MDBCardBody className="pt-0">
             <MDBCardHeader
               className="card-header rounded"
-              style={{ width: "15rem", height: "5rem" }}
+              style={{ width: "20rem", height: "5rem" }}
             >
               <MDBCardTitle className="pl-4 mb-0">
                 Dados de Negociação dos Colaboradores
@@ -63,14 +65,10 @@ class CollaboratorDeals extends Component {
                 {/* Arrumar com os dados do API de Negociação  */}
                 {collaboratorsDeal.map((user, i) => {
                   return (
-                    <tr key={user.id}>
+                    <tr>
                       <td className="align-middle">{user.id}</td>
                       <td className="align-middle">
-                        <ProviderItem
-                          key={user.id}
-                          item={user}
-                          
-                        />
+                        <CollaboratorDealItem key={user.id} item={user} />
                       </td>
                       <td className="align-middle">{user.username}</td>
                       <td className="align-middle">{user.email}</td>
@@ -82,6 +80,13 @@ class CollaboratorDeals extends Component {
             </MDBTable>
           </MDBCardBody>
         </MDBCard>
+        <MDBBtn
+          size="lg"
+          href="/CollabDeals/add"
+          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+        >
+          <MDBIcon size="lg" className="text-white" icon="plus" />
+        </MDBBtn>
       </MDBContainer>
     );
   }

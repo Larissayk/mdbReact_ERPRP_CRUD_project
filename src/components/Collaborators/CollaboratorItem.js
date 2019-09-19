@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class CollaboratorDealItem extends Component {
+class CollaboratorItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,12 +11,12 @@ class CollaboratorDealItem extends Component {
   render() {
     return (
       <p className="collection-item">
-        <Link to={`/users/${this.state.item.id}`}>
-          {this.state.item.name}
+        <Link to={`/Collaborators/${this.state.item.ID}`}>
+          {this.state.item.NOME_EMPRESA}
         </Link>
       </p>
     );
   }
 }
 
-export default CollaboratorDealItem;
+export default CollaboratorItem;
