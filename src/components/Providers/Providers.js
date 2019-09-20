@@ -42,13 +42,10 @@ class Providers extends Component {
     const { providers } = this.state;
     return (
       <MDBContainer className="main-body">
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <MDBCardHeader
-              className="card-header rounded"
-              style={{ width: "15rem", height: "5rem" }}
-            >
-              <MDBCardTitle className="pl-4 mb-0">Fornecedores</MDBCardTitle>
+        <MDBCard className="mt-3 mb-4 px-2 card">
+          <MDBCardBody className="pt-0 ">
+            <MDBCardHeader className="card-header rounded">
+              <MDBCardTitle className="mb-0" style={{fontSize:28}}>Fornecedores</MDBCardTitle>
             </MDBCardHeader>
             <MDBTable hover className="mb-2 mt-0">
               <MDBTableHead>

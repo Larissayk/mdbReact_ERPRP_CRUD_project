@@ -65,15 +65,12 @@ class NFExitDetails extends Component {
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody>
-            <Link className="float-right mr-2 mt-2" to="/NFsExit">
+          <MDBCardBody className="pt-0">
+            <Link className="float-right mr-2 mt-4" to="/NFsExit">
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
-            <MDBCardHeader
-              className="card-header rounded"
-              style={{ width: "30rem", height: "5rem" }}
-            >
-              <MDBCardTitle className="pl-4 mb-0">
+            <MDBCardHeader className="card-header rounded">
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
                 {this.state.details.NOME_EMPRESA}
               </MDBCardTitle>
             </MDBCardHeader>
@@ -279,9 +276,7 @@ class NFExitDetails extends Component {
                     </MDBCol>
                     <MDBCol md="10">
                       <div className="form-group grey-text">
-                        <label htmlFor="NFEComments">
-                          Comentários: {" "}
-                        </label>
+                        <label htmlFor="NFEComments">Comentários: </label>
                         <textarea
                           className="form-control disabled read-only"
                           id="NFEComments"

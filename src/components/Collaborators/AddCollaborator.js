@@ -82,15 +82,12 @@ class AddCollaborator extends Component {
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody>
-            <Link className="float-right mr-2 mt-2" to="/Collaborators">
+          <MDBCardBody className="pt-0">
+            <Link className="float-right mr-2 mt-4" to="/Collaborators">
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
-            <MDBCardHeader
-              className="card-header rounded"
-              style={{ width: "20rem", height: "5rem" }}
-            >
-              <MDBCardTitle className="pl-4 mb-0">
+            <MDBCardHeader className="card-header rounded">
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
                 Novo Colaborador
               </MDBCardTitle>
             </MDBCardHeader>

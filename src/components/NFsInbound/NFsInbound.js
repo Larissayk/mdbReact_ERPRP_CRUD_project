@@ -44,11 +44,10 @@ class NFsInbound extends Component {
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
           <MDBCardBody className="pt-0">
-            <MDBCardHeader
-              className="card-header rounded"
-              style={{ width: "15rem", height: "5rem" }}
-            >
-              <MDBCardTitle className="pl-4 mb-0">NF-Entrada</MDBCardTitle>
+            <MDBCardHeader className="card-header rounded">
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+                NF-Entrada
+              </MDBCardTitle>
             </MDBCardHeader>
             <MDBTable hover className="mb-2 mt-0">
               <MDBTableHead>
@@ -68,7 +67,10 @@ class NFsInbound extends Component {
                     <tr key={Fornecedores.ID}>
                       <td className="align-middle">{Fornecedores.ID}</td>
                       <td className="align-middle">
-                        <NFInboundItem key={Fornecedores.ID} item={Fornecedores} />
+                        <NFInboundItem
+                          key={Fornecedores.ID}
+                          item={Fornecedores}
+                        />
                       </td>
                       <td className="align-middle">{Fornecedores.CNPJ}</td>
                       <td className="align-middle">{Fornecedores.STATUS}</td>

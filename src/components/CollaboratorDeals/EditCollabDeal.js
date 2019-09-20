@@ -127,15 +127,12 @@ class EditCollaboratorDeal extends Component {
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody>
-            <Link className="float-right mr-2 mt-2" to="/Providers">
+          <MDBCardBody className="pt-0">
+            <Link className="float-right mr-2 mt-3" to="/CollabDeals">
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
-            <MDBCardHeader
-              className="card-header rounded"
-              style={{ width: "17rem", height: "5rem" }}
-            >
-              <MDBCardTitle className="pl-4 mb-0">
+            <MDBCardHeader className="card-header rounded">
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
                 Editar Dados da Negociação
               </MDBCardTitle>
             </MDBCardHeader>

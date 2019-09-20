@@ -30,7 +30,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const bgNavBar = { backgroundColor: "#1a1c1f" };
+    const bgNavBar = { backgroundColor: "#3f3f3e" };
     return (
       <div>
         <MDBNavbar style={bgNavBar} dark expand="md" scrolling fixed="top">
