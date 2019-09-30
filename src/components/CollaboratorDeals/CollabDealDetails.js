@@ -203,6 +203,7 @@ class CollaboratorDealDetails extends Component {
                   />
                 </MDBCol>
               </MDBRow>
+              <hr />
 
               <MDBBtn
                 href={`/CollabDeals/edit/${this.state.details.id}`}

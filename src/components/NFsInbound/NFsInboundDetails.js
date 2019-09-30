@@ -197,6 +197,7 @@ class NFInboundDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow>
+                  <hr />
                 </MDBTabPane>
 
                 <MDBTabPane tabId="2" role="tabpanel">
@@ -298,6 +299,7 @@ class NFInboundDetails extends Component {
                       </div>
                     </MDBCol>
                   </MDBRow>
+                  <hr />
                 </MDBTabPane>
                 <MDBBtn
                   href={`/NFsInbound/edit/${this.state.details.ID}`}

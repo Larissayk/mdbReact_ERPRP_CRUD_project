@@ -22,33 +22,33 @@ class EditProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ID: "",
-      NOME_EMPRESA: "",
-      CNPJ: "",
-      STATUS: "",
-      DT_INICIO: "",
-      DT_FIM: "",
-      END_EMPRESA: "",
-      BAIRRO: "",
-      MUNICIPIO: "",
-      CIDADE: "",
-      ESTADO: "",
-      PAIS: "",
-      CEP: "",
-      TEL_COM: "",
-      CEL_COM: "",
-      SIMPLES: "",
-      RETER_ISS_SP: "",
-      CERT_MUN: "",
-      CERT_EST: "",
-      CERT_FED: "",
-      IE: "",
-      CCM: "",
-      TIPO: "",
-      BCO: "",
-      NOME_BANCO: "",
-      AG: "",
-      CC: "",
+      id: "",
+      cnpj: "",
+      status: "",
+      nome: "",
+      certf_est: "",
+      certf_mun: "",
+      certf_fed: "",
+      data_inicio: "",
+      data_fim: "",
+      ie: "",
+      ccm: "",
+      municipio: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+      pais: "",
+      simples: "",
+      reter_iss_sp: "",
+      telefone: "",
+      celular: "",
+      tipo: "",
+      bco: "",
+      nome_banco: "",
+      ag: "",
+      cep: "",
+      cc: "",
+      endereco: "",
       activeItem: "1"
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -61,37 +61,37 @@ class EditProvider extends Component {
   getProviderDetails() {
     let providerId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${providerId}`)
+      .get(`http://127.0.0.1:80/api/fornecedores/${providerId}`)
       .then(response => {
         this.setState(
           {
-            ID: response.data.ID,
-            NOME_EMPRESA: response.data.NOME_EMPRESA,
-            CNPJ: response.data.CNPJ,
-            STATUS: response.data.STATUS,
-            DT_INICIO: response.data.DT_INICIO,
-            DT_FIM: response.data.DT_FIM,
-            END_EMPRESA: response.data.END_EMPRESA,
-            BAIRRO: response.data.BAIRRO,
-            MUNICIPIO: response.data.MUNICIPIO,
-            CIDADE: response.data.CIDADE,
-            ESTADO: response.data.ESTADO,
-            PAIS: response.data.PAIS,
-            CEP: response.data.CEP,
-            TEL_COM: response.data.TEL_COM,
-            CEL_COM: response.data.CEL_COM,
-            SIMPLES: response.data.SIMPLES,
-            RETER_ISS_SP: response.data.RETER_ISS_SP,
-            CERT_MUN: response.data.CERT_MUN,
-            CERT_EST: response.data.CERT_EST,
-            CERT_FED: response.data.CERT_FED,
-            IE: response.data.IE,
-            CCM: response.data.CCM,
-            TIPO: response.data.TIPO,
-            BCO: response.data.BCO,
-            NOME_BANCO: response.data.NOME_BANCO,
-            AG: response.data.NOME_EMPRAGESA,
-            CC: response.data.CC
+            id: response.data.id,
+            cnpj: response.data.cnpj,
+            status: response.data.status,
+            nome: response.data.nome,
+            certf_fed: response.data.certf_fed,
+            certf_est: response.data.certf_est,
+            certf_mun: response.data.certf_mun,
+            data_inicio: response.data.data_inicio,
+            data_fim: response.data.data_fim,
+            ie: response.data.ie,
+            ccm: response.data.ccm,
+            municipio: response.data.municipio,
+            estado: response.data.estado,
+            endereco: response.data.endereco,
+            cidade: response.data.cidade,
+            pais: response.data.pais,
+            simples: response.data.simples,
+            reter_iss_sp: response.data.reter_iss_sp,
+            telefone: response.data.telefone,
+            celular: response.data.celular,
+            tipo: response.data.tipo,
+            bco: response.data.bco,
+            nome_banco: response.data.nome_banco,
+            ag: response.data.ag,
+            cep: response.data.cep,
+            cc: response.data.cc,
+            bairro: response.data.bairro
           },
           () => {
             console.log(this.state);
@@ -102,47 +102,46 @@ class EditProvider extends Component {
   }
 
   editProvider(newProvider) {
-    //console.log(newProvider);
     axios
       .request({
         method: "PUT",
-        url: `http://localhost/api/Fornecedores/${this.state.ID}`,
+        url: `http://127.0.0.1:80/api/fornecedores/${this.state.id}`,
         data: newProvider
       })
       .then(response => {
         this.props.history.push("/Providers");
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("erro: ", err.response));
   }
 
   onSubmit(e) {
     const newProvider = {
-      NOME_EMPRESA: this.refs.name.value,
-      STATUS: this.refs.status.value,
-      // END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value,
-      // DT_INICIO: this.refs.startDate.value,
-      // DT_FIM: this.refs.endDate.value,
-      // BAIRRO: this.refs.neighborhood.value,
-      // MUNICIPIO: this.refs.municipality.value,
-      // CIDADE: this.refs.city.value,
-      // ESTADO: this.refs.state.value,
-      // PAIS: this.refs.country.value,
-      // CEP: this.refs.cep.value,
-      // TEL_COM: this.refs.phone.value,
-      // CEL_COM: this.refs.mobile.value,
-      // SIMPLES: this.refs.simples.value,
-      // RETER_ISS_SP: this.refs.issSP.value,
-      // CERT_MUN: this.refs.certMunicipal.value,
-      // CERT_EST: this.refs.certState.value,
-      // CERT_FED: this.refs.certFederal.value,
-      // IE: this.refs.ie.value,
-      // CCM: this.refs.ccm.value,
-      // TIPO: this.refs.accountType.value,
-      // BCO: this.refs.bankCode.value,
-      // NOME_BANCO: this.refs.bank.value,
-      // AG: this.refs.agency.value,
-      // CC: this.refs.accountNumb.value
+      cnpj: this.refs.cnpj.value,
+      status: this.refs.status.value,
+      nome: this.refs.name.value,
+      certf_fed: this.refs.certFederal.value,
+      certf_est: this.refs.certState.value,
+      certf_mun: this.refs.certMunicipal.value,
+      data_inicio: this.refs.startDate.value,
+      data_fim: this.refs.endDate.value,
+      ie: this.refs.ie.value,
+      ccm: this.refs.ccm.value,
+      municipio: this.refs.municipality.value,
+      endereco: this.refs.address.value,
+      cidade: this.refs.city.value,
+      bairro: this.refs.neighborhood.value,
+      pais: this.refs.country.value,
+      estado: this.refs.state.value,
+      simples: this.refs.simples.value,
+      reter_iss_sp: this.refs.issSP.value,
+      telefone: this.refs.phone.value,
+      celular: this.refs.mobile.value,
+      tipo: this.refs.accountType.value,
+      bco: this.refs.bankCode.value,
+      nome_banco: this.refs.bank.value,
+      ag: this.refs.agency.value,
+      cep: this.refs.cep.value,
+      cc: this.refs.accountNumb.value
     };
     this.editProvider(newProvider);
     e.preventDefault();
@@ -176,7 +175,7 @@ class EditProvider extends Component {
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
             <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{fontSize:28}}>
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
                 Editar Fornecedor
               </MDBCardTitle>
             </MDBCardHeader>
@@ -215,9 +214,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="NOME_EMPRESA"
                           ref="name"
-                          value={this.state.NOME_EMPRESA}
+                          value={this.state.nome}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -228,9 +226,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="STATUS"
                           ref="status"
-                          value={this.state.STATUS}
+                          value={this.state.status}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -241,9 +238,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="DT_INICIO"
                           ref="startDate"
-                          value={this.state.DT_INICIO}
+                          value={this.state.data_inicio}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -254,9 +250,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="DT_FIM"
                           ref="endDate"
-                          value={this.state.DT_FIM}
+                          value={this.state.data_fim}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -269,9 +264,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CNPJ"
                           ref="cnpj"
-                          value={this.state.CNPJ}
+                          value={this.state.cnpj}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -282,9 +276,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="TEL_COM"
                           ref="phone"
-                          value={this.state.TEL_COM}
+                          value={this.state.telefone}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -295,9 +288,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CEL_COM"
                           ref="mobile"
-                          value={this.state.CEL_COM}
+                          value={this.state.celular}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -311,9 +303,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="END_EMPRESA"
                           ref="address"
-                          value={this.state.END_EMPRESA}
+                          value={this.state.endereco}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -324,9 +315,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="BAIRRO"
                           ref="neighborhood"
-                          value={this.state.BAIRRO}
+                          value={this.state.bairro}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -337,9 +327,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="MUNICIPIO"
-                          ref="minicipality"
-                          value={this.state.MUNICIPIO}
+                          ref="municipality"
+                          value={this.state.municipio}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -352,9 +341,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CIDADE"
                           ref="city"
-                          value={this.state.CIDADE}
+                          value={this.state.cidade}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -365,9 +353,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="ESTADO"
                           ref="state"
-                          value={this.state.ESTADO}
+                          value={this.state.estado}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -378,9 +365,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="PAIS"
                           ref="country"
-                          value={this.state.PAIS}
+                          value={this.state.pais}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -391,9 +377,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CEP"
                           ref="cep"
-                          value={this.state.CEP}
+                          value={this.state.cep}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -418,9 +403,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="TIPO "
                           ref="accountType"
-                          value={this.state.TIPO}
+                          value={this.state.tipo}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -431,9 +415,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="BCO"
                           ref="bankCode"
-                          value={this.state.BCO}
+                          value={this.state.bco}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -444,9 +427,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="NOME_BANCO"
                           ref="bank"
-                          value={this.state.NOME_BANCO}
+                          value={this.state.nome_banco}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -459,9 +441,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="AG"
                           ref="agency"
-                          value={this.state.AG}
+                          value={this.state.ag}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -473,9 +454,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CC"
                           ref="AccountNumb"
-                          value={this.state.CC}
+                          value={this.state.cc}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -486,9 +466,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CCM"
                           ref="ccm"
-                          value={this.state.CCM}
+                          value={this.state.ccm}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -501,9 +480,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CERT_MUN"
                           ref="certMunicipal"
-                          value={this.state.CERT_MUN}
+                          value={this.state.certf_mun}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -515,9 +493,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CERT_EST"
                           ref="certState"
-                          value={this.state.CERT_EST}
+                          value={this.state.certf_est}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -528,9 +505,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="CERT_FED"
                           ref="certFederal"
-                          value={this.state.CERT_FED}
+                          value={this.state.certf_fed}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -543,9 +519,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="IE"
                           ref="ie"
-                          value={this.state.IE}
+                          value={this.state.ie}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -556,9 +531,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="SIMPLES"
                           ref="simples"
-                          value={this.state.SIMPLES}
+                          value={this.state.simples}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -569,9 +543,8 @@ class EditProvider extends Component {
                         <input
                           className="form-control "
                           type="text"
-                          name="RETER_ISS_SP"
                           ref="issSP"
-                          value={this.state.RETER_ISS_SP}
+                          value={this.state.reter_iss_sp}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>

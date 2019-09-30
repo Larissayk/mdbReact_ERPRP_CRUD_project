@@ -207,6 +207,7 @@ class AddNFInbound extends Component {
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
 
                     <MDBBtn
                       type="submit"
@@ -316,6 +317,7 @@ class AddNFInbound extends Component {
                         </div>
                       </MDBCol>
                     </MDBRow>
+                    <hr />
                     <MDBBtn
                       type="submit"
                       value="Save"

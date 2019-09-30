@@ -18,7 +18,7 @@ class Providers extends Component {
   constructor() {
     super();
     this.state = {
-      providers: []
+      fornecedores: []
     };
   }
 
@@ -27,11 +27,10 @@ class Providers extends Component {
   }
 
   getProviders() {
-    // axios.get('http://rplearning-rperformance.tecnologia.ws/api/users')
     axios
-      .get("http://localhost/api/Fornecedores/")
+      .get("http://127.0.0.1:80/api/fornecedores/")
       .then(response => {
-        this.setState({ providers: response.data }, () => {
+        this.setState({ fornecedores: response.data }, () => {
           console.log(this.state);
         });
       })
@@ -39,13 +38,15 @@ class Providers extends Component {
   }
 
   render() {
-    const { providers } = this.state;
+    const { fornecedores } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4 px-2 card">
           <MDBCardBody className="pt-0 ">
             <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{fontSize:28}}>Fornecedores</MDBCardTitle>
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+                Fornecedores
+              </MDBCardTitle>
             </MDBCardHeader>
             <MDBTable hover className="mb-2 mt-0">
               <MDBTableHead>
@@ -58,19 +59,19 @@ class Providers extends Component {
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
-                {providers.map((Fornecedores, i) => {
+                {fornecedores.map((fornecedores, i) => {
                   return (
-                    <tr key={Fornecedores.ID}>
-                      <td className="align-middle">{Fornecedores.ID}</td>
+                    <tr key={fornecedores.id}>
+                      <td className="align-middle">{fornecedores.id}</td>
                       <td className="align-middle">
                         <ProviderItem
-                          key={Fornecedores.ID}
-                          item={Fornecedores}
+                          key={fornecedores.id}
+                          item={fornecedores}
                         />
                       </td>
-                      <td className="align-middle">{Fornecedores.CNPJ}</td>
-                      <td className="align-middle">{Fornecedores.STATUS}</td>
-                      <td className="align-middle">{Fornecedores.DT_INICIO}</td>
+                      <td className="align-middle">{fornecedores.cnpj}</td>
+                      <td className="align-middle">{fornecedores.status}</td>
+                      <td className="align-middle">{fornecedores.data_inicio}</td>
                     </tr>
                   );
                 })}

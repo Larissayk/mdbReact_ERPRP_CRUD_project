@@ -18,7 +18,7 @@ class Collaborators extends Component {
   constructor() {
     super();
     this.state = {
-      collaborators: []
+      colaboradores: []
     };
   }
 
@@ -27,11 +27,10 @@ class Collaborators extends Component {
   }
 
   getCollaborators() {
-    // axios.get('http://rplearning-rperformance.tecnologia.ws/api/users')
     axios
-      .get("http://localhost/api/Fornecedores/")
+      .get("http://127.0.0.1:80/api/colaboradores")
       .then(response => {
-        this.setState({ collaborators: response.data }, () => {
+        this.setState({ colaboradores: response.data }, () => {
           console.log(this.state);
         });
       })
@@ -39,7 +38,7 @@ class Collaborators extends Component {
   }
 
   render() {
-    const { collaborators } = this.state;
+    const { colaboradores } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
@@ -54,27 +53,27 @@ class Collaborators extends Component {
                 <tr>
                   <th>#</th>
                   <th>Nome</th>
-                  <th>Função</th>
+                  <th>CPF</th>
                   <th>Email</th>
-                  <th>Contrato</th>
                   <th>Status</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
-                {collaborators.map((Fornecedores, i) => {
+                {colaboradores.map((colaboradores, i) => {
                   return (
-                    <tr key={Fornecedores.ID}>
-                      <td className="align-middle">{Fornecedores.ID}</td>
+                    <tr key={colaboradores.id}>
+                      <td className="align-middle">{colaboradores.id}</td>
                       <td className="align-middle">
                         <CollaboratorItem
-                          key={Fornecedores.ID}
-                          item={Fornecedores}
+                          key={colaboradores.id}
+                          item={colaboradores}
                         />
                       </td>
-                      <td className="align-middle">{Fornecedores.CNPJ}</td>
-                      <td className="align-middle">{Fornecedores.STATUS}</td>
-                      <td className="align-middle">{Fornecedores.DT_INICIO}</td>
-                      <td className="align-middle">{Fornecedores.CIDADE}</td>
+                      <td className="align-middle">{colaboradores.cpf}</td>
+                      <td className="align-middle">
+                        {colaboradores.email}
+                      </td>
+                      <td className="align-middle">{colaboradores.status}</td>
                     </tr>
                   );
                 })}

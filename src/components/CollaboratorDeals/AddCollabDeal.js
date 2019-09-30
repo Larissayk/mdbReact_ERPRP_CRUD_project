@@ -218,6 +218,7 @@ class AddCollaboratorDeal extends Component {
                     />
                   </MDBCol>
                 </MDBRow>
+                <hr />
 
                 <MDBBtn
                   type="submit"

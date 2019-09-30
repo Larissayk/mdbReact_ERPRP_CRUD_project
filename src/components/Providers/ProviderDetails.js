@@ -34,7 +34,7 @@ class ProviderDetails extends Component {
   getProvider() {
     let providerId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${providerId}`)
+      .get(`http://127.0.0.1:80/api/fornecedores/${providerId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -44,13 +44,14 @@ class ProviderDetails extends Component {
   }
 
   onDelete() {
-    let providerId = this.state.details.ID;
+    let providerId = this.state.details.id;
     axios
-      .delete(`http://localhost/api/Fornecedores/${providerId}`)
+      .delete(`http://127.0.0.1:80/api/fornecedores/${providerId}`)
       .then(response => {
+        console.log(`ID excluído: ${providerId}`);
         this.props.history.push("/Providers");
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("erro: ", err.response));
   }
 
   toggle = tab => e => {
@@ -71,7 +72,7 @@ class ProviderDetails extends Component {
             </Link>
             <MDBCardHeader className="card-header rounded">
               <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.NOME_EMPRESA}
+                {this.state.details.nome}
               </MDBCardTitle>
             </MDBCardHeader>
 
@@ -110,7 +111,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="status"
-                        value={this.state.details.STATUS}
+                        value={this.state.details.status}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group ">
@@ -121,7 +122,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="startDate"
-                        value={this.state.details.DT_INICIO}
+                        value={this.state.details.data_inicio}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group ">
@@ -132,7 +133,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="endDate"
-                        value={this.state.details.DT_FIM}
+                        value={this.state.details.data_fim}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -145,7 +146,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="cnpj"
-                        value={this.state.details.CNPJ}
+                        value={this.state.details.cnpj}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -156,7 +157,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="phone"
-                        value={this.state.details.TEL_COM}
+                        value={this.state.details.telefone}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -167,7 +168,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="mobile"
-                        value={this.state.details.CEL_COM}
+                        value={this.state.details.celular}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -181,7 +182,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="address"
-                        value={this.state.details.END_EMPRESA}
+                        value={this.state.details.endereco}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -192,7 +193,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="neighborhood"
-                        value={this.state.details.BAIRRO}
+                        value={this.state.details.bairro}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -203,7 +204,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="minicipality"
-                        value={this.state.details.MUNICIPIO}
+                        value={this.state.details.municipio}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -216,7 +217,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="city"
-                        value={this.state.details.CIDADE}
+                        value={this.state.details.cidade}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -227,7 +228,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="state"
-                        value={this.state.details.ESTADO}
+                        value={this.state.details.estado}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -238,7 +239,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="country"
-                        value={this.state.details.PAIS}
+                        value={this.state.details.pais}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -249,7 +250,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="cep"
-                        value={this.state.details.CEP}
+                        value={this.state.details.cep}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -265,7 +266,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="accountType "
-                        value={this.state.details.TIPO}
+                        value={this.state.details.tipo}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -276,7 +277,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="bankCode"
-                        value={this.state.details.BCO}
+                        value={this.state.details.bco}
                       />
                     </MDBCol>
                     <MDBCol md="6" className="form-group">
@@ -287,7 +288,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="bank"
-                        value={this.state.details.NOME_BANCO}
+                        value={this.state.details.nome_banco}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -300,7 +301,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="agency"
-                        value={this.state.details.AG}
+                        value={this.state.details.ag}
                       />
                     </MDBCol>
 
@@ -312,7 +313,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="AccountNumb"
-                        value={this.state.details.CC}
+                        value={this.state.details.cc}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -323,7 +324,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="ccm"
-                        value={this.state.details.CCM}
+                        value={this.state.details.ccm}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -336,7 +337,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="certMunicipal"
-                        value={this.state.details.CERT_MUN}
+                        value={this.state.details.certf_mun}
                       />
                     </MDBCol>
 
@@ -348,7 +349,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="certState"
-                        value={this.state.details.CERT_EST}
+                        value={this.state.details.certf_est}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -359,7 +360,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="certFederal"
-                        value={this.state.details.CERT_FED}
+                        value={this.state.details.certf_fed}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -372,7 +373,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="ie"
-                        value={this.state.details.IE}
+                        value={this.state.details.ie}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -383,7 +384,7 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="simples"
-                        value={this.state.details.SIMPLES}
+                        value={this.state.details.simples}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -394,13 +395,21 @@ class ProviderDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="issSP"
-                        value={this.state.details.RETER_ISS_SP}
+                        value={this.state.details.reter_iss_sp}
                       />
                     </MDBCol>
                   </MDBRow>
+                  <hr />
                 </MDBTabPane>
+                <label className="grey-text">
+                  Criado em: {this.state.details.created_at}
+                </label>
+                <br />
+                <label className="grey-text">
+                  Última atualização: {this.state.details.updated_at}
+                </label>
                 <MDBBtn
-                  href={`/Providers/edit/${this.state.details.ID}`}
+                  href={`/Providers/edit/${this.state.details.id}`}
                   className="deep-orange darken-3 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar

@@ -34,7 +34,7 @@ class CollaboratorDetails extends Component {
   getCollaborator() {
     let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${collaboratorId}`)
+      .get(`http://127.0.0.1:80/api/colaboradores/${collaboratorId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -44,11 +44,12 @@ class CollaboratorDetails extends Component {
   }
 
   onDelete() {
-    let collaboratorId = this.state.details.ID;
+    let collaboratorId = this.state.details.id;
     axios
-      .delete(`http://localhost/api/Fornecedores/${collaboratorId}`)
+      .delete(`http://127.0.0.1:80/api/colaboradores/${collaboratorId}`)
       .then(response => {
-        this.props.history.push("/Providers");
+        console.log(`ID excluído: ${collaboratorId}`);
+        this.props.history.push("/Collaborators");
       })
       .catch(err => console.log(err));
   }
@@ -71,7 +72,7 @@ class CollaboratorDetails extends Component {
             </Link>
             <MDBCardHeader className="card-header rounded">
               <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.NOME_EMPRESA}
+                {this.state.details.nome}
               </MDBCardTitle>
             </MDBCardHeader>
 
@@ -87,7 +88,7 @@ class CollaboratorDetails extends Component {
                     Dados Gerais
                   </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <MDBNavLink
                     to="#"
                     active={this.state.activeItem === "2"}
@@ -106,7 +107,7 @@ class CollaboratorDetails extends Component {
                   >
                     Dados Financeiros
                   </MDBNavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </MDBNav>
 
               <MDBTabContent activeItem={this.state.activeItem}>
@@ -120,10 +121,10 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabNick"
-                        value={this.state.details.STATUS}
+                        value={this.state.details.apelido}
                       />
                     </MDBCol>
-                    <MDBCol md="2" className="form-group ">
+                    <MDBCol md="3" className="form-group ">
                       <label className="grey-text" htmlFor="collabBday">
                         Data Nascimento:{" "}
                       </label>
@@ -131,10 +132,21 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabBday"
-                        value={this.state.details.DT_INICIO}
+                        value={this.state.details.data_nascimento}
                       />
                     </MDBCol>
-                    <MDBCol md="2" className="form-group ">
+                    <MDBCol md="3" className="form-group ">
+                      <label className="grey-text" htmlFor="collabStatus">
+                        Status:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabStatus"
+                        value={this.state.details.status}
+                      />
+                    </MDBCol>
+                    {/* <MDBCol md="2" className="form-group ">
                       <label className="grey-text" htmlFor="collabStartDt">
                         Data de início:{" "}
                       </label>
@@ -155,10 +167,10 @@ class CollaboratorDetails extends Component {
                         id="collabEndDt"
                         value={this.state.details.DT_FIM}
                       />
-                    </MDBCol>
+                    </MDBCol> */}
                   </MDBRow>
                   <MDBRow>
-                    <MDBCol md="4" className="form-group">
+                    <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="collabEmail">
                         Email:{" "}
                       </label>
@@ -166,10 +178,21 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabEmail"
-                        value={this.state.details.CNPJ}
+                        value={this.state.details.email}
                       />
                     </MDBCol>
-                    <MDBCol md="4" className="form-group">
+                    <MDBCol md="3" className="form-group">
+                      <label className="grey-text" htmlFor="collabPEmail">
+                        Email Pessoal:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="collabPEmail"
+                        value={this.state.details.email_pessoal}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="collabPhone">
                         Telefone:{" "}
                       </label>
@@ -177,10 +200,10 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabPhone"
-                        value={this.state.details.TEL_COM}
+                        value={this.state.details.telefone}
                       />
                     </MDBCol>
-                    <MDBCol md="4" className="form-group">
+                    <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="collabMobile">
                         Celular:{" "}
                       </label>
@@ -188,7 +211,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabMobile"
-                        value={this.state.details.CEL_COM}
+                        value={this.state.details.celular}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -201,7 +224,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabCpf"
-                        value={this.state.details.CNPJ}
+                        value={this.state.details.cpf}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -212,7 +235,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabRg"
-                        value={this.state.details.TEL_COM}
+                        value={this.state.details.rg}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -223,7 +246,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabEmis"
-                        value={this.state.details.CEL_COM}
+                        value={this.state.details.orgao_emissor}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -234,7 +257,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabCtps"
-                        value={this.state.details.CEL_COM}
+                        value={this.state.details.ctps}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -248,7 +271,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabAddress"
-                        value={this.state.details.END_EMPRESA}
+                        value={this.state.details.endereco}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -259,20 +282,20 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabNeighborhood"
-                        value={this.state.details.BAIRRO}
+                        value={this.state.details.bairro}
                       />
                     </MDBCol>
                   </MDBRow>
                   <MDBRow className="mb-2">
                     <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="collabMunicipality">
-                        Município:{" "}
+                      <label className="grey-text" htmlFor="collabCity">
+                        Cidade:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="collabMunicipality"
-                        value={this.state.details.MUNICIPIO}
+                        id="collabCity"
+                        value={this.state.details.cidade}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -283,7 +306,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabState"
-                        value={this.state.details.ESTADO}
+                        value={this.state.details.estado}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -294,7 +317,7 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabCountry"
-                        value={this.state.details.PAIS}
+                        value={this.state.details.pais}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -305,13 +328,21 @@ class CollaboratorDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="collabZipcode"
-                        value={this.state.details.CEP}
+                        value={this.state.details.cep}
                       />
                     </MDBCol>
                   </MDBRow>
+                  <hr />
                 </MDBTabPane>
+                <label className="grey-text">
+                  Criado em: {this.state.details.created_at}
+                </label>
+                <br/>
+                <label className="grey-text">
+                  Última atualização: {this.state.details.updated_at}
+                </label>
 
-                <MDBTabPane tabId="2" role="tabpanel">
+                {/* <MDBTabPane tabId="2" role="tabpanel">
                   <MDBRow className="mt-4">
                     <MDBCol md="5" className="form-group">
                       <label className="grey-text" htmlFor="collabProvider">
@@ -467,9 +498,9 @@ class CollaboratorDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow>
-                </MDBTabPane>
+                </MDBTabPane> */}
                 <MDBBtn
-                  href={`/Collaborators/edit/${this.state.details.ID}`}
+                  href={`/Collaborators/edit/${this.state.details.id}`}
                   className="deep-orange darken-3 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar

@@ -197,6 +197,7 @@ class NFExitDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow>
+                  <hr />
                 </MDBTabPane>
 
                 <MDBTabPane tabId="2" role="tabpanel">
@@ -285,6 +286,7 @@ class NFExitDetails extends Component {
                       </div>
                     </MDBCol>
                   </MDBRow>
+                  <hr />
                 </MDBTabPane>
                 <MDBBtn
                   href={`/NFsExit/edit/${this.state.details.ID}`}

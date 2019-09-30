@@ -26,44 +26,45 @@ class AddProvider extends Component {
   addProvider(newProvider) {
     axios
       .request({
-        method: 'POST',
-        url: "http://localhost/api/Fornecedores",
+        method: "POST",
+        url: "http://127.0.0.1:80/api/fornecedores/",
         data: newProvider
       })
       .then(response => {
         this.props.history.push("/Providers");
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("erro: ", err.response));
   }
 
+ 
   onSubmit(e) {
     const newProvider = {
-      NOME_EMPRESA: this.refs.name.value,
-      STATUS: this.refs.status.value,
-    //   END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value,
-    //   DT_INICIO: this.refs.startDate.value,
-    //   DT_FIM: this.refs.endDate.value,
-    //   BAIRRO: this.refs.neighborhood.value,
-    //   MUNICIPIO: this.refs.municipality.value,
-    //   CIDADE: this.refs.city.value,
-    //   ESTADO: this.refs.state.value,
-    //   PAIS: this.refs.country.value,
-    //   CEP: this.refs.cep.value,
-    //   TEL_COM: this.refs.phone.value,
-    //   CEL_COM: this.refs.mobile.value,
-    //   SIMPLES: this.refs.simples.value,
-    //   RETER_ISS_SP: this.refs.issSP.value,
-    //   CERT_MUN: this.refs.certMunicipal.value,
-    //   CERT_EST: this.refs.certState.value,
-    //   CERT_FED: this.refs.certFederal.value,
-    //   IE: this.refs.ie.value,
-    //   CCM: this.refs.ccm.value,
-    //   TIPO: this.refs.accountType.value,
-    //   BCO: this.refs.bankCode.value,
-    //   NOME_BANCO: this.refs.bank.value,
-    //   AG: this.refs.agency.value,
-    //   CC: this.refs.accountNumb.value
+      cnpj: this.refs.cnpj.value,
+      status: this.refs.status.value,
+      nome: this.refs.name.value,
+      certf_fed: this.refs.certFederal.value,
+      certf_est: this.refs.certState.value,
+      certf_mun: this.refs.certMunicipal.value,
+      data_inicio: this.refs.startDate.value,
+      data_fim: this.refs.endDate.value,
+      ie: this.refs.ie.value,
+      ccm: this.refs.ccm.value,
+      municipio: this.refs.municipality.value,
+      endereco: this.refs.address.value,
+      cidade: this.refs.city.value,
+      bairro: this.refs.neighborhood.value,
+      pais: this.refs.country.value,
+      estado: this.refs.state.value,
+      simples: this.refs.simples.value,
+      reter_iss_sp: this.refs.issSP.value,
+      telefone: this.refs.phone.value,
+      celular: this.refs.mobile.value,
+      tipo: this.refs.accountType.value,
+      bco: this.refs.bankCode.value,
+      nome_banco: this.refs.bank.value,
+      ag: this.refs.agency.value,
+      cep: this.refs.cep.value,
+      cc: this.refs.accountNumb.value
     };
     this.addProvider(newProvider);
     console.log(newProvider);
@@ -232,7 +233,7 @@ class AddProvider extends Component {
                           className="form-control"
                           type="text"
                           name="MUNICIPIO"
-                          ref="minicipality"
+                          ref="municipality"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -344,14 +345,14 @@ class AddProvider extends Component {
                       </MDBCol>
 
                       <MDBCol md="5" className="form-group">
-                        <label className="grey-text" htmlFor="AccountNumb">
+                        <label className="grey-text" htmlFor="accountNumb">
                           Nº Conta:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
                           name="CC"
-                          ref="AccountNumb"
+                          ref="accountNumb"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">

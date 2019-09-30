@@ -11,8 +11,8 @@ class CollaboratorItem extends Component {
   render() {
     return (
       <p className="collection-item">
-        <Link to={`/Collaborators/${this.state.item.ID}`}>
-          {this.state.item.NOME_EMPRESA}
+        <Link to={`/Collaborators/${this.state.item.id}`}>
+          {this.state.item.nome}
         </Link>
       </p>
     );

@@ -63,9 +63,7 @@ class Navbar extends Component {
                     <MDBDropdownItem href="/CollabDeals">
                       Dados de Negociação
                     </MDBDropdownItem>
-                    <MDBDropdownItem href="/NFsExit">
-                      NF-Saída
-                    </MDBDropdownItem>
+                    <MDBDropdownItem href="/NFsExit">NF-Saída</MDBDropdownItem>
                     <MDBDropdownItem href="/NFsInbound">
                       NF-Entrada
                     </MDBDropdownItem>
@@ -97,6 +95,7 @@ class Navbar extends Component {
         </MDBNavbar>
       </div>
     );
+    
   }
 }
 

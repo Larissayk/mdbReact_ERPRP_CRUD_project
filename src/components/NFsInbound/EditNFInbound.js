@@ -101,7 +101,7 @@ class EditNFInbound extends Component {
       .catch(err => console.log(err));
   }
 
-  EditNFexit(newNFInbound) {
+  editNFInbound(newNFInbound) {
     //console.log(newProvider);
     axios
       .request({
@@ -144,7 +144,7 @@ class EditNFInbound extends Component {
       // AG: this.refs.agency.value,
       // CC: this.refs.accountNumb.value
     };
-    this.editProvider(newNFInbound);
+    this.editNFInbound(newNFInbound);
     e.preventDefault();
     console.log(newNFInbound);
   }
@@ -311,6 +311,7 @@ class EditNFInbound extends Component {
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
 
                     <MDBBtn
                       type="submit"
@@ -436,6 +437,7 @@ class EditNFInbound extends Component {
                         </div>
                       </MDBCol>
                     </MDBRow>
+                    <hr />
                     <MDBBtn
                       type="submit"
                       value="Save"
@@ -449,6 +451,13 @@ class EditNFInbound extends Component {
             </MDBContainer>
           </MDBCardBody>
         </MDBCard>
+        <MDBBtn
+          size="lg"
+          href="/NFsInbound/add"
+          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+        >
+          <MDBIcon size="lg" className="text-white" icon="plus" />
+        </MDBBtn>
       </MDBContainer>
     );
   }

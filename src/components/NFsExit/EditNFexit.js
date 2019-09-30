@@ -101,7 +101,7 @@ class EditNFexit extends Component {
       .catch(err => console.log(err));
   }
 
-  EditNFexit(newNFExit) {
+  editNFexit(newNFExit) {
     //console.log(newProvider);
     axios
       .request({
@@ -144,7 +144,7 @@ class EditNFexit extends Component {
       // AG: this.refs.agency.value,
       // CC: this.refs.accountNumb.value
     };
-    this.editProvider(newNFExit);
+    this.editNFexit(newNFExit);
     e.preventDefault();
     console.log(newNFExit);
   }
@@ -176,7 +176,9 @@ class EditNFexit extends Component {
               <MDBIcon icon="undo-alt" /> Voltar
             </Link>
             <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{fontSize:28}}>Editar NF-Saída</MDBCardTitle>
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+                Editar NF-Saída
+              </MDBCardTitle>
             </MDBCardHeader>
             <MDBContainer>
               <MDBNav className="nav-tabs">
@@ -317,6 +319,7 @@ class EditNFexit extends Component {
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
 
                     <MDBBtn
                       type="submit"
@@ -438,6 +441,8 @@ class EditNFexit extends Component {
                         </div>
                       </MDBCol>
                     </MDBRow>
+                    <hr />
+
                     <MDBBtn
                       type="submit"
                       value="Save"
@@ -451,6 +456,13 @@ class EditNFexit extends Component {
             </MDBContainer>
           </MDBCardBody>
         </MDBCard>
+        <MDBBtn
+          size="lg"
+          href="/NFsExit/add"
+          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+        >
+          <MDBIcon size="lg" className="text-white" icon="plus" />
+        </MDBBtn>
       </MDBContainer>
     );
   }

@@ -9,7 +9,6 @@ import Providers from "./Providers/Providers";
 import ProviderDetails from "./Providers/ProviderDetails";
 import AddProvider from "./Providers/AddProvider";
 import EditProvider from "./Providers/EditProvider";
-import MyApp from "./Tests/MyApp";
 import CollaboratorDeals from "./CollaboratorDeals/CollabDeals";
 import CollaboratorDealDetails from "./CollaboratorDeals/CollabDealDetails";
 import AddCollaboratorDeal from "./CollaboratorDeals/AddCollabDeal";
@@ -37,7 +36,6 @@ const Main = () => (
       <Route exact path="/Collaborators/edit/:id" component={EditCollaborator} />
       <Route exact path="/Collaborators/:id" component={CollaboratorDetails} />
       <Route exact path="/Providers" component={Providers} />
-      {/* <Route exact path="/myApp" component={MyApp} /> */}
       <Route exact path="/Providers/add" component={AddProvider} />
       <Route exact path="/Providers/edit/:id" component={EditProvider} />
       <Route exact path="/Providers/:id" component={ProviderDetails} />

@@ -27,8 +27,9 @@ class AddCollaborator extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://localhost/api/Fornecedores/",
+        url: "http://127.0.0.1:80/api/colaboradores/",
         data: newCollaborator
+        
       })
       .then(response => {
         this.props.history.push("/Collaborators");
@@ -38,34 +39,28 @@ class AddCollaborator extends Component {
 
   onSubmit(e) {
     const newCollaborator = {
-      NOME_EMPRESA: this.refs.name.value,
-      STATUS: this.refs.status.value,
-      //   END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value
-      //   DT_INICIO: this.refs.startDate.value,
-      //   DT_FIM: this.refs.endDate.value,
-      //   BAIRRO: this.refs.neighborhood.value,
-      //   MUNICIPIO: this.refs.municipality.value,
-      //   CIDADE: this.refs.city.value,
-      //   ESTADO: this.refs.state.value,
-      //   PAIS: this.refs.country.value,
-      //   CEP: this.refs.cep.value,
-      //   TEL_COM: this.refs.phone.value,
-      //   CEL_COM: this.refs.mobile.value,
-      //   SIMPLES: this.refs.simples.value,
-      //   RETER_ISS_SP: this.refs.issSP.value,
-      //   CERT_MUN: this.refs.certMunicipal.value,
-      //   CERT_EST: this.refs.certState.value,
-      //   CERT_FED: this.refs.certFederal.value,
-      //   IE: this.refs.ie.value,
-      //   CCM: this.refs.ccm.value,
-      //   TIPO: this.refs.accountType.value,
-      //   BCO: this.refs.bankCode.value,
-      //   NOME_BANCO: this.refs.bank.value,
-      //   AG: this.refs.agency.value,
-      //   CC: this.refs.accountNumb.value
+      cpf: this.refs.collabCpf.value,
+      status: this.refs.collabStatus.value,
+      nome: this.refs.collabName.value,
+      apelido: this.refs.collabNick.value,
+      rg: this.refs.collabRg.value,
+      orgao_emissor: this.refs.collabEmis.value,
+      ctps: this.refs.collabCtps.value,
+      data_nascimento: this.refs.collabBday.value,
+      endereco: this.refs.collabAddress.value,
+      cep: this.refs.collabZipcode.value,
+      bairro: this.refs.collabNeighborhood.value,
+      cidade: this.refs.collabCity.value,
+      pais: this.refs.collabCountry.value,
+      estado: this.refs.collabState.value,
+      telefone: this.refs.collabPhone.value,
+      celular: this.refs.collabMobile.value,
+      email: this.refs.collabEmail.value,
+      email_pessoal: this.refs.collabPEmail.value,
+      // created_at: this.refs.collabCreatedAt.value,
+      // updated_at: this.refs.collabUpdatedAt.value
     };
-    this.addProvider(newCollaborator);
+    this.AddCollaborator(newCollaborator);
     console.log(newCollaborator);
     e.preventDefault();
   }
@@ -104,7 +99,7 @@ class AddCollaborator extends Component {
                     Dados Gerais
                   </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <MDBNavLink
                     to="#"
                     active={this.state.activeItem === "2"}
@@ -123,14 +118,24 @@ class AddCollaborator extends Component {
                   >
                     Dados Financeiros
                   </MDBNavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </MDBNav>
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
-                      <MDBCol md="6" className="form-group">
+                      <MDBCol md="5" className="form-group">
+                        <label className="grey-text" htmlFor="collabName">
+                          Nome:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabName"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabNick">
                           Apelido:{" "}
                         </label>
@@ -151,6 +156,16 @@ class AddCollaborator extends Component {
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabStatus">
+                          Status:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabStatus"
+                        />
+                      </MDBCol>
+                      {/* <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabStartDt">
                           Data de início:{" "}
                         </label>
@@ -169,10 +184,10 @@ class AddCollaborator extends Component {
                           type="text"
                           ref="collabEndDt"
                         />
-                      </MDBCol>
+                      </MDBCol> */}
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabEmail">
                           Email:{" "}
                         </label>
@@ -182,7 +197,17 @@ class AddCollaborator extends Component {
                           ref="collabEmail"
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabPEmail">
+                          Email Pessoal:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabPEmail"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
@@ -192,7 +217,7 @@ class AddCollaborator extends Component {
                           ref="collabPhone"
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabMobile">
                           Celular:{" "}
                         </label>
@@ -204,7 +229,7 @@ class AddCollaborator extends Component {
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabCpf">
                           CPF:{" "}
                         </label>
@@ -234,7 +259,7 @@ class AddCollaborator extends Component {
                           ref="collabEmis"
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabCtps">
                           CTPS:{" "}
                         </label>
@@ -273,16 +298,13 @@ class AddCollaborator extends Component {
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label
-                          className="grey-text"
-                          htmlFor="collabMunicipality"
-                        >
-                          Município:{" "}
+                        <label className="grey-text" htmlFor="collabCity">
+                          Cidade:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabMunicipality"
+                          ref="collabCity"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -316,6 +338,7 @@ class AddCollaborator extends Component {
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
                     <MDBBtn
                       type="submit"
                       value="Save"
@@ -326,7 +349,7 @@ class AddCollaborator extends Component {
                   </form>
                 </MDBTabPane>
 
-                <MDBTabPane tabId="2" role="tabpanel">
+                {/* <MDBTabPane tabId="2" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
                       <MDBCol md="5" className="form-group">
@@ -481,9 +504,9 @@ class AddCollaborator extends Component {
                       className="deep-orange darken-3 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
-                    </MDBBtn>
-                  </form>
-                </MDBTabPane>
+                    </MDBBtn> */}
+                  {/* </form>
+                </MDBTabPane> */}
               </MDBTabContent>
             </MDBContainer>
           </MDBCardBody>

@@ -215,6 +215,7 @@ class AddNFExit extends Component {
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
 
                     <MDBBtn
                       type="submit"
@@ -322,6 +323,7 @@ class AddNFExit extends Component {
                         </div>
                       </MDBCol>
                     </MDBRow>
+                    <hr />
                     <MDBBtn
                       type="submit"
                       value="Save"

@@ -22,33 +22,25 @@ class EditCollaborator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ID: "",
-      NOME_EMPRESA: "",
-      CNPJ: "",
-      STATUS: "",
-      DT_INICIO: "",
-      DT_FIM: "",
-      END_EMPRESA: "",
-      BAIRRO: "",
-      MUNICIPIO: "",
-      CIDADE: "",
-      ESTADO: "",
-      PAIS: "",
-      CEP: "",
-      TEL_COM: "",
-      CEL_COM: "",
-      SIMPLES: "",
-      RETER_ISS_SP: "",
-      CERT_MUN: "",
-      CERT_EST: "",
-      CERT_FED: "",
-      IE: "",
-      CCM: "",
-      TIPO: "",
-      BCO: "",
-      NOME_BANCO: "",
-      AG: "",
-      CC: "",
+      id: "",
+      cpf: "",
+      status: "",
+      nome: "",
+      apelido: "",
+      rg: "",
+      orgao_emissor: "",
+      ctps: "",
+      data_nascimento: "",
+      endereco: "",
+      cep: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+      pais: "",
+      telefone: "",
+      celular: "",
+      email: "",
+      email_pessoal: "",
       activeItem: "1"
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -61,37 +53,29 @@ class EditCollaborator extends Component {
   getCollaboratorDetails() {
     let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${collaboratorId}`)
+      .get(`http://127.0.0.1:80/api/colaboradores/${collaboratorId}`)
       .then(response => {
         this.setState(
           {
-            ID: response.data.ID,
-            NOME_EMPRESA: response.data.NOME_EMPRESA,
-            CNPJ: response.data.CNPJ,
-            STATUS: response.data.STATUS,
-            DT_INICIO: response.data.DT_INICIO,
-            DT_FIM: response.data.DT_FIM,
-            END_EMPRESA: response.data.END_EMPRESA,
-            BAIRRO: response.data.BAIRRO,
-            MUNICIPIO: response.data.MUNICIPIO,
-            CIDADE: response.data.CIDADE,
-            ESTADO: response.data.ESTADO,
-            PAIS: response.data.PAIS,
-            CEP: response.data.CEP,
-            TEL_COM: response.data.TEL_COM,
-            CEL_COM: response.data.CEL_COM,
-            SIMPLES: response.data.SIMPLES,
-            RETER_ISS_SP: response.data.RETER_ISS_SP,
-            CERT_MUN: response.data.CERT_MUN,
-            CERT_EST: response.data.CERT_EST,
-            CERT_FED: response.data.CERT_FED,
-            IE: response.data.IE,
-            CCM: response.data.CCM,
-            TIPO: response.data.TIPO,
-            BCO: response.data.BCO,
-            NOME_BANCO: response.data.NOME_BANCO,
-            AG: response.data.NOME_EMPRAGESA,
-            CC: response.data.CC
+            id: response.data.id,
+            nome: response.data.nome,
+            cpf: response.data.cpf,
+            status: response.data.status,
+            apelido: response.data.apelido,
+            rg: response.data.rg,
+            orgao_emissor: response.data.orgao_emissor,
+            ctps: response.data.ctps,
+            data_nascimento: response.data.data_nascimento,
+            endereco: response.data.endereco,
+            cep: response.data.cep,
+            bairro: response.data.bairro,
+            cidade: response.data.cidade,
+            estado: response.data.estado,
+            pais: response.data.pais,
+            telefone: response.data.telefone,
+            celular: response.data.celular,
+            email: response.data.email,
+            email_pessoal: response.data.email_pessoal,
           },
           () => {
             console.log(this.state);
@@ -101,50 +85,43 @@ class EditCollaborator extends Component {
       .catch(err => console.log(err));
   }
 
-  editProvider(newCollaborator) {
-    //console.log(newProvider);
+  editCollaborator(newCollaborator) {
     axios
       .request({
         method: "PUT",
-        url: `http://localhost/api/Fornecedores/${this.state.ID}`,
+        url: `http://127.0.0.1:80/api/colaboradores/${this.state.id}`,
         data: newCollaborator
       })
       .then(response => {
-        this.props.history.push("/Providers");
+        this.props.history.push("/Collaborators");
       })
       .catch(err => console.log(err));
   }
 
   onSubmit(e) {
     const newCollaborator = {
-      NOME_EMPRESA: this.refs.name.value,
-      STATUS: this.refs.status.value,
-      // END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value
-      // DT_INICIO: this.refs.startDate.value,
-      // DT_FIM: this.refs.endDate.value,
-      // BAIRRO: this.refs.neighborhood.value,
-      // MUNICIPIO: this.refs.municipality.value,
-      // CIDADE: this.refs.city.value,
-      // ESTADO: this.refs.state.value,
-      // PAIS: this.refs.country.value,
-      // CEP: this.refs.cep.value,
-      // TEL_COM: this.refs.phone.value,
-      // CEL_COM: this.refs.mobile.value,
-      // SIMPLES: this.refs.simples.value,
-      // RETER_ISS_SP: this.refs.issSP.value,
-      // CERT_MUN: this.refs.certMunicipal.value,
-      // CERT_EST: this.refs.certState.value,
-      // CERT_FED: this.refs.certFederal.value,
-      // IE: this.refs.ie.value,
-      // CCM: this.refs.ccm.value,
-      // TIPO: this.refs.accountType.value,
-      // BCO: this.refs.bankCode.value,
-      // NOME_BANCO: this.refs.bank.value,
-      // AG: this.refs.agency.value,
-      // CC: this.refs.accountNumb.value
+      cpf: this.refs.collabCpf.value,
+      status: this.refs.collabStatus.value,
+      nome: this.refs.collabName.value,
+      apelido: this.refs.collabNick.value,
+      rg: this.refs.collabRg.value,
+      orgao_emissor: this.refs.collabEmis.value,
+      ctps: this.refs.collabCtps.value,
+      data_nascimento: this.refs.collabBday.value,
+      endereco: this.refs.collabAddress.value,
+      cep: this.refs.collabZipcode.value,
+      bairro: this.refs.collabNeighborhood.value,
+      cidade: this.refs.collabCity.value,
+      pais: this.refs.collabCountry.value,
+      estado: this.refs.collabState.value,
+      telefone: this.refs.collabPhone.value,
+      celular: this.refs.collabMobile.value,
+      email: this.refs.collabEmail.value,
+      email_pessoal: this.refs.collabPEmail.value
+      // created_at: this.refs.collabCreatedAt.value,
+      // updated_at: this.refs.collabUpdatedAt.value
     };
-    this.editProvider(newCollaborator);
+    this.editCollaborator(newCollaborator);
     e.preventDefault();
     console.log(newCollaborator);
   }
@@ -192,7 +169,7 @@ class EditCollaborator extends Component {
                     Dados Gerais
                   </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <MDBNavLink
                     to="#"
                     active={this.state.activeItem === "2"}
@@ -211,14 +188,26 @@ class EditCollaborator extends Component {
                   >
                     Dados Financeiros
                   </MDBNavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </MDBNav>
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
-                      <MDBCol md="6" className="form-group">
+                      <MDBCol md="5" className="form-group">
+                        <label className="grey-text" htmlFor="collabName">
+                          Nome:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabName"
+                          value={this.state.nome}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabNick">
                           Apelido:{" "}
                         </label>
@@ -226,7 +215,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabNick"
-                          value={this.state.NOME_EMPRESA}
+                          value={this.state.apelido}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -238,11 +227,23 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabBday"
-                          value={this.state.STATUS}
+                          value={this.state.data_nascimento}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="collabStatus">
+                          Status:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabStatus"
+                          value={this.state.status}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      {/* <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabStartDt">
                           Data de início:{" "}
                         </label>
@@ -265,10 +266,10 @@ class EditCollaborator extends Component {
                           value={this.state.DT_FIM}
                           onChange={this.handleInputChange}
                         />
-                      </MDBCol>
+                      </MDBCol> */}
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabEmail">
                           Email:{" "}
                         </label>
@@ -276,11 +277,23 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabEmail"
-                          value={this.state.CNPJ}
+                          value={this.state.email}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="collabPEmail">
+                          Email Pessoal:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="collabPEmail"
+                          value={this.state.email_pessoal}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
@@ -288,11 +301,11 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabPhone"
-                          value={this.state.TEL_COM}
+                          value={this.state.telefone}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabMobile">
                           Celular:{" "}
                         </label>
@@ -300,13 +313,13 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabMobile"
-                          value={this.state.CEL_COM}
+                          value={this.state.celular}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabCpf">
                           CPF:{" "}
                         </label>
@@ -314,7 +327,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabCpf"
-                          value={this.state.END_EMPRESA}
+                          value={this.state.cpf}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -326,7 +339,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabRg"
-                          value={this.state.BAIRRO}
+                          value={this.state.rg}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -338,11 +351,11 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabEmis"
-                          value={this.state.MUNICIPIO}
+                          value={this.state.orgao_emissor}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabCtps">
                           CTPS:{" "}
                         </label>
@@ -350,7 +363,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabCtps"
-                          value={this.state.CIDADE}
+                          value={this.state.ctps}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -365,7 +378,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabAddress"
-                          value={this.state.ESTADO}
+                          value={this.state.endereco}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -380,7 +393,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabNeighborhood"
-                          value={this.state.PAIS}
+                          value={this.state.bairro}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -389,17 +402,15 @@ class EditCollaborator extends Component {
                       <MDBCol md="3" className="form-group">
                         <label
                           className="grey-text"
-                          htmlFor="collabMunicipality"
-                          value={this.state.CEP}
-                          onChange={this.handleInputChange}
+                          htmlFor="collabCity"
                         >
-                          Município:{" "}
+                          Cidade:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabMunicipality"
-                          value={this.state.TIPO}
+                          ref="collabCity"
+                          value={this.state.cidade}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -411,7 +422,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabState"
-                          value={this.state.BCO}
+                          value={this.state.estado}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -423,7 +434,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabCountry"
-                          value={this.state.NOME_BANCO}
+                          value={this.state.pais}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -435,11 +446,13 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabZipcode"
-                          value={this.state.AG}
+                          value={this.state.cep}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
+
                     <MDBBtn
                       type="submit"
                       value="Save"
@@ -450,7 +463,7 @@ class EditCollaborator extends Component {
                   </form>
                 </MDBTabPane>
 
-                <MDBTabPane tabId="2" role="tabpanel">
+                {/* <MDBTabPane tabId="2" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
                       <MDBCol md="5" className="form-group">
@@ -631,7 +644,7 @@ class EditCollaborator extends Component {
                       <MDBIcon far icon="save" /> Salvar
                     </MDBBtn>
                   </form>
-                </MDBTabPane>
+                </MDBTabPane> */}
               </MDBTabContent>
             </MDBContainer>
           </MDBCardBody>
