@@ -32,7 +32,7 @@ class EditCollaboratorDeal extends Component {
       Valor_Clt: "",
       Cpf_Aprovador: "",
       activeItem: "1"
-    };
+    }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 

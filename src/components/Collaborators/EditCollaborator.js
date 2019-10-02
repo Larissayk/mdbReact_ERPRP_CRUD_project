@@ -42,7 +42,7 @@ class EditCollaborator extends Component {
       email: "",
       email_pessoal: "",
       activeItem: "1"
-    };
+    }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -53,7 +53,7 @@ class EditCollaborator extends Component {
   getCollaboratorDetails() {
     let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:80/api/colaboradores/${collaboratorId}`)
+      .get(`http://127.0.0.1:8000/api/colaboradores/${collaboratorId}`)
       .then(response => {
         this.setState(
           {
@@ -89,7 +89,7 @@ class EditCollaborator extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:80/api/colaboradores/${this.state.id}`,
+        url: `http://127.0.0.1:8000/api/colaboradores/${this.state.id}`,
         data: newCollaborator
       })
       .then(response => {
@@ -203,6 +203,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabName"
+                          name="nome"
                           value={this.state.nome}
                           onChange={this.handleInputChange}
                         />
@@ -215,6 +216,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabNick"
+                          name="apelido"
                           value={this.state.apelido}
                           onChange={this.handleInputChange}
                         />
@@ -227,6 +229,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabBday"
+                          name="data_nascimento"
                           value={this.state.data_nascimento}
                           onChange={this.handleInputChange}
                         />
@@ -239,9 +242,22 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabStatus"
+                          name="status"
                           value={this.state.status}
                           onChange={this.handleInputChange}
                         />
+                        {/* <div>
+                          <select
+                            className="browser-default custom-select"
+                            ref="collabStatus"
+                            name="status"
+                            value={this.state.status}
+                            onChange={this.handleInputChange}
+                          >
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                          </select>
+                        </div> */}
                       </MDBCol>
                       {/* <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabStartDt">
@@ -277,6 +293,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabEmail"
+                          name="email"
                           value={this.state.email}
                           onChange={this.handleInputChange}
                         />
@@ -289,6 +306,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabPEmail"
+                          name="email_pessoal"
                           value={this.state.email_pessoal}
                           onChange={this.handleInputChange}
                         />
@@ -301,6 +319,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabPhone"
+                          name="telefone"
                           value={this.state.telefone}
                           onChange={this.handleInputChange}
                         />
@@ -313,6 +332,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabMobile"
+                          name="celular"
                           value={this.state.celular}
                           onChange={this.handleInputChange}
                         />
@@ -327,6 +347,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabCpf"
+                          name="cpf"
                           value={this.state.cpf}
                           onChange={this.handleInputChange}
                         />
@@ -339,6 +360,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabRg"
+                          name="rg"
                           value={this.state.rg}
                           onChange={this.handleInputChange}
                         />
@@ -351,6 +373,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabEmis"
+                          name="orgao_emissor"
                           value={this.state.orgao_emissor}
                           onChange={this.handleInputChange}
                         />
@@ -363,6 +386,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabCtps"
+                          name="ctps"
                           value={this.state.ctps}
                           onChange={this.handleInputChange}
                         />
@@ -378,6 +402,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabAddress"
+                          name="endereco"
                           value={this.state.endereco}
                           onChange={this.handleInputChange}
                         />
@@ -393,6 +418,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabNeighborhood"
+                          name="bairro"
                           value={this.state.bairro}
                           onChange={this.handleInputChange}
                         />
@@ -400,16 +426,14 @@ class EditCollaborator extends Component {
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label
-                          className="grey-text"
-                          htmlFor="collabCity"
-                        >
+                        <label className="grey-text" htmlFor="collabCity">
                           Cidade:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
                           ref="collabCity"
+                          name="cidade"
                           value={this.state.cidade}
                           onChange={this.handleInputChange}
                         />
@@ -422,6 +446,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabState"
+                          name="estado"
                           value={this.state.estado}
                           onChange={this.handleInputChange}
                         />
@@ -434,6 +459,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabCountry"
+                          name="pais"
                           value={this.state.pais}
                           onChange={this.handleInputChange}
                         />
@@ -446,6 +472,7 @@ class EditCollaborator extends Component {
                           className="form-control"
                           type="text"
                           ref="collabZipcode"
+                          name="cep"
                           value={this.state.cep}
                           onChange={this.handleInputChange}
                         />

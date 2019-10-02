@@ -28,7 +28,7 @@ class Collaborators extends Component {
 
   getCollaborators() {
     axios
-      .get("http://127.0.0.1:80/api/colaboradores")
+      .get("http://127.0.0.1:8000/api/colaboradores")
       .then(response => {
         this.setState({ colaboradores: response.data }, () => {
           console.log(this.state);

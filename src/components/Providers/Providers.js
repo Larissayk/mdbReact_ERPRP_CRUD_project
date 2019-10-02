@@ -28,7 +28,7 @@ class Providers extends Component {
 
   getProviders() {
     axios
-      .get("http://127.0.0.1:80/api/fornecedores/")
+      .get("http://127.0.0.1:8000/api/fornecedores/")
       .then(response => {
         this.setState({ fornecedores: response.data }, () => {
           console.log(this.state);

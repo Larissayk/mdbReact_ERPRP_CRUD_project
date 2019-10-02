@@ -27,7 +27,7 @@ class AddCollaborator extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:80/api/colaboradores/",
+        url: "http://127.0.0.1:8000/api/colaboradores/",
         data: newCollaborator
         
       })
@@ -164,6 +164,15 @@ class AddCollaborator extends Component {
                           type="text"
                           ref="collabStatus"
                         />
+                        {/* <div>
+                          <selectref="collabStatus"
+                            className="browser-default custom-select"
+                            
+                          >
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                          </select>
+                        </div> */}
                       </MDBCol>
                       {/* <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabStartDt">
@@ -505,7 +514,7 @@ class AddCollaborator extends Component {
                     >
                       <MDBIcon far icon="save" /> Salvar
                     </MDBBtn> */}
-                  {/* </form>
+                {/* </form>
                 </MDBTabPane> */}
               </MDBTabContent>
             </MDBContainer>

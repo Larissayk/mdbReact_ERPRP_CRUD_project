@@ -13,7 +13,11 @@ import {
   MDBCard,
   MDBCardBody,
   MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBModal,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -23,7 +27,8 @@ class ProviderDetails extends Component {
     super(props);
     this.state = {
       details: "",
-      activeItem: "1"
+      activeItem: "1",
+      modal1: false
     };
   }
 
@@ -34,7 +39,7 @@ class ProviderDetails extends Component {
   getProvider() {
     let providerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:80/api/fornecedores/${providerId}`)
+      .get(`http://127.0.0.1:8000/api/fornecedores/${providerId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -46,13 +51,21 @@ class ProviderDetails extends Component {
   onDelete() {
     let providerId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:80/api/fornecedores/${providerId}`)
+      .delete(`http://127.0.0.1:8000/api/fornecedores/${providerId}`)
       .then(response => {
         console.log(`ID excluído: ${providerId}`);
         this.props.history.push("/Providers");
       })
       .catch(err => console.log("erro: ", err.response));
   }
+
+  // Toggle Confirmation Delete Register Modal
+  toggleDeleteCollaboratorModal = nr => () => {
+    let modalNumber = "modal" + nr;
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  };
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -415,7 +428,8 @@ class ProviderDetails extends Component {
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
                 <MDBBtn
-                  onClick={this.onDelete.bind(this)}
+                  // onClick={this.onDelete.bind(this)}
+                  onClick={this.toggleDeleteCollaboratorModal(1)}
                   outline
                   color="deep-orange darken-3"
                   className="float-right"
@@ -433,6 +447,37 @@ class ProviderDetails extends Component {
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>
+
+        {/* Delete Confirmation Modal */}
+        <div>
+          <MDBModal
+            isOpen={this.state.modal1}
+            toggle={this.toggleDeleteCollaboratorModal(1)}
+            centered
+          >
+            <MDBModalHeader toggle={this.toggleDeleteCollaboratorModal(1)}>
+              Deletar registro
+            </MDBModalHeader>
+            <MDBModalBody>
+              Esta ação irá excluir o registro permanentemente. Deseja
+              prosseguir?
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn
+                className="btn grey lighten-1"
+                onClick={this.toggleDeleteCollaboratorModal(1)}
+              >
+                Não
+              </MDBBtn>
+              <MDBBtn
+                className="btn deep-orange darken-4"
+                onClick={this.onDelete.bind(this)}
+              >
+                Sim
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+        </div>
       </MDBContainer>
     );
   }

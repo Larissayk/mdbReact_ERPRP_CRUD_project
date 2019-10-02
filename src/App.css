@@ -19,7 +19,15 @@ body {
   position: absolute;
   left: 5%;
   top: 25%;
+  align-items: center;
+  flex-direction: column;
 
+}
+
+.card-body {
+  align-items: center;
+  flex-direction: column;
+  margin: 1.25rem;
 }
 
 .card {

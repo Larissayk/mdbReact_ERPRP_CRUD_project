@@ -50,7 +50,7 @@ class EditNFInbound extends Component {
       AG: "",
       CC: "",
       activeItem: "1"
-    };
+    }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -216,6 +216,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIyear"
+                          name="NOME_EMPRESA"
                           value={this.state.NOME_EMPRESA}
                           onChange={this.handleInputChange}
                         />
@@ -228,6 +229,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIType"
+                          name="STATUS"
                           value={this.state.STATUS}
                           onChange={this.handleInputChange}
                         />
@@ -240,6 +242,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFINumber"
+                          name="DT_INICIO"
                           value={this.state.DT_INICIO}
                           onChange={this.handleInputChange}
                         />
@@ -252,6 +255,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIEmissor"
+                          name= "DT_FIM"
                           value={this.state.DT_FIM}
                           onChange={this.handleInputChange}
                         />
@@ -264,6 +268,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFICnpj"
+                          name="CNPJ"
                           value={this.state.CNPJ}
                           onChange={this.handleInputChange}
                         />
@@ -282,6 +287,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIDt"
+                          name="TEL_COM"
                           value={this.state.TEL_COM}
                           onChange={this.handleInputChange}
                         />
@@ -294,6 +300,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFICollab"
+                          name="CEL_COM"
                           value={this.state.CEL_COM}
                           onChange={this.handleInputChange}
                         />
@@ -306,6 +313,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIService"
+                          name="END_EMPRESA"
                           value={this.state.END_EMPRESA}
                           onChange={this.handleInputChange}
                         />
@@ -334,6 +342,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFAmount"
+                          name="BAIRRO"
                           value={this.state.BAIRRO}
                           onChange={this.handleInputChange}
                         />
@@ -348,6 +357,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIIssSp"
+                          name="MUNICIPIO"
                           value={this.state.MUNICIPIO}
                           onChange={this.handleInputChange}
                         />
@@ -360,6 +370,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIIrrf"
+                          name="CIDADE"
                           value={this.state.CIDADE}
                           onChange={this.handleInputChange}
                         />
@@ -372,6 +383,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFIpiscofins"
+                          name="ESTADO"
                           value={this.state.ESTADO}
                           onChange={this.handleInputChange}
                         />
@@ -384,6 +396,7 @@ class EditNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="NFINetValue"
+                          name="PAIS"
                           value={this.state.PAIS}
                           onChange={this.handleInputChange}
                         />
@@ -402,6 +415,7 @@ class EditNFInbound extends Component {
                             <input
                               type="date"
                               ref="NFIReceivedDt"
+                              name="CEP"
                               className="form-control"
                               value={this.state.CEP}
                               onChange={this.handleInputChange}
@@ -417,6 +431,7 @@ class EditNFInbound extends Component {
                             <input
                               type="date"
                               ref="NFIPayingDt"
+                              name="TIPO"
                               className="form-control"
                               value={this.state.TIPO}
                               onChange={this.handleInputChange}
@@ -430,6 +445,7 @@ class EditNFInbound extends Component {
                           <textarea
                             className="form-control"
                             ref="NFIComments"
+                            name="TIPO"
                             rows="5"
                             value={this.state.TIPO}
                             onChange={this.handleInputChange}

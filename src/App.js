@@ -1,15 +1,11 @@
 import React from "react";
 import { MDBContainer } from "mdbreact";
-import "./App.css";
 import Main from "./components/Main";
-import Navbar from "./components/Navbar";
+import "./App.css";
 
 const App = () => (
   <div>
-    <Navbar />
-    <MDBContainer>
-      <Main />
-    </MDBContainer>
+     <Main />
   </div>
 );
 

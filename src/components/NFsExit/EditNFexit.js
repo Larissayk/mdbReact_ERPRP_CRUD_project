@@ -50,7 +50,7 @@ class EditNFexit extends Component {
       AG: "",
       CC: "",
       activeItem: "1"
-    };
+    }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 

@@ -27,7 +27,7 @@ class AddProvider extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:80/api/fornecedores/",
+        url: "http://127.0.0.1:8000/api/fornecedores/",
         data: newProvider
       })
       .then(response => {
@@ -128,7 +128,6 @@ class AddProvider extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="NOME_EMPRESA"
                           ref="name"
                         />
                       </MDBCol>
@@ -139,9 +138,19 @@ class AddProvider extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="STATUS"
                           ref="status"
+                          name="status"
                         />
+                        {/* <div>
+                          <select
+                            className="browser-default custom-select"
+                            ref="status"
+                            name="status"
+                          >
+                            <option>Ativo</option>
+                            <option>Inativo</option>
+                          </select>
+                        </div> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="startDate">
@@ -303,10 +312,21 @@ class AddProvider extends Component {
                         </label>
                         <input
                           className="form-control"
-                          type="text"
-                          name="TIPO"
+                          name="tipo"
                           ref="accountType"
+                          type="text"
                         />
+                        {/* <div>
+                          <select
+                            className="browser-default custom-select"
+                            name="tipo"
+                            ref="accountType"
+                          >
+                            <option></option>
+                            <option>Pessoa Física</option>
+                            <option>Pessoa Jurídica</option>
+                          </select>
+                        </div> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="bankCode">
@@ -422,9 +442,20 @@ class AddProvider extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="SIMPLES"
                           ref="simples"
+                          name="simples"
                         />
+                        {/* <div>
+                          <select
+                            className="browser-default custom-select"
+                            ref="simples"
+                            name="simples"
+                          >
+                            <option></option>
+                            <option>Sim</option>
+                            <option>Não</option>
+                          </select>
+                        </div> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="issSP">
@@ -433,9 +464,20 @@ class AddProvider extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="RETER_ISS_SP"
                           ref="issSP"
+                          name="reter_iss_sp"
                         />
+                        {/* <div>
+                          <select
+                            className="browser-default custom-select"
+                            ref="issSP"
+                            name="reter_iss_sp"
+                          >
+                            <option></option>
+                            <option>Sim</option>
+                            <option>Não</option>
+                          </select>
+                        </div> */}
                       </MDBCol>
                     </MDBRow>
                     <MDBBtn
