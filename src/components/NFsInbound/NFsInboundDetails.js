@@ -12,18 +12,25 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBModal,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
+
 
 class NFInboundDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       details: "",
-      activeItem: "1"
+      activeItem: "1",
+      modal1: false,
+      alertMessage: ""
     };
   }
 
@@ -34,7 +41,7 @@ class NFInboundDetails extends Component {
   getNFInbound() {
     let NFInboundId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${NFInboundId}`)
+      .get(`http://127.0.0.1:8000/api/nota_entrada/${NFInboundId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -46,12 +53,25 @@ class NFInboundDetails extends Component {
   onDelete() {
     let NFInboundId = this.state.details.id;
     axios
-      .delete(`http://localhost/api/Fornecedores/${NFInboundId}`)
+      .delete(`http://127.0.0.1:8000/api/nota_entrada/${NFInboundId}`)
       .then(response => {
-        this.props.history.push("/NFsInbound");
+        console.log(`ID excluído: ${NFInboundId}`);
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/NFsInbound"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
+
+  // Toggle Confirmation Delete Register Modal
+  toggleDeleteNFinboundModal = nr => () => {
+    let modalNumber = "modal" + nr;
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  };
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -64,19 +84,18 @@ class NFInboundDetails extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/NFsInbound">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.NOME_EMPRESA}
-              </MDBCardTitle>
-            </MDBCardHeader>
-
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong>Nº NF: {this.state.details.num_nf}</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
-              <MDBNav className="nav-tabs">
+              <MDBNav className="nav-tabs mx-0">
                 <MDBNavItem>
                   <MDBNavLink
                     to="#"
@@ -102,18 +121,18 @@ class NFInboundDetails extends Component {
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
                   <MDBRow className="mt-4">
-                    <MDBCol md="2" className="form-group">
+                    {/* <MDBCol md="2" className="form-group">
                       <label className="grey-text" htmlFor="NFIyear">
-                        Ano:{" "}
+                        Nº:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIyear"
-                        value={this.state.details.STATUS}
+                        value={this.state.details.num_nf}
                       />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group ">
+                    </MDBCol> */}
+                    <MDBCol md="3" className="form-group ">
                       <label className="grey-text" htmlFor="NFIType">
                         Tipo:{" "}
                       </label>
@@ -121,10 +140,10 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIType"
-                        value={this.state.details.DT_INICIO}
+                        value={this.state.details.tpnf_nfs_nfts_nd}
                       />
                     </MDBCol>
-                    <MDBCol md="1" className="form-group ">
+                    {/* <MDBCol md="1" className="form-group ">
                       <label className="grey-text" htmlFor="NFINumber">
                         Nº NF:{" "}
                       </label>
@@ -132,21 +151,21 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFINumber"
-                        value={this.state.details.DT_FIM}
+                        value={this.state.details.num_nf}
                       />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
+                    </MDBCol> */}
+                    <MDBCol md="5" className="form-group">
                       <label className="grey-text" htmlFor="NFIEmissor">
-                        Emissor:{" "}
+                        Empresa:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIEmissor"
-                        value={this.state.details.CNPJ}
+                        value={this.state.details.empresa}
                       />
                     </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="NFICnpj">
                         CNPJ:{" "}
                       </label>
@@ -154,13 +173,13 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFICnpj"
-                        value={this.state.details.TEL_COM}
+                        value={this.state.details.cnpj}
                       />
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   <MDBRow>
-                    <h5>Identificação</h5>
+                    <h5 className="grey-text mb-3 ml-3">Identificação</h5>
                   </MDBRow>
                   <MDBRow className="mb-2">
                     <MDBCol md="2" className="form-group">
@@ -171,7 +190,7 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIDt"
-                        value={this.state.details.END_EMPRESA}
+                        value={this.state.details.data_emissao}
                       />
                     </MDBCol>
                     <MDBCol md="6" className="form-group">
@@ -182,7 +201,7 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFICollab"
-                        value={this.state.details.BAIRRO}
+                        value={this.state.details.colaborador}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -193,7 +212,7 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIService"
-                        value={this.state.details.MUNICIPIO}
+                        value={this.state.details.servico}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -210,7 +229,29 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFAmount"
-                        value={this.state.details.TIPO}
+                        value={this.state.details.valor_nf}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label htmlFor="NFIReceivedDt" className="grey-text">
+                        Data Recebimento:{" "}
+                      </label>
+                      <input
+                        type="date"
+                        id="NFIReceivedDt"
+                        className="form-control disabled read-only"
+                        value={this.state.details.data_receber}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label htmlFor="NFIPayingDt" className="grey-text">
+                        Data Pagamento:{" "}
+                      </label>
+                      <input
+                        type="date"
+                        id="NFIPayingDt"
+                        className="form-control disabled read-only"
+                        value={this.state.details.data_pagar}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -223,7 +264,7 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIIssSp"
-                        value={this.state.details.TIPO}
+                        value={this.state.details.iss_sp}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -234,7 +275,7 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIIrrf"
-                        value={this.state.details.BCO}
+                        value={this.state.details.irrf}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -245,7 +286,7 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFIpiscofins"
-                        value={this.state.details.NOME_BANCO}
+                        value={this.state.details.pis_cofins}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -256,11 +297,11 @@ class NFInboundDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFINetValue"
-                        value={this.state.details.AG}
+                        value={this.state.details.valor_liquido}
                       />
                     </MDBCol>
                   </MDBRow>
-                  <MDBRow className="mb-2">
+                  {/* <MDBRow className="mb-2">
                     <MDBCol md="2">
                       <MDBRow>
                         <MDBCol>
@@ -271,6 +312,7 @@ class NFInboundDetails extends Component {
                             type="date"
                             id="NFIReceivedDt"
                             className="form-control disabled read-only"
+                            value={this.state.details.data_receber}
                           />
                         </MDBCol>
                       </MDBRow>
@@ -284,11 +326,12 @@ class NFInboundDetails extends Component {
                             type="date"
                             id="NFIPayingDt"
                             className="form-control disabled read-only"
+                            value={this.state.details.data_pagar}
                           />
                         </MDBCol>
                       </MDBRow>
-                    </MDBCol>
-                    <MDBCol md="10">
+                    </MDBCol> */}
+                  {/* <MDBCol md="10">
                       <div className="form-group grey-text">
                         <label htmlFor="NFIComments">Comentários: </label>
                         <textarea
@@ -297,23 +340,28 @@ class NFInboundDetails extends Component {
                           rows="5"
                         />
                       </div>
-                    </MDBCol>
-                  </MDBRow>
+                    </MDBCol> */}
+                  {/* </MDBRow> */}
                   <hr />
                 </MDBTabPane>
                 <MDBBtn
-                  href={`/NFsInbound/edit/${this.state.details.ID}`}
-                  className="deep-orange darken-3 float-right"
+                  href={`/NFsInbound/edit/${this.state.details.id}`}
+                  className="light-blue darken-4 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
                 <MDBBtn
-                  onClick={this.onDelete.bind(this)}
-                  outline
-                  color="deep-orange darken-3"
-                  className="float-right"
+                  onClick={this.toggleDeleteNFinboundModal(1)}
+                  className="btn grey lighten-1 float-right"
                 >
                   <MDBIcon icon="trash-alt" /> Excluir
+                </MDBBtn>
+                <MDBBtn
+                  href="/NFsInbound"
+                  value="Return"
+                  className="btn grey lighten-1 float-right"
+                >
+                  <MDBIcon icon="undo-alt" /> Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>
@@ -322,10 +370,41 @@ class NFInboundDetails extends Component {
         <MDBBtn
           size="lg"
           href="/NFsInbound/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+          className="px-3 py-3 btn light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>
+
+        {/* Delete Confirmation Modal */}
+        <div>
+          <MDBModal
+            isOpen={this.state.modal1}
+            toggle={this.toggleDeleteNFinboundModal(1)}
+            centered
+          >
+            <MDBModalHeader toggle={this.toggleDeleteNFinboundModal(1)}>
+              Deletar registro
+            </MDBModalHeader>
+            <MDBModalBody>
+              Esta ação irá excluir o registro permanentemente. Deseja
+              prosseguir?
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn
+                className="btn grey lighten-1"
+                onClick={this.toggleDeleteNFinboundModal(1)}
+              >
+                Não
+              </MDBBtn>
+              <MDBBtn
+                className="btn deep-orange darken-4"
+                onClick={this.onDelete.bind(this)}
+              >
+                Sim
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+        </div>
       </MDBContainer>
     );
   }

@@ -6,19 +6,24 @@ import {
   MDBTableBody,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
   MDBCardTitle,
   MDBBtn,
+  MDBBadge,
+  MDBRow,
+  MDBCol,
   MDBIcon
 } from "mdbreact";
 import axios from "axios";
 import NFExitItem from "./NFExitItem";
+import Moment from "react-moment";
 
 class NFsExit extends Component {
   constructor() {
     super();
     this.state = {
-      nfsExit: []
+      nfsExit: [],
+      search: "",
+      sort: ""
     };
   }
 
@@ -27,9 +32,8 @@ class NFsExit extends Component {
   }
 
   getNFsExit() {
-    // axios.get('http://rplearning-rperformance.tecnologia.ws/api/users')
     axios
-      .get("http://localhost/api/Fornecedores/")
+      .get("http://127.0.0.1:8000/api/nota_saida")
       .then(response => {
         this.setState({ nfsExit: response.data }, () => {
           console.log(this.state);
@@ -38,42 +42,118 @@ class NFsExit extends Component {
       .catch(err => console.log(err));
   }
 
+  updateSearch(event) {
+    this.setState({ search: event.target.value.substr(0, 30) });
+    console.log(`searchName: ${event.target.value}`);
+  }
+
+  handleSort(event) {
+    this.setState({ sort: event.target.value, search: "" });
+    console.log(`sortBy: ${event.target.value}`);
+  }
+
   render() {
+    let filteredData = this.state.nfsExit.filter(nota_saida => {
+      return (
+        nota_saida.nota_fiscal
+          .toLowerCase()
+          .indexOf(this.state.search.toLowerCase()) !== -1 &&
+        nota_saida.status
+            .toLowerCase()
+            .indexOf(this.state.sort.toLowerCase()) !== -1)
+    });
+
+
     const { nfsExit } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                NF-Saída
-              </MDBCardTitle>
-            </MDBCardHeader>
+          <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+            <strong>NF-SAÍDA</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="pt-0 mt-0">
+            <MDBRow>
+              <MDBCol md="4" className="float-right p-0 m-0">
+                <div className="input-group md-form form-sm form-1 pl-0">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text" id="basic-text1">
+                      <MDBIcon className="text-white" icon="search" />
+                    </span>
+                  </div>
+                  <input
+                    className="form-control my-0 py-1"
+                    type="text"
+                    placeholder="Busque pelo número"
+                    aria-label="Search"
+                    value={this.state.search}
+                    onChange={this.updateSearch.bind(this)}
+                  />
+                </div>
+              </MDBCol>
+              <MDBCol md="4" className=" p-0 my-4 ">
+                <div>
+                  <select
+                    defaultValue=" "
+                    onChange={this.handleSort.bind(this)}
+                    style={{ width: 130 }}
+                    className="form-control my-0 py-1 custom-select"
+                  >
+                    <option value="">Status</option>
+                    <option value="OK">OK</option>
+                    <option value="canc">Cancelado</option>
+                  </select>
+                </div>
+              </MDBCol>
+              <MDBCol md="4" className="p-0 m-0">
+                <MDBBtn
+                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  href="/NFsExit/add"
+                >
+                  <MDBIcon icon="plus" /> Novo Registro
+                </MDBBtn>
+              </MDBCol>
+            </MDBRow>
             <MDBTable hover className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
-                  <th>#</th>
+                  <th>Nº</th>
                   <th>Ano</th>
                   <th>Tipo</th>
-                  <th>Nº</th>
-                  <th>Emissor</th>
                   <th>Data Emissão</th>
-                  <th>Status</th>
+                  <th>Empresa</th>
+                  <th className="text-center">Status</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
-                {nfsExit.map((Fornecedores, i) => {
+                {filteredData.map(nota_saida => {
                   return (
-                    <tr key={Fornecedores.ID}>
-                      <td className="align-middle">{Fornecedores.ID}</td>
+                    <tr key={nota_saida.id}>
                       <td className="align-middle">
-                        <NFExitItem key={Fornecedores.ID} item={Fornecedores} />
+                        <NFExitItem key={nota_saida.id} item={nota_saida} />
                       </td>
-                      <td className="align-middle">{Fornecedores.CNPJ}</td>
-                      <td className="align-middle">{Fornecedores.STATUS}</td>
-                      <td className="align-middle">{Fornecedores.DT_INICIO}</td>
-                      <td className="align-middle">{Fornecedores.CNPJ}</td>
-                      <td className="align-middle">{Fornecedores.DT_INICIO}</td>
+                      <td className="align-middle">{nota_saida.ano}</td>
+                      <td className="align-middle">{nota_saida.tipo_nf}</td>
+                      <td className="align-middle">
+                        <Moment
+                          format="DD/MM/YYYY"
+                          date={nota_saida.data_de_emissao}
+                        />
+                      </td>
+                      <td style={{ width: 300 }} className="align-middle">
+                        {nota_saida.empresa_emitente}
+                      </td>
+                      <td className="text-center">
+                        {nota_saida.status.toLowerCase() == "ok" ? (
+                          <MDBBadge className="p-2" pill color="success">
+                            OK
+                          </MDBBadge>
+                        ) : (
+                          <MDBBadge className="p-2" pill color="danger">
+                            Cancelado
+                          </MDBBadge>
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
@@ -81,14 +161,6 @@ class NFsExit extends Component {
             </MDBTable>
           </MDBCardBody>
         </MDBCard>
-
-        <MDBBtn
-          size="lg"
-          href="/NFsExit/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
-        >
-          <MDBIcon size="lg" className="text-white" icon="plus" />
-        </MDBBtn>
       </MDBContainer>
     );
   }

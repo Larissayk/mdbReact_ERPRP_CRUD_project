@@ -7,18 +7,25 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBModal,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBModalHeader
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
+
 
 class CollaboratorDealDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       details: "",
-      activeItem: "1"
+      modal1: false,
+      activeItem: "1",
+      alertMessage: ""
     };
   }
 
@@ -29,7 +36,7 @@ class CollaboratorDealDetails extends Component {
   getCollaboratorsDeal() {
     let collabDealId = this.props.match.params.id;
     axios
-      .get(`https://jsonplaceholder.typicode.com/users/${collabDealId}`)
+      .get(`http://127.0.0.1:8000/api/negociacoes/${collabDealId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -41,28 +48,40 @@ class CollaboratorDealDetails extends Component {
   onDelete() {
     let collabDealId = this.state.details.id;
     axios
-      .delete(`https://jsonplaceholder.typicode.com/users/${collabDealId}`)
-      .then(response => {
-        this.props.history.push("/CollabDeals");
+      .delete(`http://127.0.0.1:8000/api/negociacoes/${collabDealId}`)
+        .then(response => {
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/CollabDeals"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
 
+  // Toggle Confirmation Delete Register Modal
+  toggleDeleteCollabDealModal = nr => () => {
+    let modalNumber = "modal" + nr;
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  };
 
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/CollabDeals">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.name}
-              </MDBCardTitle>
-            </MDBCardHeader>
-
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong className="text-uppercase">
+              {this.state.details.nome}
+            </strong>{" "}
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
               <MDBRow>
                 <MDBCol md="3" className="form-group">
@@ -73,133 +92,144 @@ class CollaboratorDealDetails extends Component {
                     className="form-control disabled read-only"
                     type="text"
                     id="status"
-                    value={this.state.details.website}
+                    value={this.state.details.status}
                   />
                 </MDBCol>
-                <MDBCol md="5" className="form-group ">
-                  <label className="grey-text" htmlFor="startDate">
+                <MDBCol md="3" className="form-group ">
+                  <label className="grey-text" htmlFor="seq_neg">
                     Sequência de Negociação:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="startDate"
-                    // value={this.state.details.DT_INICIO}
+                    id="seq_neg"
+                    value={this.state.details.seq_neg}
                   />
                 </MDBCol>
                 <MDBCol md="2" className="form-group ">
-                  <label className="grey-text" htmlFor="endDate">
+                  <label className="grey-text" htmlFor="data_neg">
+                    Dt. Negociação:{" "}
+                  </label>
+                  <input
+                    className="form-control disabled read-only"
+                    type="text"
+                    id="data_neg"
+                    value={this.state.details.data_neg}
+                  />
+                </MDBCol>
+                <MDBCol md="2" className="form-group ">
+                  <label className="grey-text" htmlFor="data_inicio">
                     Data de início:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="endDate"
-                    // value={this.state.details.DT_FIM}
+                    id="data_inicio"
+                    value={this.state.details.data_inicio}
                   />
                 </MDBCol>
                 <MDBCol md="2" className="form-group ">
-                  <label className="grey-text" htmlFor="endDate">
+                  <label className="grey-text" htmlFor="data_fim">
                     Data de término:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="endDate"
-                    // value={this.state.details.DT_FIM}
+                    id="data_fim"
+                    value={this.state.details.data_fim}
                   />
                 </MDBCol>
               </MDBRow>
               <MDBRow>
                 <MDBCol md="4" className="form-group">
-                  <label className="grey-text" htmlFor="cnpj">
+                  <label className="grey-text" htmlFor="funcao">
                     Função:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="cnpj"
-                    value={this.state.details.username}
+                    id="funcao"
+                    value={this.state.details.funcao}
                   />
                 </MDBCol>
                 <MDBCol md="4" className="form-group">
-                  <label className="grey-text" htmlFor="phone">
+                  <label className="grey-text" htmlFor="cpf">
                     CPF:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="phone"
-                    // value={this.state.details.TEL_COM}
+                    id="cpf"
+                    value={this.state.details.cpf}
                   />
                 </MDBCol>
                 <MDBCol md="4" className="form-group">
-                  <label className="grey-text" htmlFor="mobile">
+                  <label className="grey-text" htmlFor="cnpj">
                     CNPJ:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="mobile"
-                    // value={this.state.details.CEL_COM}
+                    id="cnpj"
+                    value={this.state.details.cnpj_do_pj}
                   />
                 </MDBCol>
               </MDBRow>
               <hr />
               <MDBRow className="mb-2">
                 <MDBCol md="2" className="form-group">
-                  <label className="grey-text" htmlFor="address">
-                    Contrato:{" "}
-                  </label>
-                  <input
-                    className="form-control disabled read-only"
-                    type="text"
-                    id="address"
-                    // value={this.state.details.END_EMPRESA}
-                  />
-                </MDBCol>
-                <MDBCol md="2" className="form-group">
-                  <label className="grey-text" htmlFor="neighborhood">
+                  <label className="grey-text" htmlFor="tipo">
                     Tipo:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="neighborhood"
-                    // value={this.state.details.BAIRRO}
+                    id="tipo"
+                    value={this.state.details.tipo}
                   />
                 </MDBCol>
                 <MDBCol md="2" className="form-group">
-                  <label className="grey-text" htmlFor="municipality">
+                  <label className="grey-text" htmlFor="vlr_hr_pj">
                     Valor/hora PJ:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="municipality"
-                    // value={this.state.details.MUNICIPIO}
+                    id="vlr_hr_pj"
+                    value={this.state.details.vlr_hr_pj}
+                  />
+                </MDBCol>
+                <MDBCol md="3" className="form-group">
+                  <label className="grey-text" htmlFor="fechado_aberto">
+                    Aberto/Fechado:{" "}
+                  </label>
+                  <input
+                    className="form-control disabled read-only"
+                    type="text"
+                    id="fechado_aberto"
+                    value={this.state.details.fechado_aberto}
                   />
                 </MDBCol>
                 <MDBCol md="2" className="form-group">
-                  <label className="grey-text" htmlFor="city">
+                  <label className="grey-text" htmlFor="vlr_clt">
                     Valor CLT:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="city"
-                    // value={this.state.details.CIDADE}
+                    id="vlr_clt"
+                    value={this.state.details.vlr_clt}
                   />
                 </MDBCol>
-                <MDBCol md="4" className="form-group">
-                  <label className="grey-text" htmlFor="state">
+                <MDBCol md="3" className="form-group">
+                  <label className="grey-text" htmlFor="cpf_aprovador">
                     CPF Aprovador:{" "}
                   </label>
                   <input
                     className="form-control disabled read-only"
                     type="text"
-                    id="state"
-                    // value={this.state.details.ESTADO}
+                    id="cpf_aprovador"
+                    value={this.state.details.cpf_aprovador}
                   />
                 </MDBCol>
               </MDBRow>
@@ -207,17 +237,22 @@ class CollaboratorDealDetails extends Component {
 
               <MDBBtn
                 href={`/CollabDeals/edit/${this.state.details.id}`}
-                className="deep-orange darken-3 float-right"
+                className="light-blue darken-4 float-right"
               >
                 <MDBIcon far icon="edit" /> Editar
               </MDBBtn>
               <MDBBtn
-                onClick={this.onDelete.bind(this)}
-                outline
-                color="deep-orange darken-3"
-                className="float-right"
+                onClick={this.toggleDeleteCollabDealModal(1)}
+                className="btn grey lighten-1 float-right"
               >
                 <MDBIcon icon="trash-alt" /> Excluir
+              </MDBBtn>
+              <MDBBtn
+                href="/CollabDeals"
+                value="Return"
+                className="btn grey lighten-1 float-right"
+              >
+                <MDBIcon icon="undo-alt" /> Voltar
               </MDBBtn>
             </MDBContainer>
           </MDBCardBody>
@@ -225,10 +260,41 @@ class CollaboratorDealDetails extends Component {
         <MDBBtn
           size="lg"
           href="/CollabDeals/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+          className="px-3 py-3 btn light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>
+
+        {/* Delete Confirmation Modal */}
+        <div>
+          <MDBModal
+            isOpen={this.state.modal1}
+            toggle={this.toggleDeleteCollabDealModal(1)}
+            centered
+          >
+            <MDBModalHeader toggle={this.toggleDeleteCollabDealModal(1)}>
+              Deletar registro
+            </MDBModalHeader>
+            <MDBModalBody>
+              Esta ação irá excluir o registro permanentemente. Deseja
+              prosseguir?
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn
+                className="btn grey lighten-1"
+                onClick={this.toggleDeleteCollabDealModal(1)}
+              >
+                Não
+              </MDBBtn>
+              <MDBBtn
+                className="btn deep-orange darken-4"
+                onClick={this.onDelete.bind(this)}
+              >
+                Sim
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+        </div>
       </MDBContainer>
     );
   }

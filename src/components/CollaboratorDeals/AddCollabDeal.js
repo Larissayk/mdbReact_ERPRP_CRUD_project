@@ -7,45 +7,52 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
   MDBCardTitle
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
+
 
 class AddCollaboratorDeal extends Component {
   state = {
-    activeItem: "1"
+    activeItem: "1",
+    alertMessage: ""
   };
 
   addCollabDeal(newCollabDeal) {
     axios
       .request({
         method: "POST",
-        url: "https://jsonplaceholder.typicode.com/users",
+        url: "http://127.0.0.1:8000/api/negociacoes/",
         data: newCollabDeal
       })
       .then(response => {
-        this.props.history.push("/CollabDeals");
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/CollabDeals"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
 
   onSubmit(e) {
     const newCollabDeal = {
-      Nome: this.refs.name.value,
-      Seq_Negociacao: this.refs.negotiation.value,
-      Status: this.refs.status.value,
-      Dt_Inicio: this.refs.startDate.value,
-      Dt_Fim: this.refs.endDate.value,
-      Funcao: this.refs.role.value,
-      Cpf: this.refs.cpf.value,
-      Cnpj: this.refs.cnpj.value,
-      Contrato: this.refs.contract.value,
-      Tipo: this.refs.contractType.value,
-      Valor_HoraPj: this.refs.pjValue.value,
-      Valor_Clt: this.refs.cltValue.value,
-      Cpf_Aprovador: this.approvCpf.phone.value
+      nome: this.refs.nome1.value,
+      cpf: this.refs.cpf1.value,
+      status: this.refs.status1.value,
+      data_inicio: this.refs.data_inicio1.value,
+      data_fim: this.refs.data_fim1.value,
+      tipo: this.refs.tipo1.value,
+      seq_neg: this.refs.seq_neg1.value,
+      data_neg: this.refs.data_neg1.value,
+      funcao: this.refs.funcao1.value,
+      vlr_hr_pj: this.refs.vlr_hr_pj1.value,
+      fechado_aberto: this.refs.fechado_aberto1.value,
+      vlr_clt: this.refs.vlr_clt1.value,
+      cnpj_do_pj: this.refs.cnpj_do_pj1.value,
+      cpf_aprovador: this.refs.cpf_aprovador1.value
     };
     this.addCollabDeal(newCollabDeal);
     console.log(newCollabDeal);
@@ -55,29 +62,28 @@ class AddCollaboratorDeal extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-2" to="/CollabDeals">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                Adicionar Dados da Negociação
-              </MDBCardTitle>
-            </MDBCardHeader>
-
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong>NOVOS DADOS DE NEGOCIAÇÃO</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
               <form onSubmit={this.onSubmit.bind(this)}>
                 <MDBRow>
-                  <MDBCol md="6" className="form-group">
-                    <label className="grey-text" htmlFor="name">
+                  <MDBCol md="5" className="form-group">
+                    <label className="grey-text" htmlFor="nome">
                       Nome:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Nome"
-                      ref="name"
+                      ref="nome1"
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
@@ -88,42 +94,53 @@ class AddCollaboratorDeal extends Component {
                       className="form-control"
                       type="text"
                       name="Status"
-                      ref="status"
+                      ref="status1"
                     />
                   </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="negotiation">
-                      Seq. Negociação:{" "}
+                  <MDBCol md="1" className="form-group">
+                    <label className="grey-text" htmlFor="seq_neg">
+                      Seq.:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Seq_Negociacao"
-                      ref="negotiation"
+                      ref="seq_neg1"
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="startDate">
+                    <label className="grey-text" htmlFor="data_neg">
+                      Dt. Negociação:{" "}
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="Data_Negociacao"
+                      ref="data_neg1"
+                    />
+                  </MDBCol>
+                  <MDBCol md="2" className="form-group">
+                    <label className="grey-text" htmlFor="data_inicio">
                       Data de início:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Dt_Inicio"
-                      ref="startDate"
+                      ref="data_inicio1"
                     />
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
                   <MDBCol md="4" className="form-group">
-                    <label className="grey-text" htmlFor="role">
+                    <label className="grey-text" htmlFor="funcao">
                       Função:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Funcao"
-                      ref="role"
+                      ref="funcao1"
                     />
                   </MDBCol>
                   <MDBCol md="3" className="form-group">
@@ -134,87 +151,87 @@ class AddCollaboratorDeal extends Component {
                       className="form-control"
                       type="text"
                       name="Cpf"
-                      ref="cpf"
+                      ref="cpf1"
                     />
                   </MDBCol>
                   <MDBCol md="3" className="form-group">
-                    <label className="grey-text" htmlFor="cnpj">
+                    <label className="grey-text" htmlFor="cnpj_do_pj">
                       CNPJ:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Cnpj"
-                      ref="cnpj"
+                      ref="cnpj_do_pj1"
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="endDate">
+                    <label className="grey-text" htmlFor="data_fim">
                       Data de término:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Dt_Fim"
-                      ref="endDate"
+                      ref="data_fim1"
                     />
                   </MDBCol>
                 </MDBRow>
                 <hr />
                 <MDBRow className="mb-2">
                   <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="contract">
-                      Contrato:{" "}
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="Contrato"
-                      ref="contract"
-                    />
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="contractType">
+                    <label className="grey-text" htmlFor="tipo">
                       Tipo:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
-                      name="Tipo"
-                      ref="contractType"
+                      name="Contrato"
+                      ref="tipo1"
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="pjValue">
+                    <label className="grey-text" htmlFor="vlr_hr_pj">
                       Valor/hora PJ:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Valor_HoraPj"
-                      ref="pjValue"
+                      ref="vlr_hr_pj1"
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="cltValue">
+                    <label className="grey-text" htmlFor="fechado_aberto">
+                      Aberto/Fechado:{" "}
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="Tipo"
+                      ref="fechado_aberto1"
+                    />
+                  </MDBCol>
+                  <MDBCol md="2" className="form-group">
+                    <label className="grey-text" htmlFor="vlr_clt">
                       Valor CLT:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="Valor_Clt"
-                      ref="cltValue"
+                      ref="vlr_clt1"
                     />
                   </MDBCol>
                   <MDBCol md="4" className="form-group">
-                    <label className="grey-text" htmlFor="approvCpf">
+                    <label className="grey-text" htmlFor="cpf_aprovador">
                       CPF Aprovador:{" "}
                     </label>
                     <input
                       className="form-control"
                       type="text"
                       name="CpfAprovador"
-                      ref="approvCpf"
+                      ref="cpf_aprovador1"
                     />
                   </MDBCol>
                 </MDBRow>
@@ -223,9 +240,16 @@ class AddCollaboratorDeal extends Component {
                 <MDBBtn
                   type="submit"
                   value="Save"
-                  className="deep-orange darken-3 float-right"
+                  className="light-blue darken-4 float-right"
                 >
                   <MDBIcon far icon="save" /> Salvar
+                </MDBBtn>
+                <MDBBtn
+                  href="/CollabDeals"
+                  value="Return"
+                  className="btn grey lighten-1 float-right"
+                >
+                  <MDBIcon icon="undo-alt" /> Voltar
                 </MDBBtn>
               </form>
             </MDBContainer>

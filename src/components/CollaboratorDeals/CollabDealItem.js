@@ -12,7 +12,7 @@ class CollaboratorDealItem extends Component {
     return (
       <p className="collection-item">
         <Link to={`/CollabDeals/${this.state.item.id}`}>
-          {this.state.item.name}
+          {this.state.item.nome}
         </Link>
       </p>
     );

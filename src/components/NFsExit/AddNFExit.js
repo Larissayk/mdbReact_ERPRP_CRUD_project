@@ -12,60 +12,58 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
   MDBCardTitle
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
 
 class AddNFExit extends Component {
   state = {
-    activeItem: "1"
+    activeItem: "1",
+    alertMessage: ""
   };
 
-  addProvider(newNFExit) {
+  AddNFExit(newNFExit) {
     axios
       .request({
         method: "POST",
-        url: "http://localhost/api/Fornecedores/",
+        url: "http://127.0.0.1:8000/api/nota_saida/",
         data: newNFExit
       })
       .then(response => {
-        this.props.history.push("/NFsExit");
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/NFsExit"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
 
   onSubmit(e) {
     const newNFExit = {
-      NOME_EMPRESA: this.refs.name.value,
-      STATUS: this.refs.status.value,
-      //   END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value
-      //   DT_INICIO: this.refs.startDate.value,
-      //   DT_FIM: this.refs.endDate.value,
-      //   BAIRRO: this.refs.neighborhood.value,
-      //   MUNICIPIO: this.refs.municipality.value,
-      //   CIDADE: this.refs.city.value,
-      //   ESTADO: this.refs.state.value,
-      //   PAIS: this.refs.country.value,
-      //   CEP: this.refs.cep.value,
-      //   TEL_COM: this.refs.phone.value,
-      //   CEL_COM: this.refs.mobile.value,
-      //   SIMPLES: this.refs.simples.value,
-      //   RETER_ISS_SP: this.refs.issSP.value,
-      //   CERT_MUN: this.refs.certMunicipal.value,
-      //   CERT_EST: this.refs.certState.value,
-      //   CERT_FED: this.refs.certFederal.value,
-      //   IE: this.refs.ie.value,
-      //   CCM: this.refs.ccm.value,
-      //   TIPO: this.refs.accountType.value,
-      //   BCO: this.refs.bankCode.value,
-      //   NOME_BANCO: this.refs.bank.value,
-      //   AG: this.refs.agency.value,
-      //   CC: this.refs.accountNumb.value
+      ano: this.refs.year.value,
+      tipo_nf: this.refs.type.value,
+      nota_fiscal: this.refs.number.value,
+      cnpj: this.refs.cnpj.value,
+      empresa_emitente: this.refs.emissor.value,
+      identif_contrato: this.refs.contractId.value,
+      status_contrato: this.refs.contract_status.value,
+      contrato: this.refs.contract.value,
+      data_contrato: this.refs.contractDate.value,
+      ordem_compra: this.refs.order.value,
+      parcela: this.refs.portion.value,
+      data_de_emissao: this.refs.emissionDate.value,
+      data_prev_pagto: this.refs.prevPg.value,
+      data_real_pagto: this.refs.realPg.value,
+      valor_bruto: this.refs.value.value,
+      irrf: this.refs.irrf.value,
+      pis_cofins: this.refs.pis_cofins.value,
+      valor_liquido: this.refs.totalValue.value,
+      obs: this.refs.obs.value
     };
-    this.addProvider(newNFExit);
+    this.AddNFExit(newNFExit);
     console.log(newNFExit);
     e.preventDefault();
   }
@@ -81,19 +79,18 @@ class AddNFExit extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/NFsExit">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                Adicionar NF-Saída
-              </MDBCardTitle>
-            </MDBCardHeader>
-
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong>NOVA NF-SAÍDA</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
-              <MDBNav className="nav-tabs">
+              <MDBNav className="nav-tabs mx-0">
                 <MDBNavItem>
                   <MDBNavLink
                     to="#"
@@ -121,108 +118,125 @@ class AddNFExit extends Component {
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="NFEyear">
+                        <label className="grey-text" htmlFor="year">
                           Ano:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="NOME_EMPRESA"
-                          ref="NFEyear"
+                          name="year"
+                          ref="year"
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="NFEType">
+                        <label className="grey-text" htmlFor="type">
                           Tipo:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="STATUS"
-                          ref="NFEType"
+                          name="type"
+                          ref="type"
                         />
                       </MDBCol>
                       <MDBCol md="1" className="form-group">
-                        <label className="grey-text" htmlFor="NFENumber">
+                        <label className="grey-text" htmlFor="number">
                           Nº NF:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="DT_INICIO"
-                          ref="NFENumber"
+                          name="number"
+                          ref="number"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="NFEEmissor">
+                        <label className="grey-text" htmlFor="emissor">
                           Emissor:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="DT_FIM"
-                          ref="NFEEmissor"
+                          name="emissor"
+                          ref="emissor"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFECnpj">
+                        <label className="grey-text" htmlFor="cnpj">
                           CNPJ:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="CNPJ"
-                          ref="NFECnpj"
+                          name="cnpj"
+                          ref="cnpj"
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
                     <MDBRow>
-                      <h5>Contrato</h5>
+                      <h5 className="grey-text mb-3 ml-3">Contrato</h5>
                     </MDBRow>
                     <MDBRow className="mb-2">
-                      <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="NFEId">
+                      <MDBCol md="5" className="form-group">
+                        <label className="grey-text" htmlFor="contractId">
                           Identificação:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="TEL_COM"
-                          ref="NFEId"
+                          name="contractId"
+                          ref="contractId"
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="NFEStatus">
+                        <label className="grey-text" htmlFor="status">
                           Status:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="CEL_COM"
-                          ref="NFEStatus"
+                          name="status"
+                          ref="contract_status"
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="contractNumb">
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="contract">
                           Nº Contrato:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="END_EMPRESA"
-                          ref="contractNumb"
+                          name="contract"
+                          ref="contract"
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="contract">
+                          Data:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="contract"
+                          ref="contractDate"
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
-
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="deep-orange darken-3 float-right"
+                      className="light-blue darken-4 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/NFsExit"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      <MDBIcon icon="undo-alt" /> Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -230,94 +244,119 @@ class AddNFExit extends Component {
                 <MDBTabPane tabId="2" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="data_de_emissao">
+                          Data Emissão{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="data_de_emissao"
+                          ref="emissionDate"
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="prevPg">
+                          Data Prévia{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="prevPg"
+                          ref="prevPg"
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="realPg">
+                          Data Real:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="realPg"
+                          ref="realPg"
+                        />
+                      </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFAmount">
+                        <label className="grey-text" htmlFor="ordem_compra">
+                          Ordem de Compra:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="ordem_compra"
+                          ref="order"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="parcela">
+                          Parcela:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="parcela"
+                          ref="portion"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow className="mb-2">
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="value">
                           Valor Bruto:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="TIPO"
-                          ref="NFAmount"
+                          name="value"
+                          ref="value"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFEIrrf">
+                        <label className="grey-text" htmlFor="irrf">
                           IRRF (15%):{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="BCO"
-                          ref="NFEIrrf"
+                          name="irrf"
+                          ref="irrf"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFEpiscofins">
+                        <label className="grey-text" htmlFor="pis_cofins">
                           PIS/COFINS (4,65%):{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="NOME_BANCO"
-                          ref="NFEpiscofins"
+                          name="pis_cofins"
+                          ref="pis_cofins"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFENetValue">
+                        <label className="grey-text" htmlFor="totalValue">
                           Valor Líquido:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="AG"
-                          ref="NFENetValue"
+                          name="totalValue"
+                          ref="totalValue"
                         />
                       </MDBCol>
                     </MDBRow>
-                    <MDBRow className="mb-2">
-                      <MDBCol md="2">
-                        <MDBRow>
-                          <MDBCol>
-                            <label
-                              className="grey-text"
-                              htmlFor="cerNFEPreviousDttState"
-                            >
-                              Data Prévia{" "}
-                            </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              name="CERT_EST"
-                              ref="NFEPreviousDt"
-                            />
-                          </MDBCol>
-                        </MDBRow>
-                        <br />
-                        <MDBRow>
-                          <MDBCol>
-                            <label className="grey-text" htmlFor="NFERealDt">
-                              Data Real:{" "}
-                            </label>
-                            <input
-                              className="form-control"
-                              type="text"
-                              name="CERT_FED"
-                              ref="NFERealDt"
-                            />
-                          </MDBCol>
-                        </MDBRow>
-                      </MDBCol>
-                      <MDBCol md="10">
+                    <MDBRow>
+                      <MDBCol md="12">
                         <div className="form-group grey-text">
-                          <label className="grey-text" htmlFor="NFEComments">
+                          <label className="grey-text" htmlFor="obs">
                             Comentários:{" "}
                           </label>
                           <textarea
                             className="form-control"
                             type="text"
-                            name="IE"
-                            ref="NFEComments"
+                            name="obs"
+                            ref="obs"
                             rows="5"
                           />
                         </div>
@@ -327,9 +366,16 @@ class AddNFExit extends Component {
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="deep-orange darken-3 float-right"
+                      className="light-blue darken-4 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/NFsExit"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      <MDBIcon icon="undo-alt" /> Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>

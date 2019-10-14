@@ -12,7 +12,6 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
   MDBCardTitle,
   MDBModal,
   MDBModalHeader,
@@ -20,7 +19,8 @@ import {
   MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
 
 class CollaboratorDetails extends Component {
   constructor(props) {
@@ -28,7 +28,8 @@ class CollaboratorDetails extends Component {
     this.state = {
       details: "",
       activeItem: "1",
-      modal1: false
+      modal1: false,
+      alertMessage: ""
     };
   }
 
@@ -54,9 +55,13 @@ class CollaboratorDetails extends Component {
       .delete(`http://127.0.0.1:8000/api/colaboradores/${collaboratorId}`)
       .then(response => {
         console.log(`ID excluído: ${collaboratorId}`);
-        this.props.history.push("/Collaborators");
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/Collaborators"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
 
   // Toggle Confirmation Delete Register Modal
@@ -78,19 +83,20 @@ class CollaboratorDetails extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/Collaborators">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.nome}
-              </MDBCardTitle>
-            </MDBCardHeader>
-
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong className="text-uppercase">
+              {this.state.details.nome}
+            </strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
-              <MDBNav className="nav-tabs">
+              <MDBNav className="nav-tabs mx-0">
                 <MDBNavItem>
                   <MDBNavLink
                     to="#"
@@ -101,26 +107,6 @@ class CollaboratorDetails extends Component {
                     Dados Gerais
                   </MDBNavLink>
                 </MDBNavItem>
-                {/* <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "2"}
-                    onClick={this.toggle("2")}
-                    role="tab"
-                  >
-                    Dados Profissionais
-                  </MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "3"}
-                    onClick={this.toggle("3")}
-                    role="tab"
-                  >
-                    Dados Financeiros
-                  </MDBNavLink>
-                </MDBNavItem> */}
               </MDBNav>
 
               <MDBTabContent activeItem={this.state.activeItem}>
@@ -159,28 +145,6 @@ class CollaboratorDetails extends Component {
                         value={this.state.details.status}
                       />
                     </MDBCol>
-                    {/* <MDBCol md="2" className="form-group ">
-                      <label className="grey-text" htmlFor="collabStartDt">
-                        Data de início:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabStartDt"
-                        value={this.state.details.DT_FIM}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group ">
-                      <label className="grey-text" htmlFor="collabEndDt">
-                        Data de término:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabEndDt"
-                        value={this.state.details.DT_FIM}
-                      />
-                    </MDBCol> */}
                   </MDBRow>
                   <MDBRow>
                     <MDBCol md="3" className="form-group">
@@ -355,177 +319,25 @@ class CollaboratorDetails extends Component {
                   Última atualização: {this.state.details.updated_at}
                 </label>
 
-                {/* <MDBTabPane tabId="2" role="tabpanel">
-                  <MDBRow className="mt-4">
-                    <MDBCol md="5" className="form-group">
-                      <label className="grey-text" htmlFor="collabProvider">
-                        Nome do Fornecedor:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabProvider "
-                        value={this.state.details.TIPO}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="collabEmailCorp">
-                        Email Corporativo:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabEmailCorp"
-                        value={this.state.details.BCO}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="collabContract">
-                        Tipo de Contrato:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabContract"
-                        value={this.state.details.NOME_BANCO}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow className="mb-2">
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="collabRole">
-                        Função:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabRole"
-                        value={this.state.details.AG}
-                      />
-                    </MDBCol>
-
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="collabRoleLevel">
-                        Nível:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabRoleLevel"
-                        value={this.state.details.CC}
-                      />
-                    </MDBCol>
-                    <MDBCol md="6" className="form-group">
-                      <label className="grey-text" htmlFor="collanManag">
-                        Gestor Responsável:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collanManag"
-                        value={this.state.details.CCM}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                </MDBTabPane>
-                <MDBTabPane tabId="3" role="tabpanel">
-                  <MDBRow className="mt-4">
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="collabAcountT">
-                        Tipo de Conta:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabAcountT"
-                        value={this.state.details.CERT_MUN}
-                      />
-                    </MDBCol>
-
-                    <MDBCol md="6" className="form-group">
-                      <label className="grey-text" htmlFor="collabBusinessName">
-                        Razão Social:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabBusinessName"
-                        value={this.state.details.CERT_EST}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="collabCnpj">
-                        CNPJ:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabCnpj"
-                        value={this.state.details.CERT_FED}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow className="mb-2">
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="collabBankCode">
-                        Cód. Banco:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabBankCode"
-                        value={this.state.details.IE}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="collabBAgency">
-                        Agência:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabBAgency"
-                        value={this.state.details.SIMPLES}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="collabBank">
-                        Banco:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabBank"
-                        value={this.state.details.RETER_ISS_SP}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="collabCC">
-                        Nº Conta:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="collabCC"
-                        value={this.state.details.RETER_ISS_SP}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                </MDBTabPane> */}
                 <MDBBtn
                   href={`/Collaborators/edit/${this.state.details.id}`}
-                  className="deep-orange darken-3 float-right"
+                  className="light-blue darken-4 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
                 <MDBBtn
                   // onClick={this.onDelete.bind(this)}
                   onClick={this.toggleDeleteCollaboratorModal(1)}
-                  outline
-                  color="deep-orange darken-3"
-                  className="float-right"
+                  className="btn grey lighten-1 float-right"
                 >
                   <MDBIcon icon="trash-alt" /> Excluir
+                </MDBBtn>
+                <MDBBtn
+                  href="/Collaborators"
+                  value="Return"
+                  className="btn grey lighten-1 float-right"
+                >
+                  <MDBIcon icon="undo-alt" /> Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>
@@ -534,7 +346,7 @@ class CollaboratorDetails extends Component {
         <MDBBtn
           size="lg"
           href="/Collaborators/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+          className="px-3 py-3 light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>

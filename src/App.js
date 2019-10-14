@@ -1,5 +1,4 @@
 import React from "react";
-import { MDBContainer } from "mdbreact";
 import Main from "./components/Main";
 import "./App.css";
 

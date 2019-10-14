@@ -30,7 +30,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const bgNavBar = { backgroundColor: "#3f3f3e" };
+    const bgNavBar = { backgroundColor: "#3F3F3E" };
     return (
       <div>
         <MDBNavbar style={bgNavBar} dark expand="md" scrolling fixed="top">
@@ -85,7 +85,7 @@ class Navbar extends Component {
                 </MDBNavLink>
               </MDBNavItem>
               <MDBNavItem>
-                <MDBNavLink to="#">
+                <MDBNavLink to="/Login">
                   <MDBIcon icon="sign-out-alt" />
                   Log Out
                 </MDBNavLink>

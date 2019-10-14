@@ -17,6 +17,8 @@ import {
 } from "mdbreact";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
 
 class EditProvider extends Component {
   constructor(props) {
@@ -49,7 +51,8 @@ class EditProvider extends Component {
       cep: "",
       cc: "",
       endereco: "",
-      activeItem: "1"
+      activeItem: "1",
+      alertMessage:""
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -108,9 +111,13 @@ class EditProvider extends Component {
       })
       .then(response => {
         console.log(`Put: ${response.data}`);
-        this.props.history.push("/Providers");
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/Providers"), 1800);
       })
-      .catch(err => console.log("erro: ", err.response));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
 
   onSubmit(e) {
@@ -175,18 +182,18 @@ class EditProvider extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
+          <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+            <strong>EDITAR FORNECEDOR</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
           <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/Providers">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                Editar Fornecedor
-              </MDBCardTitle>
-            </MDBCardHeader>
             <MDBContainer>
-              <MDBNav className="nav-tabs">
+              <MDBNav className="nav-tabs mx-0">
                 <MDBNavItem>
                   <MDBNavLink
                     to="#"
@@ -406,9 +413,16 @@ class EditProvider extends Component {
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="deep-orange darken-3 float-right"
+                      className="light-blue darken-4 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/Providers"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      <MDBIcon icon="undo-alt" /> Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -582,9 +596,16 @@ class EditProvider extends Component {
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="deep-orange darken-3 float-right"
+                      className="light-blue darken-4 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/Providers"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      <MDBIcon icon="undo-alt" /> Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -595,7 +616,7 @@ class EditProvider extends Component {
         <MDBBtn
           size="lg"
           href="/Providers/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+          className="px-3 py-3 btn light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>

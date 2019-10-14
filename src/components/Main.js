@@ -24,41 +24,60 @@ import AddNFInbound from "./NFsInbound/AddNFInbound";
 import NFInboundDetails from "./NFsInbound/NFsInboundDetails";
 import EditNFInbound from "./NFsInbound/EditNFInbound";
 import Navbar from "./Navbar";
+import Error404 from "./AlertModals/Error404";
+import NavbarUpdate from "./NavbarUpdate";
 
 
-const Main = withRouter (({location}) => {
-  return(
-  <main>
-    {
-      location.pathname !== "/Login" && location.pathname !== "/SignUp" && <Navbar/>
-    }
-    <Switch>
-      <Route exact path="/Login" component={Login} />
-      <Route exact path="/SignUp" component={SignUp}/>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/Collaborators" component={Collaborators} />
-      <Route exact path="/Collaborators/add" component={AddCollaborator} />
-      <Route exact path="/Collaborators/edit/:id" component={EditCollaborator}/>
-      <Route exact path="/Collaborators/:id" component={CollaboratorDetails} />
-      <Route exact path="/Providers" component={Providers} />
-      <Route exact path="/Providers/add" component={AddProvider} />
-      <Route exact path="/Providers/edit/:id" component={EditProvider} />
-      <Route exact path="/Providers/:id" component={ProviderDetails} />
-      <Route exact path="/CollabDeals" component={CollaboratorDeals} />
-      <Route exact path="/CollabDeals/add" component={AddCollaboratorDeal} />
-      <Route exact path="/CollabDeals/edit/:id" component={EditCollaboratorDeal}/>
-      <Route exact path="/CollabDeals/:id" component={CollaboratorDealDetails}/>
-      <Route exact path="/NFsExit" component={NFsExit} />
-      <Route exact path="/NFsExit/add" component={AddNFExit} />
-      <Route exact path="/NFsExit/edit/:id" component={EditNFExit} />
-      <Route exact path="/NFsExit/:id" component={NFExitDetails} />
-      <Route exact path="/NFsInbound" component={NFsInbound} />
-      <Route exact path="/NFsInbound/add" component={AddNFInbound} />
-      <Route exact path="/NFsInbound/edit/:id" component={EditNFInbound} />
-      <Route exact path="/NFsInbound/:id" component={NFInboundDetails} />
-    </Switch>
-  </main>
-  )
+const Main = withRouter(({ location }) => {
+  return (
+    <main>
+      {location.pathname !== "/Login" &&
+        location.pathname !== "/SignUp" &&
+         <NavbarUpdate />}
+      <Switch>
+        <Route exact path="/Login" component={Login} />
+        <Route exact path="/SignUp" component={SignUp} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/Collaborators" component={Collaborators} />
+        <Route exact path="/Collaborators/add" component={AddCollaborator} />
+        <Route
+          exact
+          path="/Collaborators/edit/:id"
+          component={EditCollaborator}
+        />
+        <Route
+          exact
+          path="/Collaborators/:id"
+          component={CollaboratorDetails}
+        />
+        <Route exact path="/Providers" component={Providers} />
+        <Route exact path="/Providers/add" component={AddProvider} />
+        <Route exact path="/Providers/edit/:id" component={EditProvider} />
+        <Route exact path="/Providers/:id" component={ProviderDetails} />
+        <Route exact path="/CollabDeals" component={CollaboratorDeals} />
+        <Route exact path="/CollabDeals/add" component={AddCollaboratorDeal} />
+        <Route
+          exact
+          path="/CollabDeals/edit/:id"
+          component={EditCollaboratorDeal}
+        />
+        <Route
+          exact
+          path="/CollabDeals/:id"
+          component={CollaboratorDealDetails}
+        />
+        <Route exact path="/NFsExit" component={NFsExit} />
+        <Route exact path="/NFsExit/add" component={AddNFExit} />
+        <Route exact path="/NFsExit/edit/:id" component={EditNFExit} />
+        <Route exact path="/NFsExit/:id" component={NFExitDetails} />
+        <Route exact path="/NFsInbound" component={NFsInbound} />
+        <Route exact path="/NFsInbound/add" component={AddNFInbound} />
+        <Route exact path="/NFsInbound/edit/:id" component={EditNFInbound} />
+        <Route exact path="/NFsInbound/:id" component={NFInboundDetails} />
+        {/* <Route path="*" component={Error404} /> */}
+      </Switch>
+    </main>
+  );
 });
 
 export default Main;

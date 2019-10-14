@@ -11,8 +11,8 @@ class NFInboundItem extends Component {
   render() {
     return (
       <p className="collection-item">
-        <Link to={`/NFsInbound/${this.state.item.ID}`}>
-          {this.state.item.NOME_EMPRESA}
+        <Link to={`/NFsInbound/${this.state.item.id}`}>
+          {this.state.item.empresa}
         </Link>
       </p>
     );

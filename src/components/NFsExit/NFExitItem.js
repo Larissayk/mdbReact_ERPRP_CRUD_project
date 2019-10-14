@@ -11,8 +11,8 @@ class NFExitItem extends Component {
   render() {
     return (
       <p className="collection-item">
-        <Link to={`/NFsExit/${this.state.item.ID}`}>
-          {this.state.item.NOME_EMPRESA}
+        <Link to={`/NFsExit/${this.state.item.id}`}>
+          {this.state.item.nota_fiscal}
         </Link>
       </p>
     );

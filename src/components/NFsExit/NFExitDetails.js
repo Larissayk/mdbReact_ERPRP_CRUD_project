@@ -12,18 +12,24 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBModal,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
 
 class NFExitDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       details: "",
-      activeItem: "1"
+      activeItem: "1",
+      modal1: false,
+      alertMessage: ""
     };
   }
 
@@ -34,7 +40,7 @@ class NFExitDetails extends Component {
   getNFExit() {
     let NFExitId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${NFExitId}`)
+      .get(`http://127.0.0.1:8000/api/nota_saida/${NFExitId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -46,12 +52,25 @@ class NFExitDetails extends Component {
   onDelete() {
     let NFExitId = this.state.details.id;
     axios
-      .delete(`http://localhost/api/Fornecedores/${NFExitId}`)
+      .delete(`http://127.0.0.1:8000/api/nota_saida/${NFExitId}`)
       .then(response => {
-        this.props.history.push("/NFsExit");
+        console.log(`ID excluído: ${NFExitId}`);
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/NFsExit"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
+
+  // Toggle Confirmation Delete Register Modal
+  toggleDeleteNFexitModal = nr => () => {
+    let modalNumber = "modal" + nr;
+    this.setState({
+      [modalNumber]: !this.state[modalNumber]
+    });
+  };
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -64,19 +83,18 @@ class NFExitDetails extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/NFsExit">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.NOME_EMPRESA}
-              </MDBCardTitle>
-            </MDBCardHeader>
-
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong>Nº NF:{this.state.details.nota_fiscal}</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
-              <MDBNav className="nav-tabs">
+              <MDBNav className="nav-tabs mx-0">
                 <MDBNavItem>
                   <MDBNavLink
                     to="#"
@@ -109,8 +127,8 @@ class NFExitDetails extends Component {
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="NFEyear"
-                        value={this.state.details.STATUS}
+                        id="year"
+                        value={this.state.details.ano}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group ">
@@ -120,8 +138,8 @@ class NFExitDetails extends Component {
                       <input
                         className="form-control disabled read-only"
                         type="text"
-                        id="NFEType"
-                        value={this.state.details.DT_INICIO}
+                        id="type"
+                        value={this.state.details.tipo_nf}
                       />
                     </MDBCol>
                     <MDBCol md="1" className="form-group ">
@@ -132,7 +150,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFENumber"
-                        value={this.state.details.DT_FIM}
+                        value={this.state.details.nota_fiscal}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -143,7 +161,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFEEmissor"
-                        value={this.state.details.CNPJ}
+                        value={this.state.details.empresa_emitente}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -154,16 +172,16 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFECnpj"
-                        value={this.state.details.TEL_COM}
+                        value={this.state.details.cnpj}
                       />
                     </MDBCol>
                   </MDBRow>
                   <hr />
                   <MDBRow>
-                    <h5>Contrato</h5>
+                    <h5 className="grey-text mb-3 ml-3">Contrato</h5>
                   </MDBRow>
                   <MDBRow className="mb-2">
-                    <MDBCol md="6" className="form-group">
+                    <MDBCol md="5" className="form-group">
                       <label className="grey-text" htmlFor="NFEId">
                         Identificação:{" "}
                       </label>
@@ -171,7 +189,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFEId"
-                        value={this.state.details.END_EMPRESA}
+                        value={this.state.details.identif_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -182,10 +200,10 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFEStatus"
-                        value={this.state.details.BAIRRO}
+                        value={this.state.details.status_contrato}
                       />
                     </MDBCol>
-                    <MDBCol md="4" className="form-group">
+                    <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="contractNumb">
                         Nº Contrato:{" "}
                       </label>
@@ -193,7 +211,18 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="contractNumb"
-                        value={this.state.details.MUNICIPIO}
+                        value={this.state.details.contrato}
+                      />
+                    </MDBCol>
+                    <MDBCol md="2" className="form-group">
+                      <label className="grey-text" htmlFor="contractNumb">
+                        Data:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="contractNumb"
+                        value={this.state.details.data_contrato}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -202,6 +231,63 @@ class NFExitDetails extends Component {
 
                 <MDBTabPane tabId="2" role="tabpanel">
                   <MDBRow className="mt-4">
+                    <MDBCol md="2" className="form-group">
+                      <label htmlFor="NFEPreviousDt" className="grey-text">
+                        Data Emissão:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        id="data_de_emissao"
+                        className="form-control disabled read-only"
+                        value={this.state.details.data_de_emissao}
+                      />
+                    </MDBCol>
+                    <MDBCol md="2" className="form-group">
+                      <label htmlFor="NFEPreviousDt" className="grey-text">
+                        Data Prévia:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        id="NFEPreviousDt"
+                        className="form-control disabled read-only"
+                        value={this.state.details.data_prev_pagto}
+                      />
+                    </MDBCol>
+                    <MDBCol md="2" className="form-group">
+                      <label htmlFor="NFERealDt" className="grey-text">
+                        Data Real:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        id="NFERealDt"
+                        className="form-control disabled read-only"
+                        value={this.state.details.data_real_pagto}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label htmlFor="NFERealDt" className="grey-text">
+                        Ordem de Compra:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        id="ordem_compra"
+                        className="form-control disabled read-only"
+                        value={this.state.details.ordem_compra}
+                      />
+                    </MDBCol>
+                    <MDBCol md="3" className="form-group">
+                      <label htmlFor="NFERealDt" className="grey-text">
+                        Parcela:{" "}
+                      </label>
+                      <input
+                        type="text"
+                        id="parcela"
+                        className="form-control disabled read-only"
+                        value={this.state.details.parcela}
+                      />
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBRow className="mb-2">
                     <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="NFAmount">
                         Valor Bruto:{" "}
@@ -210,7 +296,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFAmount"
-                        value={this.state.details.TIPO}
+                        value={this.state.details.valor_bruto}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -221,7 +307,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFEIrrf"
-                        value={this.state.details.BCO}
+                        value={this.state.details.irrf}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -232,7 +318,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFEpiscofins"
-                        value={this.state.details.NOME_BANCO}
+                        value={this.state.details.pis_cofins}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -243,45 +329,19 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFENetValue"
-                        value={this.state.details.AG}
+                        value={this.state.details.valor_liquido}
                       />
                     </MDBCol>
                   </MDBRow>
-                  <MDBRow className="mb-2">
-                    <MDBCol md="2">
-                      <MDBRow>
-                        <MDBCol>
-                          <label htmlFor="NFEPreviousDt" className="grey-text">
-                            Data Prévia:{" "}
-                          </label>
-                          <input
-                            type="date"
-                            id="NFEPreviousDt"
-                            className="form-control disabled read-only"
-                          />
-                        </MDBCol>
-                      </MDBRow>
-                      <br />
-                      <MDBRow>
-                        <MDBCol>
-                          <label htmlFor="NFERealDt" className="grey-text">
-                            Data Real:{" "}
-                          </label>
-                          <input
-                            type="date"
-                            id="NFERealDt"
-                            className="form-control disabled read-only"
-                          />
-                        </MDBCol>
-                      </MDBRow>
-                    </MDBCol>
-                    <MDBCol md="10">
+                  <MDBRow>
+                    <MDBCol md="12">
                       <div className="form-group grey-text">
                         <label htmlFor="NFEComments">Comentários: </label>
                         <textarea
                           className="form-control disabled read-only"
                           id="NFEComments"
                           rows="5"
+                          value={this.state.details.obs}
                         />
                       </div>
                     </MDBCol>
@@ -289,30 +349,66 @@ class NFExitDetails extends Component {
                   <hr />
                 </MDBTabPane>
                 <MDBBtn
-                  href={`/NFsExit/edit/${this.state.details.ID}`}
-                  className="deep-orange darken-3 float-right"
+                  href={`/NFsExit/edit/${this.state.details.id}`}
+                  className="light-blue darken-4 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
                 <MDBBtn
-                  onClick={this.onDelete.bind(this)}
-                  outline
-                  color="deep-orange darken-3"
-                  className="float-right"
+                  onClick={this.toggleDeleteNFexitModal(1)}
+                  className="btn grey lighten-1 float-right"
                 >
                   <MDBIcon icon="trash-alt" /> Excluir
+                </MDBBtn>
+                <MDBBtn
+                  href="/NFsExit"
+                  value="Return"
+                  className="btn grey lighten-1 float-right"
+                >
+                  <MDBIcon icon="undo-alt" /> Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>
           </MDBCardBody>
         </MDBCard>
-        <MDBBtn
-          size="lg"
-          href="/NFsExit/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
-        >
-          <MDBIcon size="lg" className="text-white" icon="plus" />
-        </MDBBtn>
+
+        {/* Delete Confirmation Modal */}
+        <div>
+          <MDBModal
+            isOpen={this.state.modal1}
+            toggle={this.toggleDeleteNFexitModal(1)}
+            centered
+          >
+            <MDBModalHeader toggle={this.toggleDeleteNFexitModal(1)}>
+              Deletar registro
+            </MDBModalHeader>
+            <MDBModalBody>
+              Esta ação irá excluir o registro permanentemente. Deseja
+              prosseguir?
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn
+                className="btn grey lighten-1"
+                onClick={this.toggleDeleteNFexitModal(1)}
+              >
+                Não
+              </MDBBtn>
+              <MDBBtn
+                className="btn deep-orange darken-4"
+                onClick={this.onDelete.bind(this)}
+              >
+                Sim
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+          <MDBBtn
+            size="lg"
+            href="/NFsExit/add"
+            className="px-3 py-3 light-blue darken-4 circle-btn"
+          >
+            <MDBIcon size="lg" className="text-white" icon="plus" />
+          </MDBBtn>
+        </div>
       </MDBContainer>
     );
   }

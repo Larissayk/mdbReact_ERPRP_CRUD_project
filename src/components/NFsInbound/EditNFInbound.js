@@ -12,45 +12,34 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
   MDBCardTitle
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
 
 class EditNFInbound extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ID: "",
-      NOME_EMPRESA: "",
-      CNPJ: "",
-      STATUS: "",
-      DT_INICIO: "",
-      DT_FIM: "",
-      END_EMPRESA: "",
-      BAIRRO: "",
-      MUNICIPIO: "",
-      CIDADE: "",
-      ESTADO: "",
-      PAIS: "",
-      CEP: "",
-      TEL_COM: "",
-      CEL_COM: "",
-      SIMPLES: "",
-      RETER_ISS_SP: "",
-      CERT_MUN: "",
-      CERT_EST: "",
-      CERT_FED: "",
-      IE: "",
-      CCM: "",
-      TIPO: "",
-      BCO: "",
-      NOME_BANCO: "",
-      AG: "",
-      CC: "",
-      activeItem: "1"
-    }
+      id: "",
+      cnpj: "",
+      tpnf_nfs_nfts_nd: "",
+      num_nf: "",
+      data_emissao: "",
+      data_receber: "",
+      data_pagar: "",
+      empresa: "",
+      servico: "",
+      colaborador: "",
+      valor_nf: "",
+      irrf: "",
+      pis_cofins: "",
+      iss_sp: "",
+      valor_liquido: "",
+      activeItem: "1",
+      alertMessage: ""
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -61,37 +50,25 @@ class EditNFInbound extends Component {
   getNFInboundDetails() {
     let NFInboundId = this.props.match.params.id;
     axios
-      .get(`http://localhost/api/Fornecedores/${NFInboundId}`)
+      .get(`http://127.0.0.1:8000/api/nota_entrada/${NFInboundId}`)
       .then(response => {
         this.setState(
           {
-            ID: response.data.ID,
-            NOME_EMPRESA: response.data.NOME_EMPRESA,
-            CNPJ: response.data.CNPJ,
-            STATUS: response.data.STATUS,
-            DT_INICIO: response.data.DT_INICIO,
-            DT_FIM: response.data.DT_FIM,
-            END_EMPRESA: response.data.END_EMPRESA,
-            BAIRRO: response.data.BAIRRO,
-            MUNICIPIO: response.data.MUNICIPIO,
-            CIDADE: response.data.CIDADE,
-            ESTADO: response.data.ESTADO,
-            PAIS: response.data.PAIS,
-            CEP: response.data.CEP,
-            TEL_COM: response.data.TEL_COM,
-            CEL_COM: response.data.CEL_COM,
-            SIMPLES: response.data.SIMPLES,
-            RETER_ISS_SP: response.data.RETER_ISS_SP,
-            CERT_MUN: response.data.CERT_MUN,
-            CERT_EST: response.data.CERT_EST,
-            CERT_FED: response.data.CERT_FED,
-            IE: response.data.IE,
-            CCM: response.data.CCM,
-            TIPO: response.data.TIPO,
-            BCO: response.data.BCO,
-            NOME_BANCO: response.data.NOME_BANCO,
-            AG: response.data.NOME_EMPRAGESA,
-            CC: response.data.CC
+            id: response.data.id,
+            cnpj: response.data.cnpj,
+            tpnf_nfs_nfts_nd: response.data.tpnf_nfs_nfts_nd,
+            num_nf: response.data.num_nf,
+            data_emissao: response.data.data_emissao,
+            data_receber: response.data.data_receber,
+            data_pagar: response.data.data_pagar,
+            empresa: response.data.empresa,
+            servico: response.data.servico,
+            colaborador: response.data.colaborador,
+            valor_nf: response.data.valor_nf,
+            irrf: response.data.irrf,
+            pis_cofins: response.data.pis_cofins,
+            iss_sp: response.data.iss_sp,
+            valor_liquido: response.data.valor_liquido
           },
           () => {
             console.log(this.state);
@@ -102,47 +79,38 @@ class EditNFInbound extends Component {
   }
 
   editNFInbound(newNFInbound) {
-    //console.log(newProvider);
     axios
       .request({
         method: "PUT",
-        url: `http://localhost/api/Fornecedores/${this.state.ID}`,
+        url: `http://127.0.0.1:8000/api/nota_entrada/${this.state.id}`,
         data: newNFInbound
       })
       .then(response => {
-        this.props.history.push("/NFsInbound");
+        this.setState({ alertMessage: "success" });
+        setTimeout(() => this.props.history.push("/NFsInbound"), 1800);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ alertMessage: "error" });
+        console.log(err);
+      });
   }
 
   onSubmit(e) {
     const newNFInbound = {
-      NOME_EMPRESA: this.refs.name.value,
-      STATUS: this.refs.status.value,
-      // END_EMPRESA: this.refs.adress.value,
-      CNPJ: this.refs.cnpj.value
-      // DT_INICIO: this.refs.startDate.value,
-      // DT_FIM: this.refs.endDate.value,
-      // BAIRRO: this.refs.neighborhood.value,
-      // MUNICIPIO: this.refs.municipality.value,
-      // CIDADE: this.refs.city.value,
-      // ESTADO: this.refs.state.value,
-      // PAIS: this.refs.country.value,
-      // CEP: this.refs.cep.value,
-      // TEL_COM: this.refs.phone.value,
-      // CEL_COM: this.refs.mobile.value,
-      // SIMPLES: this.refs.simples.value,
-      // RETER_ISS_SP: this.refs.issSP.value,
-      // CERT_MUN: this.refs.certMunicipal.value,
-      // CERT_EST: this.refs.certState.value,
-      // CERT_FED: this.refs.certFederal.value,
-      // IE: this.refs.ie.value,
-      // CCM: this.refs.ccm.value,
-      // TIPO: this.refs.accountType.value,
-      // BCO: this.refs.bankCode.value,
-      // NOME_BANCO: this.refs.bank.value,
-      // AG: this.refs.agency.value,
-      // CC: this.refs.accountNumb.value
+      cnpj: this.refs.cnpj.value,
+      tpnf_nfs_nfts_nd: this.refs.type.value,
+      num_nf: this.refs.number.value,
+      data_emissao: this.refs.emissionDt.value,
+      data_receber: this.refs.receivingDt.value,
+      data_pagar: this.refs.payDt.value,
+      empresa: this.refs.company.value,
+      servico: this.refs.service.value,
+      colaborador: this.refs.collab.value,
+      valor_nf: this.refs.value.value,
+      irrf: this.refs.irrf.value,
+      pis_cofins: this.refs.pis_cofins.value,
+      iss_sp: this.refs.iss_sp.value,
+      valor_liquido: this.refs.totalValue.value
     };
     this.editNFInbound(newNFInbound);
     e.preventDefault();
@@ -170,18 +138,18 @@ class EditNFInbound extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
-          <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/NFsInbound">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                Editar NF-Entrada
-              </MDBCardTitle>
-            </MDBCardHeader>
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong>EDITAR NF-ENTRADA</strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
+          <MDBCardBody className="mt-0">
             <MDBContainer>
-              <MDBNav className="nav-tabs">
+              <MDBNav className="nav-tabs mx-0">
                 <MDBNavItem>
                   <MDBNavLink
                     to="#"
@@ -208,7 +176,7 @@ class EditNFInbound extends Component {
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
-                      <MDBCol md="2" className="form-group">
+                      {/* <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="NFIyear">
                           Ano:{" "}
                         </label>
@@ -220,101 +188,101 @@ class EditNFInbound extends Component {
                           value={this.state.NOME_EMPRESA}
                           onChange={this.handleInputChange}
                         />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="NFIType">
-                          Tipo:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="NFIType"
-                          name="STATUS"
-                          value={this.state.STATUS}
-                          onChange={this.handleInputChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="1" className="form-group ">
-                        <label className="grey-text" htmlFor="NFINumber">
+                      </MDBCol> */}
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="number">
                           Nº NF:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFINumber"
-                          name="DT_INICIO"
-                          value={this.state.DT_INICIO}
+                          ref="number"
+                          name="num_nf"
+                          value={this.state.num_nf}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="NFIEmissor">
-                          Emissor:{" "}
+                      <MDBCol md="3" className="form-group ">
+                        <label className="grey-text" htmlFor="tpnf_nfs_nfts_nd">
+                          Tipo:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFIEmissor"
-                          name= "DT_FIM"
-                          value={this.state.DT_FIM}
+                          ref="type"
+                          name="tpnf_nfs_nfts_nd"
+                          value={this.state.tpnf_nfs_nfts_nd}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="empresa">
+                          Empresa:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="company"
+                          name="empresa"
+                          value={this.state.empresa}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFICnpj">
+                        <label className="grey-text" htmlFor="cnpj">
                           CNPJ:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFICnpj"
-                          name="CNPJ"
-                          value={this.state.CNPJ}
+                          ref="cnpj"
+                          name="cnpj"
+                          value={this.state.cnpj}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
                     <MDBRow>
-                      <h5>Identificação</h5>
+                      <h5 className="grey-text mb-3 ml-3">Identificação</h5>
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="NFIDt">
+                        <label className="grey-text" htmlFor="data_emissao">
                           Data de Emissão:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFIDt"
-                          name="TEL_COM"
-                          value={this.state.TEL_COM}
+                          ref="emissionDt"
+                          name="data_emissao"
+                          value={this.state.data_emissao}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="NFICollab">
+                        <label className="grey-text" htmlFor="colaborador">
                           Colaborador:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFICollab"
-                          name="CEL_COM"
-                          value={this.state.CEL_COM}
+                          ref="collab"
+                          name="colaborador"
+                          value={this.state.colaborador}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="NFIService">
+                        <label className="grey-text" htmlFor="servico">
                           Serviço:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFIService"
-                          name="END_EMPRESA"
-                          value={this.state.END_EMPRESA}
+                          ref="service"
+                          name="servico"
+                          value={this.state.servico}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
@@ -324,9 +292,16 @@ class EditNFInbound extends Component {
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="deep-orange darken-3 float-right"
+                      className="light-blue darken-4 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/NFsInbound"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      <MDBIcon icon="undo-alt" /> Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -335,89 +310,112 @@ class EditNFInbound extends Component {
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFIAmount">
+                        <label className="grey-text" htmlFor="valor_nf">
                           Valor Bruto:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFAmount"
-                          name="BAIRRO"
-                          value={this.state.BAIRRO}
+                          ref="value"
+                          name="valor_nf"
+                          value={this.state.valor_nf}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label htmlFor="data_receber" className="grey-text">
+                          Data Recebimento:{" "}
+                        </label>
+                        <input
+                          type="text"
+                          ref="receivingDt"
+                          name="data_receber"
+                          className="form-control"
+                          value={this.state.data_receber}
+                          onChange={this.handleInputChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label htmlFor="data_pagar" className="grey-text">
+                          Data Pagamento:{" "}
+                        </label>
+                        <input
+                          type="text"
+                          ref="payDt"
+                          name="data_pagar"
+                          className="form-control"
+                          value={this.state.data_pagar}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFIIssSp">
+                        <label className="grey-text" htmlFor="iss_sp">
                           ISS-SP:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFIIssSp"
-                          name="MUNICIPIO"
-                          value={this.state.MUNICIPIO}
+                          ref="iss_sp"
+                          name="iss_sp"
+                          value={this.state.iss_sp}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFIIrrf">
+                        <label className="grey-text" htmlFor="irrf">
                           IRRF (15%):{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFIIrrf"
-                          name="CIDADE"
-                          value={this.state.CIDADE}
+                          ref="irrf"
+                          name="irrf"
+                          value={this.state.irrf}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFIpiscofins">
+                        <label className="grey-text" htmlFor="pis_cofins">
                           PIS/COFINS (4,65%):{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFIpiscofins"
-                          name="ESTADO"
-                          value={this.state.ESTADO}
+                          ref="pis_cofins"
+                          name="pis_cofins"
+                          value={this.state.pis_cofins}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFINetValue">
+                        <label className="grey-text" htmlFor="valor_liquido">
                           Valor Líquido:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="NFINetValue"
-                          name="PAIS"
-                          value={this.state.PAIS}
+                          ref="totalValue"
+                          name="valor_liquido"
+                          value={this.state.valor_liquido}
                           onChange={this.handleInputChange}
                         />
                       </MDBCol>
                     </MDBRow>
-                    <MDBRow className="mb-2">
-                      <MDBCol md="2">
-                        <MDBRow>
+                    {/* <MDBRow className="mb-2">
+                      <MDBCol md="2"> */}
+                    {/* <MDBRow>
                           <MDBCol>
-                            <label
-                              htmlFor="NFIReceivedDt"
-                              className="grey-text"
-                            >
+                            <label htmlFor="data_receber" className="grey-text">
                               Data Recebimento:{" "}
                             </label>
                             <input
                               type="date"
-                              ref="NFIReceivedDt"
-                              name="CEP"
+                              ref="receivingDt"
+                              name="data_receber"
                               className="form-control"
-                              value={this.state.CEP}
+                              value={this.state.data_receber}
                               onChange={this.handleInputChange}
                             />
                           </MDBCol>
@@ -425,21 +423,21 @@ class EditNFInbound extends Component {
                         <br />
                         <MDBRow>
                           <MDBCol>
-                            <label htmlFor="NFIPayingDt" className="grey-text">
+                            <label htmlFor="data_pagar" className="grey-text">
                               Data Pagamento:{" "}
                             </label>
                             <input
                               type="date"
-                              ref="NFIPayingDt"
-                              name="TIPO"
+                              ref="payDt"
+                              name="data_pagar"
                               className="form-control"
-                              value={this.state.TIPO}
+                              value={this.state.data_pagar}
                               onChange={this.handleInputChange}
                             />
                           </MDBCol>
                         </MDBRow>
-                      </MDBCol>
-                      <MDBCol md="10">
+                      </MDBCol> */}
+                    {/* <MDBCol md="10">
                         <div className="form-group grey-text">
                           <label htmlFor="NFIComments">Comentários: </label>
                           <textarea
@@ -451,15 +449,22 @@ class EditNFInbound extends Component {
                             onChange={this.handleInputChange}
                           />
                         </div>
-                      </MDBCol>
-                    </MDBRow>
+                      </MDBCol> */}
+                    {/* </MDBRow> */}
                     <hr />
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="deep-orange darken-3 float-right"
+                      className="light-blue darken-4 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/NFsInbound"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      <MDBIcon icon="undo-alt" /> Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -470,7 +475,7 @@ class EditNFInbound extends Component {
         <MDBBtn
           size="lg"
           href="/NFsInbound/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+          className="px-3 py-3 btn light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>

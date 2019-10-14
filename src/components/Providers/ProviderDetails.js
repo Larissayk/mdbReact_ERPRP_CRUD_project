@@ -21,6 +21,9 @@ import {
 } from "mdbreact";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ErrorMessage from "../AlertModals/ErrorMessage";
+import SuccessMessage from "../AlertModals/SuccessMessage";
+
 
 class ProviderDetails extends Component {
   constructor(props) {
@@ -54,10 +57,14 @@ class ProviderDetails extends Component {
       .delete(`http://127.0.0.1:8000/api/fornecedores/${providerId}`)
       .then(response => {
         console.log(`ID excluído: ${providerId}`);
-        this.props.history.push("/Providers");
+         this.setState({ alertMessage: "success" });
+         setTimeout(() => this.props.history.push("/Providers"), 1800);
       })
-      .catch(err => console.log("erro: ", err.response));
-  }
+      .catch(err => {
+       this.setState( {alertMessage: "error" });
+       console.log(err);
+  });
+}
 
   // Toggle Confirmation Delete Register Modal
   toggleDeleteCollaboratorModal = nr => () => {
@@ -78,17 +85,18 @@ class ProviderDetails extends Component {
   render() {
     return (
       <MDBContainer className="main-body">
+        <div>
+          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+        </div>
         <MDBCard className="mt-3 mb-4">
+          <MDBCardTitle style={{ fontSize: 28 }}>
+            <strong className="text-uppercase">
+              {this.state.details.nome}
+            </strong>
+          </MDBCardTitle>
+          <hr className="mb-0" />
           <MDBCardBody className="pt-0">
-            <Link className="float-right mr-2 mt-4" to="/Providers">
-              <MDBIcon icon="undo-alt" /> Voltar
-            </Link>
-            <MDBCardHeader className="card-header rounded">
-              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-                {this.state.details.nome}
-              </MDBCardTitle>
-            </MDBCardHeader>
-
             <MDBContainer>
               <MDBNav className="nav-tabs">
                 <MDBNavItem>
@@ -423,18 +431,23 @@ class ProviderDetails extends Component {
                 </label>
                 <MDBBtn
                   href={`/Providers/edit/${this.state.details.id}`}
-                  className="deep-orange darken-3 float-right"
+                  className="light-blue darken-4 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
                 <MDBBtn
                   // onClick={this.onDelete.bind(this)}
                   onClick={this.toggleDeleteCollaboratorModal(1)}
-                  outline
-                  color="deep-orange darken-3"
-                  className="float-right"
+                  className="btn grey lighten-1 float-right"
                 >
                   <MDBIcon icon="trash-alt" /> Excluir
+                </MDBBtn>
+                <MDBBtn
+                  href="/Providers"
+                  value="Return"
+                  className="btn grey lighten-1 float-right"
+                >
+                  <MDBIcon icon="undo-alt" /> Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>
@@ -443,7 +456,7 @@ class ProviderDetails extends Component {
         <MDBBtn
           size="lg"
           href="/Providers/add"
-          className="px-3 py-3 btn deep-orange darken-3 circle-btn"
+          className="px-3 py-3 btn light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>
