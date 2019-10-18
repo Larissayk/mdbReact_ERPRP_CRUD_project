@@ -63,7 +63,6 @@ class CollaboratorDeals extends Component {
       
       
     });
-    const { collaboratorsDeal } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
@@ -100,7 +99,7 @@ class CollaboratorDeals extends Component {
                   >
                     <option value="">Status</option>
                     <option value="ativo">Ativo</option>
-                    <option value="desligado">Desligado</option>
+                    <option value="interrompido">Interrompido</option>
                   </select>
                 </div>
               </MDBCol>
@@ -120,7 +119,7 @@ class CollaboratorDeals extends Component {
                   <th>Nome</th>
                   <th>Função</th>
                   <th>Tipo de contrato</th>
-                  <th>Status</th>
+                  <th className="text-center">Status</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -137,14 +136,14 @@ class CollaboratorDeals extends Component {
                       </td>
                       <td className="align-middle">{negociacoes.funcao}</td>
                       <td className="align-middle">{negociacoes.tipo}</td>
-                      <td className="align-middle">
-                        {negociacoes.status.toLowerCase() == "ativo" ?(
+                      <td className="text-center">
+                        {negociacoes.status.toLowerCase() === "ativo" ? (
                           <MDBBadge className="p-2" pill color="success">
                             Ativo
                           </MDBBadge>
                         ) : (
                           <MDBBadge className="p-2" pill color="danger">
-                            Desligado
+                            Interrompido
                           </MDBBadge>
                         )}
                       </td>

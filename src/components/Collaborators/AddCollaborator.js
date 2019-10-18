@@ -12,39 +12,64 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
-const initialState = {
-  campoObrigatorio: ""
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+
+  return valid;
 };
+
 class AddCollaborator extends Component {
-  state = {
-    cpf: "",
-    status: "",
-    nome: "",
-    apelido: "",
-    rg: "",
-    orgao_emissor: "",
-    ctps: "",
-    data_nascimento: "",
-    endereco: "",
-    cep: "",
-    bairro: "",
-    cidade: "",
-    estado: "",
-    pais: "",
-    telefone: "",
-    celular: "",
-    email: "",
-    email_pessoal: "",
-    activeItem: "1",
-    alertMessage: "",
-    campoObrigatorio: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cpf: null,
+      // status: "",
+      nome: null,
+      // apelido: "",
+      // rg: "",
+      // orgao_emissor: "",
+      // ctps: "",
+      // data_nascimento: "",
+      // endereco: "",
+      // cep: "",
+      // bairro: "",
+      // cidade: "",
+      // estado: "",
+      // pais: "",
+      // telefone: "",
+      celular: null,
+      // email: "",
+      email_pessoal: null,
+      activeItem: "1",
+      alertMessage: "",
+      alertMessage1: "",
+      formErrors: {
+        nome: "",
+        cpf: "",
+        celular:"",
+        email_pessoal:""
+      }
+    };
+  }
 
   AddCollaborator(newCollaborator) {
     axios
@@ -86,26 +111,22 @@ class AddCollaborator extends Component {
       email_pessoal: this.refs.collabPEmail.value
     };
     e.preventDefault();
-    this.AddCollaborator(newCollaborator);
-    console.log(newCollaborator);
-    
-     
-    
+    // console.log(newCollaborator);
+
+    if (formValid(this.state)) {
+      this.AddCollaborator(newCollaborator);
+      console.log(`
+        --SUBMITTING--
+        Nome: ${this.state.nome}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
-
-  // validate = () => {
-  //   let campoObrigatorio = "";
-
-  //   if (!this.state.nome) {
-  //     campoObrigatorio = "Campo de preenchimento obrigatório";
-  //   }
-
-  //   if (campoObrigatorio) {
-  //     this.setState({ campoObrigatorio });
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -115,16 +136,38 @@ class AddCollaborator extends Component {
     }
   };
 
-  changeHandler = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
+
+    switch (name) {
+      case "nome":
+        formErrors.nome = value.length < 0 ? "Campo obrigatório." : "";
+        break;
+      case "cpf":
+        formErrors.cpf = value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      case "celular":
+        formErrors.celular = value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      case "email_pessoal":
+        formErrors.email_pessoal = value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
   render() {
+    const { formErrors } = this.state;
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -148,64 +191,70 @@ class AddCollaborator extends Component {
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
-                  <form
-                    className="needs-validation"
-                    onSubmit={this.onSubmit.bind(this)}
-                    noValidate
-                  >
+                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
-                      <MDBCol md="5" className="form-group">
+                      <MDBCol md="5" className="form-group mb-0">
                         <label className="grey-text" htmlFor="collabName">
-                          Nome:{" "}
+                          Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          value={this.state.nome}
                           name="nome"
-                          className="form-control"
+                          className={
+                            formErrors.nome.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="collabName"
-                          onChange={this.changeHandler}
                           autoFocus
-                          required
+                          onChange={this.handleChange}
                         />
-                        <div className="invalid-feedback">
-                          Campo de preenchimento obrigatório
-                        </div>
+                        {formErrors.nome.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.nome}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabNick">
                           Apelido:{" "}
                         </label>
                         <input
-                          value={this.state.apelido}
-                          onChange={this.changeHandler}
                           className="form-control"
                           type="text"
                           ref="collabNick"
                         />
-                        {/* <div className="invalid-feedback">
-                          {this.state.campoObrigatorio}
-                        </div> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabBday">
                           Data Nascimento:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="collabBday"
+                          mask="99/99/9999"
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabStatus">
-                          Status:{" "}
+                          Status: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            ref="collabStatus"
+                          >
+                            <option value="Ativo">Ativo</option>
+                            <option value="Desligado">Desligado</option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control"
                           type="text"
                           ref="collabStatus"
-                        />
+                          required
+                        /> */}
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
@@ -221,54 +270,91 @@ class AddCollaborator extends Component {
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabPEmail">
-                          Email Pessoal:{" "}
+                          Email Pessoal: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          className="form-control"
+                          className={
+                            formErrors.email_pessoal.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="collabPEmail"
+                          name="email_pessoal"
+                          onChange={this.handleChange}
                         />
+                        {formErrors.email_pessoal.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.email_pessoal}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="collabPhone"
+                          mask="(99) 9999-9999"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabMobile">
-                          Celular:{" "}
+                          Celular: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
-                          className="form-control"
+                        <InputMask
+                          className={
+                            formErrors.celular.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="collabMobile"
+                          mask="(99) 9 9999-9999"
+                          name="celular"
+                          onChange={this.handleChange}
                         />
+                        {formErrors.celular.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.celular}
+                          </span>
+                        )}
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabCpf">
-                          CPF:{" "}
+                          CPF: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
-                          className="form-control"
+                        <InputMask
+                          className={
+                            formErrors.cpf.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="collabCpf"
+                          mask="999.999.999-99"
+                          name="cpf"
+                          onChange={this.handleChange}
                         />
+                        {formErrors.cpf.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.cpf}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabRg">
                           RG:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="collabRg"
+                          mask="99.999.999-**"
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
@@ -353,14 +439,24 @@ class AddCollaborator extends Component {
                         <label className="grey-text" htmlFor="collabZipcode">
                           CEP:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="collabZipcode"
+                          mask="99999-999"
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"

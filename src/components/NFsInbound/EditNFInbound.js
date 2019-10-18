@@ -12,15 +12,34 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
+
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  // Object.values(rest).forEach(val => {
+  //   val === null && (valid = false);
+  // });
+
+  return valid;
+};
 
 class EditNFInbound extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       id: "",
       cnpj: "",
@@ -38,9 +57,13 @@ class EditNFInbound extends Component {
       iss_sp: "",
       valor_liquido: "",
       activeItem: "1",
-      alertMessage: ""
+      alertMessage: "",
+      alertMessage1: "",
+      formErrors: {
+        empresa: ""
+      }
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -71,7 +94,7 @@ class EditNFInbound extends Component {
             valor_liquido: response.data.valor_liquido
           },
           () => {
-            console.log(this.state);
+            console.log("Get:", this.state);
           }
         );
       })
@@ -112,20 +135,53 @@ class EditNFInbound extends Component {
       iss_sp: this.refs.iss_sp.value,
       valor_liquido: this.refs.totalValue.value
     };
-    this.editNFInbound(newNFInbound);
+    // this.editNFInbound(newNFInbound);
     e.preventDefault();
-    console.log(newNFInbound);
+    // console.log(newNFInbound);
+
+    if (formValid(this.state)) {
+      this.editNFInbound(newNFInbound);
+      console.log(`
+        --SUBMITTING--
+        Empresa: ${this.state.empresa}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
 
-  handleInputChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
 
-    this.setState({
-      [name]: value
-    });
-  }
+    switch (name) {
+      case "empresa":
+        formErrors.empresa =
+          value.length === 0 ? "Campo de preenchimento obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () =>
+      console.log("handleChange:", this.state)
+    );
+  };
+
+  // handleInputChange(e) {
+  //   const target = e.target;
+  //   const value = target.value;
+  //   const name = target.name;
+
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // }
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -136,11 +192,13 @@ class EditNFInbound extends Component {
   };
 
   render() {
+    const { formErrors } = this.state;
+
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -174,7 +232,7 @@ class EditNFInbound extends Component {
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)}>
+                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       {/* <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="NFIyear">
@@ -199,25 +257,40 @@ class EditNFInbound extends Component {
                           ref="number"
                           name="num_nf"
                           value={this.state.num_nf}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group ">
                         <label className="grey-text" htmlFor="tpnf_nfs_nfts_nd">
                           Tipo:{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            type="text"
+                            ref="type"
+                            name="tpnf_nfs_nfts_nd"
+                            value={this.state.tpnf_nfs_nfts_nd}
+                            onChange={this.handleChange}
+                          >
+                            <option>Selecione...</option>
+                            <option value="ND">ND</option>
+                            <option value="NFS">NFS</option>
+                            <option value="NFTS">NFTS</option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control"
                           type="text"
                           ref="type"
                           name="tpnf_nfs_nfts_nd"
                           value={this.state.tpnf_nfs_nfts_nd}
                           onChange={this.handleInputChange}
-                        />
+                        /> */}
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="empresa">
-                          Empresa:{" "}
+                          Empresa: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
                           className="form-control"
@@ -225,20 +298,26 @@ class EditNFInbound extends Component {
                           ref="company"
                           name="empresa"
                           value={this.state.empresa}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
+                        {formErrors.empresa.length === 0 && (
+                          <span className="errorMessage">
+                            {formErrors.empresa}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cnpj">
                           CNPJ:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="cnpj"
                           name="cnpj"
                           value={this.state.cnpj}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
+                          mask="99.999.999/9999-99"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -257,7 +336,7 @@ class EditNFInbound extends Component {
                           ref="emissionDt"
                           name="data_emissao"
                           value={this.state.data_emissao}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="6" className="form-group">
@@ -270,7 +349,7 @@ class EditNFInbound extends Component {
                           ref="collab"
                           name="colaborador"
                           value={this.state.colaborador}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
@@ -283,11 +362,20 @@ class EditNFInbound extends Component {
                           ref="service"
                           name="servico"
                           value={this.state.servico}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"
@@ -319,7 +407,7 @@ class EditNFInbound extends Component {
                           ref="value"
                           name="valor_nf"
                           value={this.state.valor_nf}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -332,7 +420,7 @@ class EditNFInbound extends Component {
                           name="data_receber"
                           className="form-control"
                           value={this.state.data_receber}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -345,7 +433,7 @@ class EditNFInbound extends Component {
                           name="data_pagar"
                           className="form-control"
                           value={this.state.data_pagar}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -360,7 +448,7 @@ class EditNFInbound extends Component {
                           ref="iss_sp"
                           name="iss_sp"
                           value={this.state.iss_sp}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -373,7 +461,7 @@ class EditNFInbound extends Component {
                           ref="irrf"
                           name="irrf"
                           value={this.state.irrf}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -386,7 +474,7 @@ class EditNFInbound extends Component {
                           ref="pis_cofins"
                           name="pis_cofins"
                           value={this.state.pis_cofins}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -399,7 +487,7 @@ class EditNFInbound extends Component {
                           ref="totalValue"
                           name="valor_liquido"
                           value={this.state.valor_liquido}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -452,6 +540,16 @@ class EditNFInbound extends Component {
                       </MDBCol> */}
                     {/* </MDBRow> */}
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
+
                     <MDBBtn
                       type="submit"
                       value="Save"

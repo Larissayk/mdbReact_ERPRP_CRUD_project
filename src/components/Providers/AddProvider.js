@@ -12,19 +12,48 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+
+  return valid;
+};
+
 class AddProvider extends Component {
-  state = {
-    activeItem: "1",
-    alertMessage:""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      nome: null,
+      cnpj: null,
+      dt_inicio: null,
+      activeItem: "1",
+      alertMessage: "",
+      alertMessage1: "",
+      formErrors: {
+        nome: "",
+        cnpj: "",
+        dt_inicio:""
+      }
+    };
+  }
 
   addProvider(newProvider) {
     axios
@@ -43,7 +72,6 @@ class AddProvider extends Component {
       });
   }
 
- 
   onSubmit(e) {
     const newProvider = {
       cnpj: this.refs.cnpj.value,
@@ -73,9 +101,23 @@ class AddProvider extends Component {
       cep: this.refs.cep.value,
       cc: this.refs.accountNumb.value
     };
-    this.addProvider(newProvider);
-    console.log(newProvider);
+    // this.addProvider(newProvider);
+    // console.log(newProvider);
     e.preventDefault();
+
+    if (formValid(this.state)) {
+      this.addProvider(newProvider);
+      console.log(`
+        --SUBMITTING--
+        Nome: ${this.state.nome}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
 
   toggle = tab => e => {
@@ -86,12 +128,35 @@ class AddProvider extends Component {
     }
   };
 
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
+
+    switch (name) {
+      case "nome":
+        formErrors.nome = value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      case "cnpj":
+        formErrors.cnpj = value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      case "dt_inicio":
+        formErrors.dt_inicio = value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+  };
+
   render() {
+    const { formErrors } = this.state;
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -127,92 +192,129 @@ class AddProvider extends Component {
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)}>
                     <MDBRow className="mt-4">
-                      <MDBCol md="6" className="form-group">
+                      <MDBCol md="6" className="form-group mb-0">
                         <label className="grey-text" htmlFor="name">
-                          Nome:{" "}
+                          Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          className="form-control"
+                          className={
+                            formErrors.nome.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="name"
+                          name="nome"
+                          autoFocus
+                          onChange={this.handleChange}
                         />
+                        {formErrors.nome.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.nome}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="status">
-                          Status:{" "}
+                          Status: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
+                        {/* <input
                           className="form-control"
                           type="text"
                           ref="status"
                           name="status"
-                        />
-                        {/* <div>
+                        /> */}
+                        <div>
                           <select
                             className="browser-default custom-select"
                             ref="status"
-                            name="status"
                           >
-                            <option>Ativo</option>
-                            <option>Inativo</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Desligado">Desligado</option>
                           </select>
-                        </div> */}
+                        </div>
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="startDate">
                           Data de início:{" "}
+                          <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
-                          className="form-control"
+                        <InputMask
+                          className={
+                            formErrors.dt_inicio.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          name="DT_INICIO"
+                          name="dt_inicio"
                           ref="startDate"
+                          mask="99/99/9999"
+                          onChange={this.handleChange}
                         />
+                        {formErrors.dt_inicio.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.dt_inicio}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="endDate">
                           Data de término:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           name="DT_FIM"
                           ref="endDate"
+                          mask="99/99/9999"
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="cnpj">
-                          CNPJ:{" "}
+                          CNPJ: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
-                          className="form-control"
+                        <InputMask
+                          className={
+                            formErrors.cnpj.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          name="CNPJ"
+                          name="cnpj"
                           ref="cnpj"
+                          mask="99.999.999/9999-99"
+                          onChange={this.handleChange}
                         />
+                        {formErrors.cnpj.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.cnpj}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="phone">
                           Telefone:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           name="TEL_COM"
                           ref="phone"
+                          mask="(99) 9999-9999"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="mobile">
                           Celular:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           name="CEL_COM"
                           ref="mobile"
+                          mask="(99) 9 9999-9999"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -290,15 +392,25 @@ class AddProvider extends Component {
                         <label className="grey-text" htmlFor="cep">
                           CEP:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           name="CEP"
                           ref="cep"
+                          mask="99999-999"
                         />
                       </MDBCol>
                     </MDBRow>
-                    <hr/>
+                    <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"
@@ -324,23 +436,28 @@ class AddProvider extends Component {
                         <label className="grey-text" htmlFor="accountType">
                           Tipo de conta:{" "}
                         </label>
-                        <input
+                        {/* <input
                           className="form-control"
                           name="tipo"
                           ref="accountType"
                           type="text"
-                        />
-                        {/* <div>
+                        /> */}
+                        <div>
                           <select
                             className="browser-default custom-select"
                             name="tipo"
                             ref="accountType"
+                            type="text"
                           >
-                            <option></option>
-                            <option>Pessoa Física</option>
-                            <option>Pessoa Jurídica</option>
+                            <option>Selecione...</option>
+                            <option option value="Pessoa Física">
+                              Pessoa Física
+                            </option>
+                            <option option value="Pessoa Jurídica">
+                              Pessoa Jurídica
+                            </option>
                           </select>
-                        </div> */}
+                        </div>
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="bankCode">
@@ -494,6 +611,16 @@ class AddProvider extends Component {
                         </div> */}
                       </MDBCol>
                     </MDBRow>
+                    <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
                     <MDBBtn
                       type="submit"
                       value="Save"

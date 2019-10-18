@@ -19,6 +19,8 @@ import {
   MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
+import Moment from "react-moment";
+import MomentInput from "react-moment-input";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
@@ -84,8 +86,8 @@ class CollaboratorDetails extends Component {
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -310,14 +312,24 @@ class CollaboratorDetails extends Component {
                     </MDBCol>
                   </MDBRow>
                   <hr />
+                  <div className="float-left">
+                    <label className="grey-text">
+                      Criado em:
+                      <Moment
+                        format="DD/MM/YYYY"
+                        date={this.state.details.created_at}
+                      />
+                    </label>
+                    <br />
+                    <label className="grey-text">
+                      Última atualização:
+                      <Moment
+                        format="DD/MM/YYYY"
+                        date={this.state.details.updated_at}
+                      />
+                    </label>
+                  </div>
                 </MDBTabPane>
-                <label className="grey-text">
-                  Criado em: {this.state.details.created_at}
-                </label>
-                <br />
-                <label className="grey-text">
-                  Última atualização: {this.state.details.updated_at}
-                </label>
 
                 <MDBBtn
                   href={`/Collaborators/edit/${this.state.details.id}`}

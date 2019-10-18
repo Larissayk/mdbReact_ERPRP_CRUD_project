@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component} from "react";
 import {
   MDBContainer,
   MDBTable,
@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import CollaboratorItem from "./CollaboratorItem";
 
+
 class Collaborators extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +24,7 @@ class Collaborators extends Component {
       colaboradores: [],
       search: "",
       sort: ""
+
     };
   }
 
@@ -73,7 +75,6 @@ class Collaborators extends Component {
       }
     });
 
-    const { colaboradores } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4 px-2 card">
@@ -133,7 +134,7 @@ class Collaborators extends Component {
                   <th>CPF</th>
                   <th>Celular</th>
                   <th>Email pessoal</th>
-                  <th>Status</th>
+                  <th className="text-center">Status</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -152,7 +153,7 @@ class Collaborators extends Component {
                         {colaboradores.email_pessoal}
                       </td>
                       <td className="text-center">
-                        {colaboradores.status.toLowerCase() == "ativo" ? (
+                        {colaboradores.status.toLowerCase() === "ativo" ? (
                           <MDBBadge className="p-2" pill color="success">
                             Ativo
                           </MDBBadge>

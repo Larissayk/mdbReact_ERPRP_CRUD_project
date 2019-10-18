@@ -12,17 +12,34 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
+
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  // Object.values(rest).forEach(val => {
+  //   val === null && (valid = false);
+  // });
+
+  return valid;
+};
 
 class EditProvider extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       id: "",
       cnpj: "",
@@ -52,9 +69,14 @@ class EditProvider extends Component {
       cc: "",
       endereco: "",
       activeItem: "1",
-      alertMessage:""
+      alertMessage: "",
+      formErrors: {
+        nome: "",
+        cnpj: "",
+        data_inicio: ""
+      }
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -96,7 +118,9 @@ class EditProvider extends Component {
             cc: response.data.cc,
             bairro: response.data.bairro
           },
-          () => {}
+          () => {
+            console.log("Get:", this.state);
+          }
         );
       })
       .catch(err => console.log(err));
@@ -116,7 +140,7 @@ class EditProvider extends Component {
       })
       .catch(err => {
         this.setState({ alertMessage: "error" });
-        console.log(err);
+        console.log("Erro:", err);
       });
   }
 
@@ -149,27 +173,58 @@ class EditProvider extends Component {
       cep: this.refs.cep.value,
       cc: this.refs.accountNumb.value
     };
-    this.editProvider(newProvider);
+    // this.editProvider(newProvider);
     e.preventDefault();
-    console.log(newProvider);
+    // console.log(newProvider);
+
+    if (formValid(this.state)) {
+      this.editProvider(newProvider);
+      console.log(`
+        --SUBMITTING--
+        Nome: ${this.state.nome}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
 
-  handleInputChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+  // handleInputChange(e) {
+  //   const target = e.target;
+  //   const value = target.value;
+  //   const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
-  }
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // }
 
-  handleSelectChange(e) {
-    let { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-  }
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
+
+    switch (name) {
+      case "nome":
+        formErrors.nome = value.length === 0 ? "Campo obrigatório." : "";
+        break;
+      case "cnpj":
+        formErrors.cnpj = value.length === 0 ? "Campo obrigatório." : "";
+        break;
+      case "data_inicio":
+        formErrors.data_inicio = value.length === 0 ? "Campo obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () =>
+      console.log("handleChange:", this.state)
+    );
+  };
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -180,11 +235,12 @@ class EditProvider extends Component {
   };
 
   render() {
+        const { formErrors } = this.state;
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
@@ -218,45 +274,76 @@ class EditProvider extends Component {
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)}>
+                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
-                      <MDBCol md="6" className="form-group">
+                      <MDBCol md="6" className="form-group mb-0">
                         <label className="grey-text" htmlFor="name">
-                          Nome:{" "}
+                          Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          className="form-control"
+                          className={
+                            formErrors.nome.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="name"
                           name="nome"
                           value={this.state.nome}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
+                        {formErrors.nome.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.nome}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="status">
-                          Status:{" "}
+                          Status: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            ref="status"
+                            name="status"
+                            value={this.state.status}
+                            onChange={this.handleChange}
+                          >
+                            <option value="Ativo">Ativo</option>
+                            <option value="Desligado">Desligado</option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control"
                           ref="status"
                           name="status"
                           value={this.state.status}
                           onChange={this.handleInputChange}
-                        />
+                        /> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="startDate">
                           Data de início:{" "}
+                          <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          className="form-control "
+                          className={
+                            formErrors.data_inicio.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="startDate"
                           name="data_inicio"
                           value={this.state.data_inicio}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
+                        {formErrors.data_inicio.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.data_inicio}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="endDate">
@@ -268,48 +355,60 @@ class EditProvider extends Component {
                           ref="endDate"
                           name="data_fim"
                           value={this.state.data_fim}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="cnpj">
-                          CNPJ:{" "}
+                          CNPJ: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
-                          className="form-control "
+                        <InputMask
+                          className={
+                            formErrors.cnpj.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="cnpj"
                           name="cnpj"
                           value={this.state.cnpj}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
+                          mask="99.999.999/9999-99"
                         />
+                        {formErrors.cnpj.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.cnpj}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="phone">
                           Telefone:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control "
                           type="text"
                           ref="phone"
                           name="telefone"
                           value={this.state.telefone}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
+                          mask="(99) 9999-9999"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="mobile">
                           Celular:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control "
                           type="text"
                           ref="mobile"
                           name="celular"
                           value={this.state.celular}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
+                          mask="(99) 9 9999-9999"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -325,7 +424,7 @@ class EditProvider extends Component {
                           ref="address"
                           name="endereco"
                           value={this.state.endereco}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -338,7 +437,7 @@ class EditProvider extends Component {
                           ref="neighborhood"
                           name="bairro"
                           value={this.state.bairro}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -351,7 +450,7 @@ class EditProvider extends Component {
                           ref="municipality"
                           name="municipio"
                           value={this.state.municipio}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -366,7 +465,7 @@ class EditProvider extends Component {
                           ref="city"
                           name="cidade"
                           value={this.state.cidade}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -379,7 +478,7 @@ class EditProvider extends Component {
                           ref="state"
                           name="estado"
                           value={this.state.estado}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -392,23 +491,34 @@ class EditProvider extends Component {
                           ref="country"
                           name="pais"
                           value={this.state.pais}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cep">
                           CEP:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control "
                           type="text"
                           ref="cep"
                           name="cep"
                           value={this.state.cep}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
+                          mask="99999-999"
                         />
                       </MDBCol>
                     </MDBRow>
+                    <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"
@@ -433,13 +543,31 @@ class EditProvider extends Component {
                         <label className="grey-text" htmlFor="accountType">
                           Tipo de conta:{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            name="tipo"
+                            ref="accountType"
+                            type="text"
+                            value={this.state.tipo}
+                            onChange={this.handleChange}
+                          >
+                            <option>Selecione...</option>
+                            <option option value="Pessoa Física">
+                              Pessoa Física
+                            </option>
+                            <option option value="Pessoa Jurídica">
+                              Pessoa Jurídica
+                            </option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control "
                           ref="accountType"
                           name="tipo"
                           value={this.state.tipo}
                           onChange={this.handleInputChange}
-                        />
+                        /> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="bankCode">
@@ -451,7 +579,7 @@ class EditProvider extends Component {
                           ref="bankCode"
                           name="bco"
                           value={this.state.bco}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="6" className="form-group">
@@ -464,7 +592,7 @@ class EditProvider extends Component {
                           ref="bank"
                           name="nome_banco"
                           value={this.state.nome_banco}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -479,7 +607,7 @@ class EditProvider extends Component {
                           ref="agency"
                           name="ag"
                           value={this.state.ag}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
 
@@ -493,7 +621,7 @@ class EditProvider extends Component {
                           ref="accountNumb"
                           name="cc"
                           value={this.state.cc}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
@@ -506,7 +634,7 @@ class EditProvider extends Component {
                           ref="ccm"
                           name="ccm"
                           value={this.state.ccm}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -521,7 +649,7 @@ class EditProvider extends Component {
                           ref="certMunicipal"
                           name="certf_mun"
                           value={this.state.certf_mun}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
 
@@ -535,7 +663,7 @@ class EditProvider extends Component {
                           ref="certState"
                           name="certf_est"
                           value={this.state.certf_est}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
@@ -548,7 +676,7 @@ class EditProvider extends Component {
                           ref="certFederal"
                           name="certf_fed"
                           value={this.state.certf_fed}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -563,7 +691,7 @@ class EditProvider extends Component {
                           ref="ie"
                           name="ie"
                           value={this.state.ie}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
@@ -575,7 +703,7 @@ class EditProvider extends Component {
                           ref="simples"
                           name="simples"
                           value={this.state.simples}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
@@ -588,11 +716,22 @@ class EditProvider extends Component {
                             ref="issSP"
                             name="reter_iss_sp"
                             value={this.state.reter_iss_sp}
-                            onChange={this.handleInputChange}
+                            onChange={this.handleChange}
                           />
                         </div>
                       </MDBCol>
                     </MDBRow>
+                    <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
+
                     <MDBBtn
                       type="submit"
                       value="Save"

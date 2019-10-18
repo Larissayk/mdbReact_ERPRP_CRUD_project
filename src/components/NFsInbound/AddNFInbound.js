@@ -12,17 +12,44 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+
+  return valid;
+};
+
 class AddNFInbound extends Component {
-  state = {
-    activeItem: "1",
-    alertMessage: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      empresa: null,
+      activeItem: "1",
+      alertMessage: "",
+      alertMessage1: "",
+      formErrors: {
+        empresa: ""
+      }
+    };
+  }
 
   AddNFInbound(newNFInbound) {
     axios
@@ -58,9 +85,23 @@ class AddNFInbound extends Component {
       iss_sp: this.refs.iss_sp.value,
       valor_liquido: this.refs.totalValue.value
     };
-    this.AddNFInbound(newNFInbound);
-    console.log(newNFInbound);
+    // this.AddNFInbound(newNFInbound);
+    // console.log(newNFInbound);
     e.preventDefault();
+
+    if (formValid(this.state)) {
+      this.AddNFInbound(newNFInbound);
+      console.log(`
+        --SUBMITTING--
+        Empresa: ${this.state.empresa}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
 
   toggle = tab => e => {
@@ -71,12 +112,30 @@ class AddNFInbound extends Component {
     }
   };
 
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
+
+    switch (name) {
+      case "empresa":
+        formErrors.empresa =
+          value.length === 0 ? "Campo de preenchimento obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+  };
+
   render() {
+    const { formErrors } = this.state;
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -110,7 +169,7 @@ class AddNFInbound extends Component {
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)}>
+                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       {/* <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="NFIyear">
@@ -130,36 +189,61 @@ class AddNFInbound extends Component {
                           className="form-control"
                           type="text"
                           ref="number"
+                          autoFocus
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group ">
                         <label className="grey-text" htmlFor="NFIType">
                           Tipo:{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            type="text"
+                            ref="type"
+                          >
+                            <option>Selecione...</option>
+                            <option value="ND">ND</option>
+                            <option value="NFS">NFS</option>
+                            <option value="NFTS">NFTS</option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control"
                           type="text"
                           ref="type"
-                        />
+                        /> */}
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="NFIEmissor">
-                          Empresa:{" "}
+                          Empresa: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          className="form-control"
+                          className={
+                            formErrors.empresa.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
+                          name="empresa"
                           type="text"
                           ref="company"
+                          onChange={this.handleChange}
                         />
+                        {formErrors.empresa.length === 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.empresa}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="NFICnpj">
                           CNPJ:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="cnpj"
+                          mask="99.999.999/9999-99"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -172,10 +256,11 @@ class AddNFInbound extends Component {
                         <label className="grey-text" htmlFor="NFIDt">
                           Data de Emissão:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           ref="emissionDt"
+                          mask="99/99/9999"
                         />
                       </MDBCol>
                       <MDBCol md="6" className="form-group">
@@ -200,6 +285,15 @@ class AddNFInbound extends Component {
                       </MDBCol>
                     </MDBRow>
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"
@@ -235,20 +329,22 @@ class AddNFInbound extends Component {
                         <label htmlFor="NFIReceivedDt" className="grey-text">
                           Data Recebimento:{" "}
                         </label>
-                        <input
+                        <InputMask
                           type="text"
                           ref="receivingDt"
                           className="form-control"
+                          mask="99/99/9999"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label htmlFor="NFIPayingDt" className="grey-text">
                           Data Pagamento:{" "}
                         </label>
-                        <input
+                        <InputMask
                           type="text"
                           ref="payDt"
                           className="form-control"
+                          mask="99/99/9999"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -337,6 +433,16 @@ class AddNFInbound extends Component {
                       </MDBCol> */}
                     {/* </MDBRow> */}
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
+
                     <MDBBtn
                       type="submit"
                       value="Save"

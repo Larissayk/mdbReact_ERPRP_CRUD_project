@@ -23,9 +23,9 @@ import NFsInbound from "./NFsInbound/NFsInbound";
 import AddNFInbound from "./NFsInbound/AddNFInbound";
 import NFInboundDetails from "./NFsInbound/NFsInboundDetails";
 import EditNFInbound from "./NFsInbound/EditNFInbound";
-import Navbar from "./Navbar";
-import Error404 from "./AlertModals/Error404";
 import NavbarUpdate from "./NavbarUpdate";
+import FieldValidation from "../FieldValidation";
+
 
 
 const Main = withRouter(({ location }) => {
@@ -33,7 +33,7 @@ const Main = withRouter(({ location }) => {
     <main>
       {location.pathname !== "/Login" &&
         location.pathname !== "/SignUp" &&
-         <NavbarUpdate />}
+        location.pathname !== "/FieldValidation" && <NavbarUpdate />}
       <Switch>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
@@ -74,7 +74,7 @@ const Main = withRouter(({ location }) => {
         <Route exact path="/NFsInbound/add" component={AddNFInbound} />
         <Route exact path="/NFsInbound/edit/:id" component={EditNFInbound} />
         <Route exact path="/NFsInbound/:id" component={NFInboundDetails} />
-        {/* <Route path="*" component={Error404} /> */}
+        <Route exact path="/FieldValidation" component={FieldValidation} />
       </Switch>
     </main>
   );

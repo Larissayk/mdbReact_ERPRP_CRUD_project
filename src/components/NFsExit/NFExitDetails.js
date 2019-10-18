@@ -19,6 +19,7 @@ import {
   MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
+import Moment from "react-moment";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
@@ -84,8 +85,8 @@ class NFExitDetails extends Component {
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -142,7 +143,7 @@ class NFExitDetails extends Component {
                         value={this.state.details.tipo_nf}
                       />
                     </MDBCol>
-                    <MDBCol md="1" className="form-group ">
+                    <MDBCol md="2" className="form-group ">
                       <label className="grey-text" htmlFor="NFENumber">
                         Nº NF:{" "}
                       </label>
@@ -153,7 +154,7 @@ class NFExitDetails extends Component {
                         value={this.state.details.nota_fiscal}
                       />
                     </MDBCol>
-                    <MDBCol md="4" className="form-group">
+                    <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="NFEEmissor">
                         Emissor:{" "}
                       </label>
@@ -200,7 +201,7 @@ class NFExitDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="NFEStatus"
-                        value={this.state.details.status_contrato}
+                        value={this.state.details.status}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -227,6 +228,24 @@ class NFExitDetails extends Component {
                     </MDBCol>
                   </MDBRow>
                   <hr />
+
+                  <div className="float-left">
+                    <label className="grey-text">
+                      Criado em:
+                      <Moment
+                        format="DD/MM/YYYY"
+                        date={this.state.details.created_at}
+                      />
+                    </label>
+                    <br />
+                    <label className="grey-text">
+                      Última atualização:
+                      <Moment
+                        format="DD/MM/YYYY"
+                        date={this.state.details.updated_at}
+                      />
+                    </label>
+                  </div>
                 </MDBTabPane>
 
                 <MDBTabPane tabId="2" role="tabpanel">

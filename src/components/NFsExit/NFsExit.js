@@ -55,16 +55,14 @@ class NFsExit extends Component {
   render() {
     let filteredData = this.state.nfsExit.filter(nota_saida => {
       return (
-        nota_saida.nota_fiscal
-          .toLowerCase()
-          .indexOf(this.state.search.toLowerCase()) !== -1 &&
+        nota_saida.nota_fiscal.indexOf(this.state.search) !== -1 &&
         nota_saida.status
-            .toLowerCase()
-            .indexOf(this.state.sort.toLowerCase()) !== -1)
+          .toLowerCase()
+          .indexOf(this.state.sort.toLowerCase()) !== -1
+      );
     });
 
 
-    const { nfsExit } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4">
@@ -122,7 +120,7 @@ class NFsExit extends Component {
                   <th>Tipo</th>
                   <th>Data Emissão</th>
                   <th>Empresa</th>
-                  <th className="text-center">Status</th>
+                  <th className="text-center">Status Contr.</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -144,7 +142,7 @@ class NFsExit extends Component {
                         {nota_saida.empresa_emitente}
                       </td>
                       <td className="text-center">
-                        {nota_saida.status.toLowerCase() == "ok" ? (
+                        {nota_saida.status.toLowerCase() === "ok" ? (
                           <MDBBadge className="p-2" pill color="success">
                             OK
                           </MDBBadge>

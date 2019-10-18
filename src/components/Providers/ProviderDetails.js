@@ -12,7 +12,6 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardHeader,
   MDBCardTitle,
   MDBModal,
   MDBModalHeader,
@@ -20,7 +19,7 @@ import {
   MDBModalFooter
 } from "mdbreact";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import Moment from "react-moment";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
@@ -83,11 +82,13 @@ class ProviderDetails extends Component {
   };
 
   render() {
+    const data_inicio = this.state.details.data_inicio
+
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
@@ -275,6 +276,24 @@ class ProviderDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow>
+                  <hr />
+                  <div className="float-left">
+                    <label className="grey-text">
+                      Criado em:
+                      <Moment
+                        format="DD/MM/YYYY"
+                        date={this.state.details.created_at}
+                      />
+                    </label>
+                    <br />
+                    <label className="grey-text">
+                      Última atualização:
+                      <Moment
+                        format="DD/MM/YYYY"
+                        date={this.state.details.updated_at}
+                      />
+                    </label>
+                  </div>
                 </MDBTabPane>
 
                 <MDBTabPane tabId="2" role="tabpanel">
@@ -422,13 +441,7 @@ class ProviderDetails extends Component {
                   </MDBRow>
                   <hr />
                 </MDBTabPane>
-                <label className="grey-text">
-                  Criado em: {this.state.details.created_at}
-                </label>
-                <br />
-                <label className="grey-text">
-                  Última atualização: {this.state.details.updated_at}
-                </label>
+
                 <MDBBtn
                   href={`/Providers/edit/${this.state.details.id}`}
                   className="light-blue darken-4 float-right"
@@ -460,7 +473,6 @@ class ProviderDetails extends Component {
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
         </MDBBtn>
-
         {/* Delete Confirmation Modal */}
         <div>
           <MDBModal

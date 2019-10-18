@@ -7,16 +7,34 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  // Object.values(rest).forEach(val => {
+  //   val === null && (valid = false);
+  // });
+
+  return valid;
+};
 
 class EditCollaboratorDeal extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       id: "",
       nome: "",
@@ -34,9 +52,15 @@ class EditCollaboratorDeal extends Component {
       cnpj_do_pj: "",
       cpf_aprovador: "",
       activeItem: "1",
-      alertMessage: ""
+      alertMessage: "",
+      alertMessage1: "",
+      formErrors: {
+        nome: "",
+        funcao: "",
+        tipo: ""
+      }
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -68,7 +92,7 @@ class EditCollaboratorDeal extends Component {
           },
 
           () => {
-            console.log(this.state);
+            console.log("Get:", this.state);
           }
         );
       })
@@ -109,20 +133,61 @@ class EditCollaboratorDeal extends Component {
       cnpj_do_pj: this.refs.cnpj_do_pj1.value,
       cpf_aprovador: this.refs.cpf_aprovador1.value
     };
-    this.editCollabDeal(newCollabDeal);
+    // this.editCollabDeal(newCollabDeal);
     e.preventDefault();
-    console.log(newCollabDeal);
+    // console.log(newCollabDeal);
+
+    if (formValid(this.state)) {
+      this.editCollabDeal(newCollabDeal);
+      console.log(`
+        --SUBMITTING--
+        Nome: ${this.state.nome}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
 
-  handleInputChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
 
-    this.setState({
-      [name]: value
-    });
-  }
+    switch (name) {
+      case "nome":
+        formErrors.nome =
+          value.length < 1 ? "Campo obrigatório." : "";
+        break;
+        case "funcao":
+        formErrors.funcao =
+          value.length < 1 ? "Campo obrigatório." : "";
+        break;
+        case "tipo":
+        formErrors.tipo =
+          value.length < 1 ? "Campo obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () =>
+      console.log("handleChange:", this.state)
+    );
+  };
+
+  // handleInputChange(e) {
+  //   const target = e.target;
+  //   const value = target.value;
+  //   const name = target.name;
+
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // }
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -133,11 +198,12 @@ class EditCollaboratorDeal extends Component {
   };
 
   render() {
+    const { formErrors } = this.state;
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
@@ -146,33 +212,52 @@ class EditCollaboratorDeal extends Component {
           <hr className="mb-0" />
           <MDBCardBody className="pt-0">
             <MDBContainer>
-              <form onSubmit={this.onSubmit.bind(this)}>
+              <form onSubmit={this.onSubmit.bind(this)} noValidate>
                 <MDBRow>
-                  <MDBCol md="4" className="form-group">
+                  <MDBCol md="4" className="form-group mb-0">
                     <label className="grey-text" htmlFor="nome">
-                      Nome:{" "}
+                      Nome: <span style={{ color: "red" }}>*</span>{" "}
                     </label>
                     <input
-                      className="form-control"
+                      className={
+                        formErrors.nome.length > 0
+                          ? "form-control error1"
+                          : "form-control"
+                      }
                       type="text"
                       name="nome"
                       ref="nome1"
                       value={this.state.nome}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
+                    {formErrors.nome.length > 0 && (
+                      <span className="errorMessageForm">{formErrors.nome}</span>
+                    )}
                   </MDBCol>
-                  <MDBCol md="2" className="form-group">
+                  <MDBCol md="2.5" className="form-group mx-2">
                     <label className="grey-text" htmlFor="status">
-                      Status:{" "}
+                      Status: <span style={{ color: "red" }}>*</span>{" "}
                     </label>
-                    <input
+                    <div>
+                      <select
+                        className="browser-default custom-select"
+                        name="status"
+                        ref="status1"
+                        value={this.state.status}
+                        onChange={this.handleChange}
+                      >
+                        <option value="Ativo">Ativo</option>
+                        <option value="Interrompido">Interrompido</option>
+                      </select>
+                    </div>
+                    {/* <input
                       className="form-control"
                       type="text"
                       name="status"
                       ref="status1"
                       value={this.state.status}
                       onChange={this.handleInputChange}
-                    />
+                    /> */}
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
                     <label className="grey-text" htmlFor="seq_neg">
@@ -184,7 +269,7 @@ class EditCollaboratorDeal extends Component {
                       name="seq_neg"
                       ref="seq_neg1"
                       value={this.state.seq_neg}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
@@ -197,7 +282,7 @@ class EditCollaboratorDeal extends Component {
                       name="data_neg"
                       ref="data_neg1"
                       value={this.state.data_neg}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
@@ -210,48 +295,59 @@ class EditCollaboratorDeal extends Component {
                       name="data_inicio"
                       ref="data_inicio1"
                       value={this.state.data_inicio}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
                   <MDBCol md="4" className="form-group">
                     <label className="grey-text" htmlFor="funcao">
-                      Função:{" "}
+                      Função: <span style={{ color: "red" }}>*</span>{" "}
                     </label>
                     <input
-                      className="form-control "
+                      className={
+                        formErrors.funcao.length > 0
+                          ? "form-control error1"
+                          : "form-control"
+                      }
                       type="text"
                       name="funcao"
                       ref="funcao1"
                       value={this.state.funcao}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
+                    {formErrors.funcao.length > 0 && (
+                      <span className="errorMessageForm">
+                        {formErrors.funcao}
+                      </span>
+                    )}
                   </MDBCol>
                   <MDBCol md="3" className="form-group">
                     <label className="grey-text" htmlFor="cpf">
                       CPF:{" "}
                     </label>
-                    <input
+                    <InputMask
                       className="form-control "
                       type="text"
                       name="cpf"
                       ref="cpf1"
                       value={this.state.cpf}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
+                      mask="999.999.999-99"
                     />
                   </MDBCol>
                   <MDBCol md="3" className="form-group">
                     <label className="grey-text" htmlFor="cnpj_do_pj">
                       CNPJ:{" "}
                     </label>
-                    <input
+                    <InputMask
                       className="form-control "
                       type="text"
                       name="cnpj_do_pj"
                       ref="cnpj_do_pj1"
                       value={this.state.cnpj_do_pj}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
+                      mask="99.999.999/9999-99"
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
@@ -264,7 +360,7 @@ class EditCollaboratorDeal extends Component {
                       name="data_fim"
                       ref="data_fim1"
                       value={this.state.data_fim}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                 </MDBRow>
@@ -272,16 +368,40 @@ class EditCollaboratorDeal extends Component {
                 <MDBRow className="mb-2">
                   <MDBCol md="2" className="form-group">
                     <label className="grey-text" htmlFor="tipo">
-                      Tipo:{" "}
+                      Tipo: <span style={{ color: "red" }}>*</span>{" "}
                     </label>
-                    <input
+                    <div>
+                      <select
+                        className={
+                          formErrors.tipo.length > 0
+                            ? "browser-default custom-select error1"
+                            : "browser-default custom-select"
+                        }
+                        type="text"
+                        name="tipo"
+                        ref="tipo1"
+                        value={this.state.tipo}
+                        onChange={this.handleChange}
+                      >
+                        <option value="">Selecione...</option>
+                        <option value="PJ">PJ</option>
+                        <option value="CLT">CLT</option>
+                        <option value="CLT-FLEX">CLT-FLEX</option>
+                      </select>
+                    </div>
+                    {formErrors.tipo.length > 0 && (
+                      <span className="errorMessageForm">
+                        {formErrors.tipo}
+                      </span>
+                    )}
+                    {/* <input
                       className="form-control "
                       type="text"
                       name="tipo"
                       ref="tipo1"
                       value={this.state.tipo}
                       onChange={this.handleInputChange}
-                    />
+                    /> */}
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
                     <label className="grey-text" htmlFor="vlr_hr_pj">
@@ -293,21 +413,35 @@ class EditCollaboratorDeal extends Component {
                       name="vlr_hr_pj"
                       ref="vlr_hr_pj1"
                       value={this.state.vlr_hr_pj}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
                     <label className="grey-text" htmlFor="fechado_aberto">
                       Aberto/Fechado:{" "}
                     </label>
-                    <input
+                    <div>
+                      <select
+                        className="browser-default custom-select"
+                        type="text"
+                        name="Tipo"
+                        ref="fechado_aberto1"
+                        value={this.state.fechado_aberto}
+                        onChange={this.handleChange}
+                      >
+                        <option>Selecione...</option>
+                        <option value="Aberto">Aberto</option>
+                        <option value="Fechado">Fechado</option>
+                      </select>
+                    </div>
+                    {/* <input
                       className="form-control "
                       type="text"
                       name="fechado_aberto"
                       ref="fechado_aberto1"
                       value={this.state.fechado_aberto}
                       onChange={this.handleInputChange}
-                    />
+                    /> */}
                   </MDBCol>
                   <MDBCol md="2" className="form-group">
                     <label className="grey-text" htmlFor="vlr_clt">
@@ -319,24 +453,34 @@ class EditCollaboratorDeal extends Component {
                       name="vlr_clt"
                       ref="vlr_clt1"
                       value={this.state.vlr_clt}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
                     />
                   </MDBCol>
                   <MDBCol md="4" className="form-group">
                     <label className="grey-text" htmlFor="cpf_aprovador">
                       CPF Aprovador:{" "}
                     </label>
-                    <input
+                    <InputMask
                       className="form-control "
                       type="text"
                       name="cpf_aprovador"
                       ref="cpf_aprovador1"
                       value={this.state.cpf_aprovador}
-                      onChange={this.handleInputChange}
+                      onChange={this.handleChange}
+                      mask="999.999.999-99"
                     />
                   </MDBCol>
                 </MDBRow>
                 <hr />
+
+                <div>
+                  {this.state.alertMessage1 === "error1" ? (
+                    <MDBAlert color="danger">
+                      Certifique-se de que os campos foram preenchidos
+                      corretamente.
+                    </MDBAlert>
+                  ) : null}
+                </div>
 
                 <MDBBtn
                   type="submit"

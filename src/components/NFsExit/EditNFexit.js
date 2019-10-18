@@ -12,15 +12,34 @@ import {
   MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardTitle
+  MDBCardTitle,
+  MDBAlert
 } from "mdbreact";
 import axios from "axios";
+import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
+
+const formValid = ({ formErrors, ...rest }) => {
+  let valid = true;
+
+  // validate form errors being empty
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  // validate the form was filled out
+  // Object.values(rest).forEach(val => {
+  //   val === null && (valid = false);
+  // });
+
+  return valid;
+};
 
 class EditNFexit extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       id: "",
       ano: "",
@@ -44,9 +63,13 @@ class EditNFexit extends Component {
       valor_liquido: "",
       obs: "",
       activeItem: "1",
-      alertMessage: ""
+      alertMessage: "",
+      alertMessage1: "",
+      formErrors: {
+        nota_fiscal: ""
+      }
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -82,10 +105,9 @@ class EditNFexit extends Component {
             pis_cofins: response.data.pis_cofins,
             valor_liquido: response.data.valor_liquido,
             obs: response.data.obs
-            
           },
           () => {
-            console.log(this.state);
+            console.log("Get:", this.state);
           }
         );
       })
@@ -118,7 +140,7 @@ class EditNFexit extends Component {
       cnpj: this.refs.cnpj.value,
       empresa_emitente: this.refs.emissor.value,
       identif_contrato: this.refs.contractId.value,
-      status_contrato: this.refs.contract_status.value,
+      status: this.refs.status.value,
       contrato: this.refs.contract.value,
       data_contrato: this.refs.contractDate.value,
       ordem_compra: this.refs.order.value,
@@ -132,20 +154,53 @@ class EditNFexit extends Component {
       valor_liquido: this.refs.totalValue.value,
       obs: this.refs.obs.value
     };
-    this.editNFexit(newNFExit);
+    // this.editNFexit(newNFExit);
     e.preventDefault();
-    console.log(newNFExit);
+    // console.log(newNFExit);
+
+    if (formValid(this.state)) {
+      this.editNFexit(newNFExit);
+      console.log(`
+        --SUBMITTING--
+        Nota fiscal: ${this.state.nota_fiscal}
+      `);
+    } else {
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      this.setState({ alertMessage1: "error1" }, () => {
+        console.log("alerta:", this.state.alertMessage1);
+      });
+      setTimeout(() => this.setState({ alertMessage1: "" }), 2000);
+    }
   }
 
-  handleInputChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+  handleChange = e => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let formErrors = { ...this.state.formErrors };
 
-    this.setState({
-      [name]: value
-    });
-  }
+    switch (name) {
+      case "nota_fiscal":
+        formErrors.nota_fiscal =
+          value.length === 0 ? "Campo de preenchimento obrigatório." : "";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ formErrors, [name]: value }, () =>
+      console.log("handleChange:", this.state)
+    );
+  };
+
+  // handleInputChange(e) {
+  //   const target = e.target;
+  //   const value = target.value;
+  //   const name = target.name;
+
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // }
 
   toggle = tab => e => {
     if (this.state.activeItem !== tab) {
@@ -156,11 +211,13 @@ class EditNFexit extends Component {
   };
 
   render() {
+        const { formErrors } = this.state;
+
     return (
       <MDBContainer className="main-body">
         <div>
-          {this.state.alertMessage == "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage == "error" ? <ErrorMessage /> : null}
+          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
+          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
@@ -194,7 +251,7 @@ class EditNFexit extends Component {
 
               <MDBTabContent activeItem={this.state.activeItem}>
                 <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)}>
+                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="year">
@@ -203,62 +260,78 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="year"
+                          name="ano"
                           ref="year"
                           value={this.state.ano}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="type">
                           Tipo:{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            type="text"
+                            name="tipo_nf"
+                            ref="type"
+                            value={this.state.tipo_nf}
+                            onChange={this.handleChange}
+                          >
+                            <option>Selecione...</option>
+                            <option value="NF1">NF1</option>
+                            <option value="NF2">NF2</option>
+                            <option value="NFE">NFE</option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control"
                           type="text"
                           name="type"
                           ref="type"
                           value={this.state.tipo_nf}
                           onChange={this.handleInputChange}
-                        />
+                        /> */}
                       </MDBCol>
-                      <MDBCol md="1" className="form-group">
+                      <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="number">
                           Nº NF:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="number"
                           ref="number"
+                          name="nota_fiscal"
                           value={this.state.nota_fiscal}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="emissor">
                           Emissor:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          name="emissor"
+                          name="empresa_emitente"
                           ref="emissor"
                           value={this.state.empresa_emitente}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cnpj">
                           CNPJ:{" "}
                         </label>
-                        <input
+                        <InputMask
                           className="form-control"
                           type="text"
                           name="cnpj"
                           ref="cnpj"
                           value={this.state.cnpj}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
+                          mask="99.999.999/9999-99"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -274,24 +347,36 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="contractId"
+                          name="identif_contrato"
                           ref="contractId"
                           value={this.state.identif_contrato}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="contract_status">
-                          Status:{" "}
+                          Status: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            name="status"
+                            ref="status"
+                            value={this.state.status}
+                            onChange={this.handleChange}
+                          >
+                            <option value="Ok">Ok</option>
+                            <option value="Cancelado">Cancelado</option>
+                          </select>
+                        </div>
+                        {/* <input
                           className="form-control"
                           type="text"
                           name="contract_status"
                           ref="contract_status"
                           value={this.state.status_contrato}
                           onChange={this.handleInputChange}
-                        />
+                        /> */}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="contract">
@@ -300,10 +385,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="contract"
+                          name="contrato"
                           ref="contract"
                           value={this.state.contrato}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
@@ -313,14 +398,23 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="concontractDatetract"
+                          name="data_contrato"
                           ref="contractDate"
                           value={this.state.data_contrato}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"
@@ -349,10 +443,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="emissionDate"
+                          name="data_de_emissao"
                           ref="emissionDate"
                           value={this.state.data_de_emissao}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
@@ -362,10 +456,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="prevPg"
+                          name="data_prev_pagto"
                           ref="prevPg"
                           value={this.state.data_prev_pagto}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
@@ -375,10 +469,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="realPg"
+                          name="data_real_pagto"
                           ref="realPg"
                           value={this.state.data_real_pagto}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -391,7 +485,7 @@ class EditNFexit extends Component {
                           name="order"
                           ref="order"
                           value={this.state.ordem_compra}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -401,10 +495,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="portion"
+                          name="parcela"
                           ref="portion"
                           value={this.state.parcela}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -416,10 +510,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="value"
+                          name="valor_bruto"
                           ref="value"
                           value={this.state.valor_bruto}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -432,7 +526,7 @@ class EditNFexit extends Component {
                           name="irrf"
                           ref="irrf"
                           value={this.state.irrf}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -445,7 +539,7 @@ class EditNFexit extends Component {
                           name="pis_cofins"
                           ref="pis_cofins"
                           value={this.state.pis_cofins}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
@@ -455,10 +549,10 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="totalValue"
+                          name="valor_liquido"
                           ref="totalValue"
                           value={this.state.valor_liquido}
-                          onChange={this.handleInputChange}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
@@ -475,12 +569,21 @@ class EditNFexit extends Component {
                             ref="obs"
                             rows="5"
                             value={this.state.obs}
-                            onChange={this.handleInputChange}
+                            onChange={this.handleChange}
                           />
                         </div>
                       </MDBCol>
                     </MDBRow>
                     <hr />
+
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
                     <MDBBtn
                       type="submit"

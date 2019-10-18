@@ -11,12 +11,7 @@ import {
   MDBListGroup,
   NavLink,
   MDBListGroupItem,
-  MDBDropdownItem,
-  MDBDropdownMenu,
-  MDBDropdownToggle,
-  MDBDropdown
 } from "mdbreact";
-import { BrowserRouter as Router } from "react-router-dom";
 
 
 class NavbarUpdate extends React.Component {
@@ -36,7 +31,7 @@ class NavbarUpdate extends React.Component {
 
   render() {
     const bgDarkGrey = { backgroundColor: "#3F3F3E" };
-    const container = { height: 1300 };
+    const container = { height: 0, width: 400 };
     return (
       <div>
         <div className="sidebar-fixed position-fixed">
@@ -49,37 +44,37 @@ class NavbarUpdate extends React.Component {
             />{" "}
           </a>
           <MDBListGroup active className="list-group-flush">
-            <NavLink exact={true} to="/" ClassName="activeClass">
+            <NavLink exact to="/" className="activeClass">
               <MDBListGroupItem hover>
                 <MDBIcon icon="chart-pie" className="mr-3" />
                 Dashboard
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/Collaborators" ClassName="activeClass">
+            <NavLink to="/Collaborators" className="activeClass">
               <MDBListGroupItem hover>
                 <MDBIcon icon="address-card" className="mr-3" />
                 Colaboradores
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/Providers" ClassName="activeClass">
+            <NavLink to="/Providers" className="activeClass">
               <MDBListGroupItem hover>
                 <MDBIcon icon="briefcase" className="mr-3" />
                 Fornecedores
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/CollabDeals" ClassName="activeClass">
+            <NavLink to="/CollabDeals" className="activeClass">
               <MDBListGroupItem hover>
                 <MDBIcon icon="hand-holding-usd" className="mr-3" />
                 Negociação
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/NFsInbound" ClassName="activeClass">
+            <NavLink to="/NFsInbound" className="activeClass">
               <MDBListGroupItem hover>
                 <MDBIcon icon="file-import" className="mr-3" />
                 NF-Entrada
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/NFsExit" ClassName="activeClass">
+            <NavLink to="/NFsExit" className="activeClass">
               <MDBListGroupItem>
                 <MDBIcon icon="file-export" className="mr-3" />
                 NF-Saída

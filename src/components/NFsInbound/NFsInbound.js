@@ -57,7 +57,6 @@ class NFsInbound extends Component {
         //   .indexOf(this.state.status.toLowerCase()) !== -1
       );
     });
-    const { nfsInbound } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4 px-2 card">

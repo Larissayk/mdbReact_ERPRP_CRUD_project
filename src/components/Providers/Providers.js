@@ -64,7 +64,6 @@ class Providers extends Component {
       
     });
 
-    const { fornecedores } = this.state;
     return (
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4 px-2 card">
@@ -143,7 +142,7 @@ class Providers extends Component {
                         />
                       </td>
                       <td className="text-center">
-                        {fornecedores.status.toLowerCase() == "ativo" ? (
+                        {fornecedores.status.toLowerCase() === "ativo" ? (
                           <MDBBadge className="p-2" pill color="success">
                             Ativo
                           </MDBBadge>
