@@ -386,7 +386,7 @@ class EditCollaboratorDeal extends Component {
                         <option value="">Selecione...</option>
                         <option value="PJ">PJ</option>
                         <option value="CLT">CLT</option>
-                        <option value="CLT-FLEX">CLT-FLEX</option>
+                        <option value="CLT FLEX">CLT FLEX</option>
                       </select>
                     </div>
                     {formErrors.tipo.length > 0 && (
@@ -494,7 +494,7 @@ class EditCollaboratorDeal extends Component {
                   value="Return"
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="undo-alt" /> Voltar
+                  Voltar
                 </MDBBtn>
               </form>
             </MDBContainer>

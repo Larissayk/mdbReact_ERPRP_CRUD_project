@@ -384,7 +384,7 @@ class NFExitDetails extends Component {
                   value="Return"
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="undo-alt" /> Voltar
+                  Voltar 
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>

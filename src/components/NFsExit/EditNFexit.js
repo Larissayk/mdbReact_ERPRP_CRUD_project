@@ -366,7 +366,7 @@ class EditNFexit extends Component {
                             onChange={this.handleChange}
                           >
                             <option value="Ok">Ok</option>
-                            <option value="Cancelado">Cancelado</option>
+                            <option value="CANC">Cancelado</option>
                           </select>
                         </div>
                         {/* <input
@@ -428,7 +428,7 @@ class EditNFexit extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                      <MDBIcon icon="undo-alt" /> Voltar
+                       Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -597,7 +597,7 @@ class EditNFexit extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                      <MDBIcon icon="undo-alt" /> Voltar
+                       Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>

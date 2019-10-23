@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import {
   MDBRow,
   MDBCol,
@@ -19,9 +19,6 @@ import axios from "axios";
 import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -39,52 +36,37 @@ const formValid = ({ formErrors, ...rest }) => {
   return valid;
 };
 
-class AddCollaborator extends Component {
+class AddCustomer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cpf: null,
-      // status: "",
+      cnpj: null,
       nome: null,
-      // apelido: "",
-      // rg: "",
-      // orgao_emissor: "",
-      // ctps: "",
-      data_nascimento: new Date(),
-      // endereco: "",
-      // cep: "",
-      // bairro: "",
-      // cidade: "",
-      // estado: "",
-      // pais: "",
-      // telefone: "",
-      celular: null,
-      // email: "",
-      email_pessoal: null,
+      status: null,
+      email: null,
       activeItem: "1",
       alertMessage: "",
       alertMessage1: "",
       formErrors: {
         nome: "",
-        cpf: "",
-        celular: "",
-        email_pessoal: ""
+        cnpj: "",
+        status: "",
+        email: ""
       }
     };
   }
 
-  AddCollaborator(newCollaborator) {
+  AddCustomer(newCustomer) {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/colaboradores/",
-        data: newCollaborator
+        url: "http://127.0.0.1:8000/api/clientes/",
+        data: newCustomer
       })
       .then(response => {
         this.setState({ alertMessage: "success" });
-        setTimeout(() => this.props.history.push("/Collaborators"), 1800);
-        // this.props.history.push("/Collaborators");
+        setTimeout(() => this.props.history.push("/Customers"), 1800);
       })
       .catch(err => {
         this.setState({ alertMessage: "error" });
@@ -93,31 +75,31 @@ class AddCollaborator extends Component {
   }
 
   onSubmit(e) {
-    const newCollaborator = {
-      cpf: this.refs.collabCpf.value,
-      status: this.refs.collabStatus.value,
-      nome: this.refs.collabName.value,
-      apelido: this.refs.collabNick.value,
-      rg: this.refs.collabRg.value,
-      orgao_emissor: this.refs.collabEmis.value,
-      ctps: this.refs.collabCtps.value,
-      data_nascimento: this.refs.collabBday.value,
-      endereco: this.refs.collabAddress.value,
-      cep: this.refs.collabZipcode.value,
-      bairro: this.refs.collabNeighborhood.value,
-      cidade: this.refs.collabCity.value,
-      pais: this.refs.collabCountry.value,
-      estado: this.refs.collabState.value,
-      telefone: this.refs.collabPhone.value,
-      celular: this.refs.collabMobile.value,
-      email: this.refs.collabEmail.value,
-      email_pessoal: this.refs.collabPEmail.value
+    const newCustomer = {
+    //   cpf: this.refs.collabCpf.value,
+    //   status: this.refs.collabStatus.value,
+    //   nome: this.refs.collabName.value,
+    //   apelido: this.refs.collabNick.value,
+    //   rg: this.refs.collabRg.value,
+    //   orgao_emissor: this.refs.collabEmis.value,
+    //   ctps: this.refs.collabCtps.value,
+    //   data_nascimento: this.refs.collabBday.value,
+    //   endereco: this.refs.collabAddress.value,
+    //   cep: this.refs.collabZipcode.value,
+    //   bairro: this.refs.collabNeighborhood.value,
+    //   cidade: this.refs.collabCity.value,
+    //   pais: this.refs.collabCountry.value,
+    //   estado: this.refs.collabState.value,
+    //   telefone: this.refs.collabPhone.value,
+    //   celular: this.refs.collabMobile.value,
+    //   email: this.refs.collabEmail.value,
+    //   email_pessoal: this.refs.collabPEmail.value
     };
     e.preventDefault();
     // console.log(newCollaborator);
 
     if (formValid(this.state)) {
-      this.AddCollaborator(newCollaborator);
+      this.AddCustomer(newCustomer);
       console.log(`
         --SUBMITTING--
         Nome: ${this.state.nome}
@@ -148,14 +130,11 @@ class AddCollaborator extends Component {
       case "nome":
         formErrors.nome = value.length < 1 ? "Campo obrigatório." : "";
         break;
-      case "cpf":
-        formErrors.cpf = value.length < 1 ? "Campo obrigatório." : "";
+      case "cnoj":
+        formErrors.cnpj = value.length < 1 ? "Campo obrigatório." : "";
         break;
-      case "celular":
-        formErrors.celular = value.length < 1 ? "Campo obrigatório." : "";
-        break;
-      case "email_pessoal":
-        formErrors.email_pessoal = value.length < 1 ? "Campo obrigatório." : "";
+      case "email":
+        formErrors.email = value.length < 1 ? "Campo obrigatório." : "";
         break;
       default:
         break;
@@ -163,15 +142,6 @@ class AddCollaborator extends Component {
 
     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
-
-  // dateHandleChange = date => {
-  //   this.setState({
-  //     data_nascimento: date
-  //   });
-  //   console.log(this.state);
-  // };
-
-
 
   render() {
     const { formErrors } = this.state;
@@ -183,7 +153,7 @@ class AddCollaborator extends Component {
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
-            <strong>NOVO COLABORADOR</strong>
+            <strong>NOVO CLIENTE</strong>
           </MDBCardTitle>
           <hr className="mb-0" />
           <MDBCardBody className="mt-0">
@@ -206,7 +176,7 @@ class AddCollaborator extends Component {
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       <MDBCol md="5" className="form-group mb-0">
-                        <label className="grey-text" htmlFor="collabName">
+                        <label className="grey-text" htmlFor="nome">
                           Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
@@ -217,44 +187,36 @@ class AddCollaborator extends Component {
                               : "form-control"
                           }
                           type="text"
-                          ref="collabName"
+                          ref="nome"
                           autoFocus
                           onChange={this.handleChange}
                         />
-                        {formErrors.nome.length > 0 && (
+                        {/* {formErrors.nome.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.nome}
                           </span>
-                        )}
+                        )} */}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabNick">
-                          Apelido:{" "}
+                        <label className="grey-text" htmlFor="cnpj">
+                          CNPJ: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabNick"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="collabBday">
-                          Data Nascimento:{" "}
-                        </label>
-                        {/* <DatePicker
-                          className="form-control"
-                          selected={this.state.data_nascimento}
-                          onChange={this.dateHandleChange}
-                          dateFormat="dd/MM/yyyy"
-                          ref="collabBday"
-                        /> */}
-
                         <InputMask
-                          className="form-control"
+                          className={
+                            formErrors.cnpj.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          ref="collabBday"
-                          mask="99/99/9999"
+                          ref="cnpj"
+                          mask="99.999.999/9999-99"
+                          onChange={this.handleChange}
                         />
+                        {/* {formErrors.cnpj.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.cnpj}
+                          </span>
+                        )} */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="collabStatus">
@@ -276,193 +238,176 @@ class AddCollaborator extends Component {
                           required
                         /> */}
                       </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="dt_inicio">
+                          Data de início:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control"
+                          type="text"
+                          ref="dt_inicio"
+                          mask="99/99/9999"
+                        />
+                      </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabEmail">
-                          Email:{" "}
+                      <MDBCol md="4" className="form-group ">
+                        <label className="grey-text" htmlFor="Contato">
+                          Contato:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabEmail"
+                          ref="Contato"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group ">
+                        <label className="grey-text" htmlFor="cargo">
+                          Cargo:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="cargo"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabPEmail">
-                          Email Pessoal: <span style={{ color: "red" }}>*</span>{" "}
+                        <label className="grey-text" htmlFor="email">
+                          Email: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
                           className={
-                            formErrors.email_pessoal.length > 0
+                            formErrors.email.length > 0
                               ? "form-control error1"
                               : "form-control"
                           }
                           type="text"
-                          ref="collabPEmail"
-                          name="email_pessoal"
+                          ref="email"
+                          name="email"
                           onChange={this.handleChange}
                         />
-                        {formErrors.email_pessoal.length > 0 && (
+                        {/* {formErrors.email.length > 0 && (
                           <span className="errorMessageForm">
-                            {formErrors.email_pessoal}
+                            {formErrors.email}
                           </span>
-                        )}
+                        )} */}
                       </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="dt_término">
+                          Data de término:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control"
+                          type="text"
+                          ref="dt_término"
+                          mask="99/99/9999"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabPhone">
+                        <label className="grey-text" htmlFor="telefone">
                           Telefone:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref="collabPhone"
+                          ref="telefone"
                           mask="(99) 9999-9999"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabMobile">
-                          Celular: <span style={{ color: "red" }}>*</span>{" "}
+                          Celular:
                         </label>
                         <InputMask
-                          className={
-                            formErrors.celular.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
+                          className="form-control"
                           type="text"
                           ref="collabMobile"
                           mask="(99) 9 9999-9999"
                           name="celular"
-                          onChange={this.handleChange}
                         />
-                        {formErrors.celular.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.celular}
-                          </span>
-                        )}
                       </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCpf">
-                          CPF: <span style={{ color: "red" }}>*</span>{" "}
+                        <label className="grey-text" htmlFor="municipal">
+                          Insc. Municipal:{" "}
                         </label>
-                        <InputMask
-                          className={
-                            formErrors.cpf.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
+                        <input
+                          className="form-control"
                           type="text"
                           ref="collabCpf"
-                          mask="999.999.999-99"
-                          name="cpf"
-                          onChange={this.handleChange}
+                          name="municipal"
                         />
-                        {formErrors.cpf.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.cpf}
-                          </span>
-                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabRg">
-                          RG:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="collabRg"
-                          mask="99.999.999-**"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="collabEmis">
-                          Órgão Emis.:{" "}
+                        <label className="grey-text" htmlFor="estadual">
+                          Insc. Estadual:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabEmis"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="collabCtps">
-                          CTPS:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabCtps"
+                          ref="estadual"
                         />
                       </MDBCol>
                     </MDBRow>
                     <hr />
                     <MDBRow>
                       <MDBCol md="8" className="form-group">
-                        <label className="grey-text" htmlFor="collabAddress">
+                        <label className="grey-text" htmlFor="endereco">
                           Endereço:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabAddress"
+                          ref="endereco"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label
-                          className="grey-text"
-                          htmlFor="collabNeighborhood"
-                        >
+                        <label className="grey-text" htmlFor="bairro">
                           Bairro:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabNeighborhood"
+                          ref="bairro"
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCity">
+                        <label className="grey-text" htmlFor="cidade">
                           Cidade:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabCity"
+                          ref="cidade"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabState">
-                          Estado:{" "}
+                        <label className="grey-text" htmlFor="uf">
+                          UF:{" "}
                         </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabState"
-                        />
+                        <input className="form-control" type="text" ref="uf" />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCountry">
+                        <label className="grey-text" htmlFor="pais">
                           País:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabCountry"
+                          ref="pais"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabZipcode">
+                        <label className="grey-text" htmlFor="cep">
                           CEP:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref="collabZipcode"
+                          ref="cep"
                           mask="99999-999"
                         />
                       </MDBCol>
@@ -486,7 +431,7 @@ class AddCollaborator extends Component {
                       <MDBIcon far icon="save" /> Salvar
                     </MDBBtn>
                     <MDBBtn
-                      href="/Collaborators"
+                      href="/Customers"
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
@@ -502,4 +447,4 @@ class AddCollaborator extends Component {
     );
   }
 }
-export default AddCollaborator;
+export default AddCustomer;

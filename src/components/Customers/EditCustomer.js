@@ -29,14 +29,14 @@ const formValid = ({ formErrors, ...rest }) => {
   });
 
   //validate the form was filled out
-//   Object.values(rest).forEach(val => {
-//     val === "" && (valid = false);
-//   });
-// console.log("rest",rest)
+  //   Object.values(rest).forEach(val => {
+  //     val === "" && (valid = false);
+  //   });
+  // console.log("rest",rest)
   return valid;
 };
 
-class EditCollaborator extends Component {
+class EditCustomer extends Component {
   constructor(props) {
     super(props);
 
@@ -65,44 +65,44 @@ class EditCollaborator extends Component {
       alertMessage1: "",
       formErrors: {
         nome: "",
-        cpf: "",
-        celular: "",
-        email_pessoal: ""
+        cnpj: "",
+        status: "",
+        email: ""
       }
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.getCollaboratorDetails();
+    this.getCustomersDetails();
   }
 
-  getCollaboratorDetails() {
-    let collaboratorId = this.props.match.params.id;
+  getCustomersDetails() {
+    let customerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/colaboradores/${collaboratorId}`)
+      .get(`http://127.0.0.1:8000/api/clientes/${customerId}`)
       .then(response => {
         this.setState(
           {
-            id: response.data.id,
-            nome: response.data.nome,
-            cpf: response.data.cpf,
-            status: response.data.status,
-            apelido: response.data.apelido,
-            rg: response.data.rg,
-            orgao_emissor: response.data.orgao_emissor,
-            ctps: response.data.ctps,
-            data_nascimento: response.data.data_nascimento,
-            endereco: response.data.endereco,
-            cep: response.data.cep,
-            bairro: response.data.bairro,
-            cidade: response.data.cidade,
-            estado: response.data.estado,
-            pais: response.data.pais,
-            telefone: response.data.telefone,
-            celular: response.data.celular,
-            email: response.data.email,
-            email_pessoal: response.data.email_pessoal
+            // id: response.data.id,
+            // nome: response.data.nome,
+            // cpf: response.data.cpf,
+            // status: response.data.status,
+            // apelido: response.data.apelido,
+            // rg: response.data.rg,
+            // orgao_emissor: response.data.orgao_emissor,
+            // ctps: response.data.ctps,
+            // data_nascimento: response.data.data_nascimento,
+            // endereco: response.data.endereco,
+            // cep: response.data.cep,
+            // bairro: response.data.bairro,
+            // cidade: response.data.cidade,
+            // estado: response.data.estado,
+            // pais: response.data.pais,
+            // telefone: response.data.telefone,
+            // celular: response.data.celular,
+            // email: response.data.email,
+            // email_pessoal: response.data.email_pessoal
           },
           () => {
             console.log("Get:", this.state);
@@ -112,50 +112,50 @@ class EditCollaborator extends Component {
       .catch(err => console.log(err));
   }
 
-  editCollaborator(newCollaborator) {
+  editCustomer(newCustomer) {
     axios
       .request({
         method: "PUT",
         url: `http://127.0.0.1:8000/api/colaboradores/${this.state.id}`,
-        data: newCollaborator
+        data: newCustomer
       })
       .then(response => {
         this.setState({ alertMessage: "success" });
-        setTimeout(() => this.props.history.push("/Collaborators"), 1800);
+        setTimeout(() => this.props.history.push("/Customers"), 1800);
       })
       .catch(err => {
         this.setState({ alertMessage: "error" });
-        console.log('Erro:', err);
+        console.log("Erro:", err);
       });
   }
 
   onSubmit(e) {
-    const newCollaborator = {
-      cpf: this.refs.collabCpf.value,
-      status: this.refs.collabStatus.value,
-      nome: this.refs.collabName.value,
-      apelido: this.refs.collabNick.value,
-      rg: this.refs.collabRg.value,
-      orgao_emissor: this.refs.collabEmis.value,
-      ctps: this.refs.collabCtps.value,
-      data_nascimento: this.refs.collabBday.value,
-      endereco: this.refs.collabAddress.value,
-      cep: this.refs.collabZipcode.value,
-      bairro: this.refs.collabNeighborhood.value,
-      cidade: this.refs.collabCity.value,
-      pais: this.refs.collabCountry.value,
-      estado: this.refs.collabState.value,
-      telefone: this.refs.collabPhone.value,
-      celular: this.refs.collabMobile.value,
-      email: this.refs.collabEmail.value,
-      email_pessoal: this.refs.collabPEmail.value
+    const newCustomer = {
+    //   cpf: this.refs.collabCpf.value,
+    //   status: this.refs.collabStatus.value,
+    //   nome: this.refs.collabName.value,
+    //   apelido: this.refs.collabNick.value,
+    //   rg: this.refs.collabRg.value,
+    //   orgao_emissor: this.refs.collabEmis.value,
+    //   ctps: this.refs.collabCtps.value,
+    //   data_nascimento: this.refs.collabBday.value,
+    //   endereco: this.refs.collabAddress.value,
+    //   cep: this.refs.collabZipcode.value,
+    //   bairro: this.refs.collabNeighborhood.value,
+    //   cidade: this.refs.collabCity.value,
+    //   pais: this.refs.collabCountry.value,
+    //   estado: this.refs.collabState.value,
+    //   telefone: this.refs.collabPhone.value,
+    //   celular: this.refs.collabMobile.value,
+    //   email: this.refs.collabEmail.value,
+    //   email_pessoal: this.refs.collabPEmail.value
     };
     // this.editCollaborator(newCollaborator);
     e.preventDefault();
     // console.log(newCollaborator);
 
     if (formValid(this.state)) {
-      this.editCollaborator(newCollaborator);
+      this.editCustomer(newCustomer);
       console.log(`
         --SUBMITTING--
         Nome: ${this.state.nome}
@@ -178,16 +178,13 @@ class EditCollaborator extends Component {
       case "nome":
         formErrors.nome = value.length < 1 ? "Campo obrigatório." : "";
         break;
-      case "celular":
-        formErrors.celular = value.length < 1 ? "Campo obrigatório." : "";
+      case "email":
+        formErrors.email = value.length < 1 ? "Campo obrigatório." : "";
         break;
-      case "cpf":
-        formErrors.cpf = value.length < 1 ? "Campo obrigatório." : "";
+      case "cnpj":
+        formErrors.cnpj = value.length < 1 ? "Campo obrigatório." : "";
         break;
-      case "email_pessoal":
-        formErrors.email_pessoal = value.length < 1 ? "Campo obrigatório." : "";
-        break;
-      default:
+        default:
         break;
     }
 
@@ -216,7 +213,7 @@ class EditCollaborator extends Component {
 
   render() {
     const { formErrors } = this.state;
-    console.log("formErrors",formErrors);
+    console.log("formErrors", formErrors);
 
     return (
       <MDBContainer className="main-body">
@@ -226,7 +223,7 @@ class EditCollaborator extends Component {
         </div>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-            <strong>EDITAR COLABORADOR</strong>
+            <strong>EDITAR CLIENTE</strong>
           </MDBCardTitle>
           <hr className="mb-0" />
           <MDBCardBody className="mt-0">
@@ -249,7 +246,7 @@ class EditCollaborator extends Component {
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       <MDBCol md="5" className="form-group mb-0">
-                        <label className="grey-text" htmlFor="collabName">
+                        <label className="grey-text" htmlFor="nome">
                           Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
@@ -259,52 +256,48 @@ class EditCollaborator extends Component {
                               : "form-control"
                           }
                           type="text"
-                          ref="collabName"
+                          ref="nome"
                           name="nome"
                           value={this.state.nome}
                           onChange={this.handleChange}
                         />
-                        {formErrors.nome.length > 0 && (
+                        {/* {formErrors.nome.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.nome}
                           </span>
-                        )}
+                        )} */}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabNick">
-                          Apelido:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabNick"
-                          name="apelido"
-                          value={this.state.apelido}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="collabBday">
-                          Data Nascimento:{" "}
+                        <label className="grey-text" htmlFor="cnpj">
+                          CNPJ: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <InputMask
-                          className="form-control"
+                          className={
+                            formErrors.cnpj.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          ref="collabBday"
-                          name="data_nascimento"
-                          value={this.state.data_nascimento}
+                          ref="cnpj"
+                          name="cnpj"
+                          value={this.state.cnpj}
+                          mask="99.999.999/9999-99"
                           onChange={this.handleChange}
-                          mask="99/99/9999"
                         />
+                        {/* {formErrors.cnpj.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.cnpj}
+                          </span>
+                        )} */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="collabStatus">
+                        <label className="grey-text" htmlFor="status">
                           Status: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <div>
                           <select
                             className="browser-default custom-select"
-                            ref="collabStatus"
+                            ref="status"
                             name="status"
                             value={this.state.status}
                             onChange={this.handleChange}
@@ -323,51 +316,94 @@ class EditCollaborator extends Component {
                           onChange={this.handleInputChange}
                         /> */}
                       </MDBCol>
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="dt_inicio">
+                          Data de início:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control"
+                          type="text"
+                          ref="dt_inicio"
+                          name="dt_inicio"
+                          value={this.state.dt_inicio}
+                          onChange={this.handleChange}
+                          mask="99/99/9999"
+                        />
+                      </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabEmail">
-                          Email:{" "}
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="contato">
+                          Contato:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabEmail"
-                          name="email"
-                          value={this.state.email}
+                          ref="contato"
+                          name="contato"
+                          value={this.state.contato}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabPEmail">
-                          Email Pessoal: <span style={{ color: "red" }}>*</span>{" "}
+                        <label className="grey-text" htmlFor="cargo">
+                          Cargo:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="cargo"
+                          name="cargo"
+                          value={this.state.cargo}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="email">
+                          Email: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
                           className={
-                            formErrors.email_pessoal.length > 0
+                            formErrors.email.length > 0
                               ? "form-control error1"
                               : "form-control"
                           }
                           type="text"
-                          ref="collabPEmail"
-                          name="email_pessoal"
-                          value={this.state.email_pessoal}
+                          ref="email"
+                          name="email"
+                          value={this.state.email}
                           onChange={this.handleChange}
                         />
-                        {formErrors.email_pessoal.length > 0 && (
+                        {/* {formErrors.email.length > 0 && (
                           <span className="errorMessageForm">
-                            {formErrors.email_pessoal}
+                            {formErrors.email}
                           </span>
-                        )}
+                        )} */}
                       </MDBCol>
+                      <MDBCol md="2" className="form-group ">
+                        <label className="grey-text" htmlFor="dt_fim">
+                          Data de término:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control"
+                          type="text"
+                          ref="dt_inicio"
+                          name="dt_fim"
+                          value={this.state.dt_fim}
+                          onChange={this.handleChange}
+                          mask="99/99/9999"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabPhone">
+                        <label className="grey-text" htmlFor="telefone">
                           Telefone:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref="collabPhone"
+                          ref="telefone"
                           name="telefone"
                           value={this.state.telefone}
                           onChange={this.handleChange}
@@ -375,90 +411,42 @@ class EditCollaborator extends Component {
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabMobile">
-                          Celular: <span style={{ color: "red" }}>*</span>{" "}
+                        <label className="grey-text" htmlFor="celular">
+                          Celular:
                         </label>
                         <InputMask
-                          className={
-                            formErrors.celular.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
+                          className="form-control"
                           type="text"
-                          ref="collabMobile"
+                          ref="celular"
                           name="celular"
                           value={this.state.celular}
                           onChange={this.handleChange}
                           mask="(99) 9 9999-9999"
                         />
-                        {formErrors.celular.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.celular}
-                          </span>
-                        )}
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCpf">
-                          CPF: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <InputMask
-                          className={
-                            formErrors.cpf.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="collabCpf"
-                          name="cpf"
-                          value={this.state.cpf}
-                          onChange={this.handleChange}
-                          mask="999.999.999-99"
-                        />
-                        {formErrors.cpf.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.cpf}
-                          </span>
-                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabRg">
-                          RG:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="collabRg"
-                          name="rg"
-                          value={this.state.rg}
-                          onChange={this.handleChange}
-                          mask="99.999.999-**"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="collabEmis">
-                          Órgão Emis.:{" "}
+                        <label className="grey-text" htmlFor="municipal">
+                          Insc. Municipal:
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabEmis"
-                          name="orgao_emissor"
-                          value={this.state.orgao_emissor}
+                          ref="municipal"
+                          name="municipal"
+                          value={this.state.municipal}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="collabCtps">
-                          CTPS:{" "}
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="estadual">
+                          Insc. Estadual:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabCtps"
-                          name="ctps"
-                          value={this.state.ctps}
+                          ref="estadual"
+                          name="estadual"
+                          value={this.state.estadual}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
@@ -466,29 +454,26 @@ class EditCollaborator extends Component {
                     <hr />
                     <MDBRow>
                       <MDBCol md="8" className="form-group">
-                        <label className="grey-text" htmlFor="collabAddress">
+                        <label className="grey-text" htmlFor="endereco">
                           Endereço:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabAddress"
+                          ref="endereco"
                           name="endereco"
                           value={this.state.endereco}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label
-                          className="grey-text"
-                          htmlFor="collabNeighborhood"
-                        >
+                        <label className="grey-text" htmlFor="bairro">
                           Bairro:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabNeighborhood"
+                          ref="bairro"
                           name="bairro"
                           value={this.state.bairro}
                           onChange={this.handleChange}
@@ -497,52 +482,52 @@ class EditCollaborator extends Component {
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCity">
+                        <label className="grey-text" htmlFor="cidade">
                           Cidade:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabCity"
+                          ref="cidade"
                           name="cidade"
                           value={this.state.cidade}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabState">
-                          Estado:{" "}
+                        <label className="grey-text" htmlFor="uf">
+                          UF:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabState"
-                          name="estado"
-                          value={this.state.estado}
+                          ref="uf"
+                          name="uf"
+                          value={this.state.uf}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCountry">
+                        <label className="grey-text" htmlFor="pais">
                           País:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="collabCountry"
+                          ref="pais"
                           name="pais"
                           value={this.state.pais}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabZipcode">
+                        <label className="grey-text" htmlFor="cep">
                           CEP:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref="collabZipcode"
+                          ref="cep"
                           name="cep"
                           value={this.state.cep}
                           onChange={this.handleChange}
@@ -569,7 +554,7 @@ class EditCollaborator extends Component {
                       <MDBIcon far icon="save" /> Salvar
                     </MDBBtn>
                     <MDBBtn
-                      href="/Collaborators"
+                      href="/Customers"
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
@@ -583,7 +568,7 @@ class EditCollaborator extends Component {
         </MDBCard>
         <MDBBtn
           size="lg"
-          href="/Collaborators/add"
+          href="/Customers/add"
           className="px-3 py-3 light-blue darken-4 circle-btn"
         >
           <MDBIcon size="lg" className="text-white" icon="plus" />
@@ -592,4 +577,4 @@ class EditCollaborator extends Component {
     );
   }
 }
-export default EditCollaborator;
+export default EditCustomer;

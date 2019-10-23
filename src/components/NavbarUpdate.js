@@ -14,6 +14,7 @@ import {
 } from "mdbreact";
 
 
+
 class NavbarUpdate extends React.Component {
   constructor(props) {
     super(props);
@@ -46,38 +47,53 @@ class NavbarUpdate extends React.Component {
           <MDBListGroup active className="list-group-flush">
             <NavLink exact to="/" className="activeClass">
               <MDBListGroupItem hover>
-                <MDBIcon icon="chart-pie" className="mr-3" />
+                <MDBIcon icon="chart-pie" className="mr-3" fixed />
                 Dashboard
               </MDBListGroupItem>
             </NavLink>
             <NavLink to="/Collaborators" className="activeClass">
               <MDBListGroupItem hover>
-                <MDBIcon icon="address-card" className="mr-3" />
+                <MDBIcon icon="address-card" className="mr-3" fixed />
                 Colaboradores
               </MDBListGroupItem>
             </NavLink>
             <NavLink to="/Providers" className="activeClass">
               <MDBListGroupItem hover>
-                <MDBIcon icon="briefcase" className="mr-3" />
+                <MDBIcon icon="briefcase" className="mr-3" fixed />
                 Fornecedores
               </MDBListGroupItem>
             </NavLink>
             <NavLink to="/CollabDeals" className="activeClass">
               <MDBListGroupItem hover>
-                <MDBIcon icon="hand-holding-usd" className="mr-3" />
+                {/* <MDBIcon icon="fas fa-hand-holding-usd" className="mr-3" fixed /> */}
+                <i class="fas fa-hand-holding-usd mr-3 pl-1" />
                 Negociação
               </MDBListGroupItem>
             </NavLink>
             <NavLink to="/NFsInbound" className="activeClass">
               <MDBListGroupItem hover>
-                <MDBIcon icon="file-import" className="mr-3" />
+                {/* <MDBIcon icon="file-import" className="mr-3" fixed /> */}
+                <i class="fas fa-file-import mr-3 pl-1" />
                 NF-Entrada
               </MDBListGroupItem>
             </NavLink>
             <NavLink to="/NFsExit" className="activeClass">
               <MDBListGroupItem>
-                <MDBIcon icon="file-export" className="mr-3" />
+                {/* <MDBIcon icon="file-export" className="mr-3" fixed /> */}
+                <i class="fas fa-file-export mr-3 pl-1" />
                 NF-Saída
+              </MDBListGroupItem>
+            </NavLink>
+            <NavLink to="/Customers" className="activeClass">
+              <MDBListGroupItem>
+                <MDBIcon far icon="building" className="mr-3" fixed />
+                Clientes
+              </MDBListGroupItem>
+            </NavLink>
+            <NavLink to="/Contracts" className="activeClass">
+              <MDBListGroupItem>
+                <MDBIcon icon="file-alt" className="mr-3" fixed />
+                Contratos
               </MDBListGroupItem>
             </NavLink>
           </MDBListGroup>
@@ -109,7 +125,8 @@ class NavbarUpdate extends React.Component {
                 </MDBNavItem>
                 <MDBNavItem>
                   <MDBNavLink to="/Login">
-                    <MDBIcon icon="sign-out-alt" />
+                    <i class="fas fa-sign-out-alt"></i>
+                    {/* <MDBIcon icon="sign-out-alt" /> */}
                   </MDBNavLink>
                 </MDBNavItem>
               </MDBNavbarNav>

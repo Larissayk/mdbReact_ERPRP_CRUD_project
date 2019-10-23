@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import {
   MDBContainer,
   MDBTable,
@@ -11,32 +11,31 @@ import {
   MDBIcon,
   MDBCol,
   MDBRow,
-  MDBBadge
 } from "mdbreact";
 import axios from "axios";
-import CollaboratorItem from "./CollaboratorItem";
+import ContractItem from "./ContractItem";
+import Moment from "react-moment";
 
 
-class Collaborators extends Component {
+class Contracts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colaboradores: [],
+      contratos: [],
       search: "",
       sort: ""
-
     };
   }
 
   componentDidMount() {
-    this.getCollaborators();
+    this.getContracts();
   }
 
-  getCollaborators() {
+  getContracts() {
     axios
-      .get("http://127.0.0.1:8000/api/colaboradores")
+      .get("http://127.0.0.1:8000/api/contratos")
       .then(response => {
-        this.setState({ colaboradores: response.data }, () => {
+        this.setState({ contratos: response.data }, () => {
           console.log(this.state);
         });
       })
@@ -54,23 +53,22 @@ class Collaborators extends Component {
   }
 
   render() {
-    let filteredData = this.state.colaboradores.filter(colaboradores => {
+    let filteredData = this.state.contratos.filter(contratos => {
       if (this.state.sort === "") {
         return (
-          colaboradores.nome
+          contratos.codigo_RP
             .toLowerCase()
-            .indexOf(this.state.search.toLowerCase()) !== -1 ||
-          colaboradores.cpf.indexOf(this.state.search) !== -1
+            .indexOf(this.state.search.toLowerCase()) !== -1 
+        //  || contratos.cnpj.indexOf(this.state.search) !== -1
         );
       } else {
         return (
-          colaboradores.nome
+          contratos.codigo_RP
             .toLowerCase()
             .indexOf(this.state.search.toLowerCase()) !== -1 &&
-          colaboradores.status
+          contratos.tipo
             .toLowerCase()
             .indexOf(this.state.sort.toLowerCase()) !== -1
-          //  colaboradores.cpf.indexOf(this.state.search) !== -1
         );
       }
     });
@@ -79,7 +77,7 @@ class Collaborators extends Component {
       <MDBContainer className="main-body">
         <MDBCard className="mt-3 mb-4 px-2 card">
           <MDBCardTitle style={{ fontSize: 28 }}>
-            <strong>COLABORADORES</strong>
+            <strong>CONTRATOS</strong>
           </MDBCardTitle>
           <hr className="mb-0" />
           <MDBCardBody className="pt-0 mt-0">
@@ -95,10 +93,10 @@ class Collaborators extends Component {
                   <input
                     className="form-control my-0 py-1"
                     type="text"
-                    placeholder="Busque pelo nome ou CPF"
+                    placeholder="Busque pelo código"
                     aria-label="Search"
-                    value={this.state.search}
-                    onChange={this.updateSearch.bind(this)}
+                    // value={this.state.search}
+                    // onChange={this.updateSearch.bind(this)}
                   />
                 </div>
               </MDBCol>
@@ -111,9 +109,9 @@ class Collaborators extends Component {
                     style={{ width: 130 }}
                     className="form-control my-0 py-1 custom-select"
                   >
-                    <option value="">Status</option>
-                    <option value="ativo">Ativo</option>
-                    <option value="desligado">Desligado</option>
+                    <option value="">Tipo</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="fornecedor">Fornecedor</option>
                   </select>
                 </div>
               </MDBCol>
@@ -121,7 +119,7 @@ class Collaborators extends Component {
               <MDBCol md="4" className="p-0 m-0 ">
                 <MDBBtn
                   className="pt-3 px-3 my-3 float-right light-blue darken-4"
-                  href="/Collaborators/add"
+                  href="/Contracts/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
@@ -130,39 +128,31 @@ class Collaborators extends Component {
             <MDBTable hover className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
-                  <th>Nome</th>
-                  <th>CPF</th>
-                  <th>Celular</th>
-                  <th>Email pessoal</th>
-                  <th className="text-center">Status</th>
+                  <th>Cód. RP</th>
+                  <th>Tipo</th>
+                  <th>Contratante</th>
+                  <th>Contratada</th>
+                  <th>Data início</th>
+                  <th>Vigência</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
-                {filteredData.map(colaboradores => {
+                {filteredData.map(contratos => {
                   return (
-                    <tr key={colaboradores.id}>
+                    <tr key={contratos.id}>
                       <td className="align-middle">
-                        <CollaboratorItem
-                          key={colaboradores.id}
-                          item={colaboradores}
+                        <ContractItem key={contratos.id} item={contratos} />
+                      </td>
+                      <td className="align-middle">{contratos.tipo}</td>
+                      <td className="align-middle">{contratos.contratante}</td>
+                      <td className="text-center">{contratos.contratada}</td>
+                      <td className="align-middle">
+                        <Moment
+                          format="DD/MM/YYYY"
+                          date={contratos.dt_inicio}
                         />
                       </td>
-                      <td className="align-middle">{colaboradores.cpf}</td>
-                      <td className="align-middle">{colaboradores.celular}</td>
-                      <td className="align-middle">
-                        {colaboradores.email_pessoal}
-                      </td>
-                      <td className="text-center">
-                        {colaboradores.status.toLowerCase() === "ativo" ? (
-                          <MDBBadge className="p-2" pill color="success">
-                            Ativo
-                          </MDBBadge>
-                        ) : (
-                          <MDBBadge className="p-2" pill color="danger">
-                            Desligado
-                          </MDBBadge>
-                        )}
-                      </td>
+                      <td className="text-center">{contratos.vigencia}</td>
                     </tr>
                   );
                 })}
@@ -174,4 +164,4 @@ class Collaborators extends Component {
     );
   }
 }
-export default Collaborators;
+export default Contracts;

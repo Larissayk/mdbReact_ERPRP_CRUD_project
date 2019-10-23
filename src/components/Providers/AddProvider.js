@@ -19,6 +19,9 @@ import axios from "axios";
 import InputMask from "react-input-mask";
 import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -424,7 +427,7 @@ class AddProvider extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                      <MDBIcon icon="undo-alt" /> Voltar
+                       Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -633,7 +636,7 @@ class AddProvider extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                      <MDBIcon icon="undo-alt" /> Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
