@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #F0F3F4;
+  background-color: #e4e5e6;
   /* background-image: url('https://media.istockphoto.com/vectors/abstract-gear-wheel-mechanism-background-machine-technology-vector-vector-id1022563038') */
 }
 
@@ -18,8 +18,8 @@ body {
 
 .main-body {
   position: absolute;
-  left: 19%;
-  top: 15%;
+  left: 18%;
+  top: 12%;
   align-items: center;
   flex-direction: column;
 }
@@ -36,7 +36,7 @@ body {
 
 .card-header {
   /* background-color: #47bebe; */
-  background-color:#00bcd4 ;
+  background-color: #00bcd4;
   color: white;
   text-align: center;
   align-items: center;
@@ -50,7 +50,7 @@ body {
 }
 
 .card-title {
-  margin:1rem;
+  margin: 1rem;
   margin-bottom: 0;
 }
 
@@ -79,99 +79,117 @@ body {
 }
 
 table th {
-    font-size: 1rem;
-    font-weight: 400;
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 table td {
-   font-size: 1rem;
-    font-weight: 300;
+  font-size: 1rem;
+  font-weight: 300;
 }
 
-
 .error-header {
-	background: #fff;
+  background: #fff;
   height: 180px;
   margin-top: 3rem;
 }
 
 .error-container {
-	background: rgba(0,0,0,.05);
+  background: rgba(0, 0, 0, 0.05);
   text-align: center;
   height: 25rem;
 }
 
 .error-container h1 {
-	color: #39bbdb;
+  color: #39bbdb;
 }
 
 .error-container h1 {
-	font-size: 110px;
-	font-weight: 300;
-	margin: -103px 0 0 0;
-	text-align: center;
+  font-size: 110px;
+  font-weight: 300;
+  margin: -103px 0 0 0;
+  text-align: center;
 }
 
 .error-divider {
-	margin-top: -27px;
-	padding: 30px 0;
+  margin-top: -27px;
+  padding: 30px 0;
 }
 
 .error-container h2 {
-	font-size: 58px;
-	font-weight: 300;
-	margin: 0;
-	text-transform: uppercase;
+  font-size: 58px;
+  font-weight: 300;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .error-container p.description {
-	color:white;
-	font-size: 40px;
-	margin: 0;
+  color: white;
+  font-size: 40px;
+  margin: 0;
 }
 
 .input-group.md-form.form-sm.form-1 input {
-  border: 1px solid #DEE2E6;
+  border: 1px solid #dee2e6;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
 
-select.form-control{
-  border: 1px solid #DEE2E6;
+select.form-control {
+  border: 1px solid #dee2e6;
   height: 34px;
   margin-left: 1rem;
 }
 
 table.table thead th {
-border-top: 2px solid #dee2e6
+  border-top: 2px solid #dee2e6;
 }
-
 
 .md-form.input-group .input-group-text {
-background-color: #01579b;
+  background-color: #01579b;
 }
+
+.navbar {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+  padding: none ;
+  font-weight: 400;
+  font-size: medium;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+  color: #FFF;
+}
+
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link:hover {
+color:#bac2cc;
+}
+
 
 .sidebar-fixed {
   left: 0;
   top: 0;
   height: 100vh;
-  width: 220px;
+  width: 200px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   z-index: 1050;
-  background-color: #3F3F3E;
-  padding: 1rem;
+  background-color: #3f3f3e;
   padding-top: 0;
 }
 
-.sidebar-fixed .logo-wrapper img{
+.sidebar-fixed .logo-wrapper img {
   width: 100%;
   padding: 2.5rem;
+}
+
+.img-fluid {
+  margin: 1rem;
+  padding: 1rem;
 }
 
 .list-group-item {
   display: block !important;
   transition: background-color 0.3s;
-  background-color: #3F3F3E;
+  background-color: #3f3f3e;
   padding: 0;
   color: white;
 }
@@ -179,34 +197,37 @@ background-color: #01579b;
 .list-group .active {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   border-radius: 5px;
-  color:#007bff;
+  color: #61dafb;
   text-decoration: none;
 }
 
-li.list-group-item .list-group-item-undefined .list-group-item-action{
-color: #007bff;
+li.list-group-item .list-group-item-undefined .list-group-item-action {
+  color: #61dafb;
 }
 
+.list-group .list-group-item:first-child {
+  font-weight:400;
+}
 
 .list-group-item:hover {
-  color:#007bff;
+  color: #bac2cc;
   text-decoration: none;
-  background-color: #3F3F3E
+  background-color: #3f3f3e;
 }
 
-.list-group-flush{
-  color: #3F3F3E;
+.list-group-flush {
+  color: #3f3f3e;
 }
 
-.list-group-flush .list-group-item .active{
-    border-right: 0;
-    border-left: 0;
-    border-radius: 0;
+.list-group-flush .list-group-item .active {
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
 }
 
 .active li {
-  background-color: #3F3F3E !;
-  color:#007bff;
+  background-color: #3f3f3e !;
+  color: #61dafb;
 }
 
 input.form-control.error {
@@ -215,12 +236,14 @@ input.form-control.error {
 
 input.form-control.error1 {
   border: 1px solid red;
-  box-shadow: 0 2px 5px 0 hsla(0, 100%, 50%, 0.158), 0 2px 10px 0 rgba(248, 2, 2, 0.12);
+  box-shadow: 0 2px 5px 0 hsla(0, 100%, 50%, 0.158),
+    0 2px 10px 0 rgba(248, 2, 2, 0.12);
 }
 
 select.browser-default.custom-select.error1 {
   border: 1px solid red;
-  box-shadow: 0 2px 5px 0 hsla(0, 100%, 50%, 0.158), 0 2px 10px 0 rgba(248, 2, 2, 0.12);
+  box-shadow: 0 2px 5px 0 hsla(0, 100%, 50%, 0.158),
+    0 2px 10px 0 rgba(248, 2, 2, 0.12);
 }
 
 .errorMessage {

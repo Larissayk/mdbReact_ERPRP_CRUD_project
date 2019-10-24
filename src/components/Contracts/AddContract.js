@@ -41,18 +41,20 @@ class AddContract extends Component {
     super(props);
 
     this.state = {
-      cnpj: null,
-      nome: null,
-      status: null,
-      email: null,
+      cod_contrato_rp: null,
+      cod_contrato: null,
+      tipo_contrato: null,
+      cnpj_contratante: null,
+      cnpj_contratada: null,
       activeItem: "1",
       alertMessage: "",
       alertMessage1: "",
       formErrors: {
-        nome: "",
-        cnpj: "",
-        status: "",
-        email: ""
+        cod_contrato_rp: "",
+        cod_contrato: "",
+        tipo_contrato: "",
+        cnpj_contratante: "",
+        cnpj_contratada:""
       }
     };
   }
@@ -76,24 +78,29 @@ class AddContract extends Component {
 
   onSubmit(e) {
     const newContract = {
-      //   cpf: this.refs.collabCpf.value,
-      //   status: this.refs.collabStatus.value,
-      //   nome: this.refs.collabName.value,
-      //   apelido: this.refs.collabNick.value,
-      //   rg: this.refs.collabRg.value,
-      //   orgao_emissor: this.refs.collabEmis.value,
-      //   ctps: this.refs.collabCtps.value,
-      //   data_nascimento: this.refs.collabBday.value,
-      //   endereco: this.refs.collabAddress.value,
-      //   cep: this.refs.collabZipcode.value,
-      //   bairro: this.refs.collabNeighborhood.value,
-      //   cidade: this.refs.collabCity.value,
-      //   pais: this.refs.collabCountry.value,
-      //   estado: this.refs.collabState.value,
-      //   telefone: this.refs.collabPhone.value,
-      //   celular: this.refs.collabMobile.value,
-      //   email: this.refs.collabEmail.value,
-      //   email_pessoal: this.refs.collabPEmail.value
+      cod_contrato_rp: this.refs.cod_contrato_rp.value,
+      cod_contrato: this.refs.cod_contrato.value,
+      tipo_contrato: this.refs.tipo_contrato.value,
+      nome_contratante: this.refs.nome_contratante.value,
+      apelido_contratante: this.refs.apelido_contratante.value,
+      cnpj_contratante: this.refs.cnpj_contratante.value,
+      end_empresa_contratante: this.refs.end_empresa_contratante.value,
+      cod_cep_contratante: this.refs.cod_cep_contratante.value,
+      nome_contratada: this.refs.nome_contratada.value,
+      apelido_contratada: this.refs.apelido_contratada.value,
+      cnpj_contratada: this.refs.cnpj_contratada.value,
+      end_empresa_contratada: this.refs.end_empresa_contratada.value,
+      cod_cep_contratada: this.refs.cod_cep_contratada.value,
+      objeto_contrato: this.refs.objeto_contrato.value,
+      valor_contrato: this.refs.valor_contrato.value,
+      data_assinatura_contrato: this.refs.data_assinatura_contrato.value,
+      data_inicio_contrato: this.refs.data_inicio_contrato.value,
+      data_fim_contrato: this.refs.data_fim_contrato.value,
+      prazo_vigencia_contrato: this.refs.prazo_vigencia_contrato.value,
+      prorrogacao_contrato: this.refs.prorrogacao_contrato.value,
+      prazo_para_prorrogacao_contrato: this.refs.prazo_para_prorrogacao_contrato.value,
+      reajuste_contrato: this.refs.reajuste_contrato.value,
+      condicao_fat_contrato: this.refs.condicao_fat_contrato.value
     };
     e.preventDefault();
     // console.log(newCollaborator);
@@ -102,7 +109,7 @@ class AddContract extends Component {
       this.AddContract(newContract);
       console.log(`
         --SUBMITTING--
-        Nome: ${this.state.nome}
+        Cód. RP: ${this.state.cod_contrato_rp}
       `);
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -121,27 +128,38 @@ class AddContract extends Component {
     }
   };
 
-  //   handleChange = e => {
-  //     e.preventDefault();
-  //     const { name, value } = e.target;
-  //     let formErrors = { ...this.state.formErrors };
+    handleChange = e => {
+      e.preventDefault();
+      const { name, value } = e.target;
+      let formErrors = { ...this.state.formErrors };
 
-  //     switch (name) {
-  //       case "nome":
-  //         formErrors.nome = value.length < 1 ? "Campo obrigatório." : "";
-  //         break;
-  //       case "cnoj":
-  //         formErrors.cnpj = value.length < 1 ? "Campo obrigatório." : "";
-  //         break;
-  //       case "email":
-  //         formErrors.email = value.length < 1 ? "Campo obrigatório." : "";
-  //         break;
-  //       default:
-  //         break;
-  //     }
+      switch (name) {
+        case "cod_contrato_rp":
+          formErrors.cod_contrato_rp =
+            value.length < 1 ? "Campo obrigatório." : "";
+          break;
+        case "cod_contrato":
+          formErrors.cod_contrato =
+            value.length < 1 ? "Campo obrigatório." : "";
+          break;
+        case "tipo_contrato":
+          formErrors.tipo_contrato =
+            value.length < 1 ? "Campo obrigatório." : "";
+          break;
+        case "cnpj_contratante":
+          formErrors.cnpj_contratante =
+            value.length < 1 ? "Campo obrigatório." : "";
+          break;
+        case "cnpj_contratada":
+          formErrors.cnpj_contratada =
+            value.length < 1 ? "Campo obrigatório." : "";
+          break;
+        default:
+          break;
+      }
 
-  //     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
-  //   };
+      this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+    };
 
   render() {
     const { formErrors } = this.state;
@@ -189,7 +207,7 @@ class AddContract extends Component {
                     Dados Contratada
                   </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <MDBNavLink
                     to="#"
                     active={this.state.activeItem === "4"}
@@ -208,7 +226,7 @@ class AddContract extends Component {
                   >
                     Aditivos
                   </MDBNavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </MDBNav>
 
               <MDBTabContent activeItem={this.state.activeItem}>
@@ -216,78 +234,94 @@ class AddContract extends Component {
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       <MDBCol md="3" className="form-group mb-0">
-                        <label className="grey-text" htmlFor="cod_RP">
+                        <label className="grey-text" htmlFor="cod_contrato_rp">
                           Código RP: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
-                          name="nome"
-                          className="form-control"
-                          //   {
-                          //     formErrors.cod_RP.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                          name="cod_contrato_rp"
+                          className={
+                            formErrors.cod_contrato_rp.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          ref="cod_RP"
+                          ref="cod_contrato_rp"
                           autoFocus
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.cod_RP.length > 0 && (
+                        {formErrors.cod_contrato_rp.length > 0 && (
                           <span className="errorMessageForm">
-                            {formErrors.cod_RP}
+                            {formErrors.cod_contrato_rp}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cnpj">
+                        <label className="grey-text" htmlFor="cod_contrato">
                           Cód. Contrato: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <InputMask
-                          className="form-control"
-                          //   {
-                          //     formErrors.codigo.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                          className={
+                            formErrors.cod_contrato.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          ref="codigo"
+                          ref="cod_contrato"
+                          name="cod_contrato"
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.codigo.length > 0 && (
+                        {formErrors.cod_contrato.length > 0 && (
                           <span className="errorMessageForm">
-                            {formErrors.codigo}
+                            {formErrors.cod_contrato}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="collabStatus">
+                        <label className="grey-text" htmlFor="tipo_contrato">
                           Tipo: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <div>
                           <select
-                            className="browser-default custom-select"
-                            ref="tipo"
+                            className={
+                              formErrors.tipo_contrato.length > 0
+                                ? "browser-default custom-select error1"
+                                : "browser-default custom-select"
+                            }
+                            ref="tipo_contrato"
+                            name="tipo_contrato"
+                            onChange={this.handleChange}
                           >
                             <option value="cliente">Cliente</option>
                             <option value="fornecedor">Fornecedor</option>
                           </select>
                         </div>
+                        {formErrors.tipo_contrato.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.tipo_contrato}
+                          </span>
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="dt_assinatura">
+                        <label
+                          className="grey-text"
+                          htmlFor="data_assinatura_contrato"
+                        >
                           Data assinatura:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref=""
+                          ref="data_assinatura_contrato"
                           mask="99/99/9999"
                         />
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="dt_inicio">
+                        <label
+                          className="grey-text"
+                          htmlFor="data_inicio_contrato"
+                        >
                           Data de início:{" "}
-                          <span style={{ color: "red" }}>*</span>{" "}
+                          {/* <span style={{ color: "red" }}>*</span>{" "} */}
                         </label>
                         <InputMask
                           className="form-control"
@@ -297,7 +331,7 @@ class AddContract extends Component {
                           //       : "form-control"
                           //   }
                           type="text"
-                          ref="dt_inicio"
+                          ref="data_inicio_contrato"
                           mask="99/99/9999"
                         />
                         {/* {formErrors.dt_inicio.length > 0 && (
@@ -309,33 +343,39 @@ class AddContract extends Component {
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="valor">
+                        <label className="grey-text" htmlFor="valor_contrato">
                           Valor:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="valor"
+                          ref="valor_contrato"
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group ">
-                        <label className="grey-text" htmlFor="vigencia">
+                        <label
+                          className="grey-text"
+                          htmlFor="prazo_vigencia_contrato"
+                        >
                           Vigência (meses):{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="vigencia"
+                          ref="prazo_vigencia_contrato"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group ">
-                        <label className="grey-text" htmlFor="prorrogacao">
+                        <label
+                          className="grey-text"
+                          htmlFor="prorrogacao_contrato"
+                        >
                           Prorrogação:{" "}
                         </label>
                         <div>
                           <select
                             className="browser-default custom-select"
-                            ref="prorrogação"
+                            ref="prorrogacao_contrato"
                           >
                             <option value="">Selecionar</option>
                             <option value="Novo Acordo">Novo Acordo</option>
@@ -347,13 +387,16 @@ class AddContract extends Component {
                         </div>
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="dt_término">
+                        <label
+                          className="grey-text"
+                          htmlFor="data_fim_contrato"
+                        >
                           Data de término:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref="dt_término"
+                          ref="data_fim_contrato"
                           mask="99/99/9999"
                         />
                       </MDBCol>
@@ -362,14 +405,14 @@ class AddContract extends Component {
                       <MDBCol md="4" className="form-group">
                         <label
                           className="grey-text"
-                          htmlFor="prazo_prorrogacao"
+                          htmlFor="prazo_para_prorrogacao_contrato"
                         >
                           Prazo Prorrogação:{" "}
                         </label>
                         <div>
                           <select
                             className="browser-default custom-select"
-                            ref="prazo_prorrogacao"
+                            ref="prazo_para_prorrogacao_contrato"
                           >
                             <option value="">Selecionar</option>
                             <option value="No ato">No ato</option>
@@ -380,13 +423,16 @@ class AddContract extends Component {
                         </div>
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="reajuste">
+                        <label
+                          className="grey-text"
+                          htmlFor="reajuste_contrato"
+                        >
                           Reajuste:
                         </label>
                         <div>
                           <select
                             className="browser-default custom-select"
-                            ref="reajuste"
+                            ref="reajuste_contrato"
                           >
                             <option value="">Selecionar</option>
                             <option value="IGP-M">IGP-M</option>
@@ -396,14 +442,17 @@ class AddContract extends Component {
                         </div>
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="cond_faturamento">
+                        <label
+                          className="grey-text"
+                          htmlFor="condicao_fat_contrato"
+                        >
                           Cond. Faturamento:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="cond_faturamento"
-                          name="municond_faturamentoipal"
+                          ref="condicao_fat_contrato"
+                          name="condicao_fat_contrato"
                         />
                       </MDBCol>
                     </MDBRow>
@@ -441,7 +490,7 @@ class AddContract extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -477,39 +526,53 @@ class AddContract extends Component {
                           CNPJ: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <InputMask
-                          className="form-control"
-                          //   {
-                          //     formErrors.cnpj_contratante.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                          className={
+                            formErrors.cnpj_contratante.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="cnpj_contratante"
+                          name="cnpj_contratante"
                           mask="99.999.999/9999-99"
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.cnpj_contratante.length > 0 && (
+                        {formErrors.cnpj_contratante.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cnpj_contratante}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="8" className="form-group">
                         <label
                           className="grey-text"
-                          htmlFor="endereco_contratante"
+                          htmlFor="end_empresa_contratante"
                         >
                           Endereço:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="endereco_contratante"
+                          ref="end_empresa_contratante"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
+                        <label
+                          className="grey-text"
+                          htmlFor="cod_cep_contratante"
+                        >
+                          CEP:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control"
+                          type="text"
+                          ref="cod_cep_contratante"
+                          mask="99999-999"
+                        />
+                      </MDBCol>
+                      {/* <MDBCol md="4" className="form-group">
                         <label
                           className="grey-text"
                           htmlFor="bairro_contratante"
@@ -521,9 +584,9 @@ class AddContract extends Component {
                           type="text"
                           ref="bairro_contratante"
                         />
-                      </MDBCol>
+                      </MDBCol> */}
                     </MDBRow>
-                    <MDBRow className="mb-2">
+                    {/* <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
                         <label
                           className="grey-text"
@@ -568,7 +631,7 @@ class AddContract extends Component {
                           mask="99999-999"
                         />
                       </MDBCol>
-                    </MDBRow>
+                    </MDBRow> */}
                     <hr />
                     <div>
                       {this.state.alertMessage1 === "error1" ? (
@@ -591,7 +654,7 @@ class AddContract extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -627,39 +690,53 @@ class AddContract extends Component {
                           CNPJ: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <InputMask
-                          className="form-control"
-                          //   {
-                          //     formErrors.cnpj_contratada.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                          className={
+                            formErrors.cnpj_contratada.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
                           ref="cnpj_contratada"
                           mask="99.999.999/9999-99"
+                          name="cnpj_contratada"
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.cnpj_contratada.length > 0 && (
+                        {formErrors.cnpj_contratada.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cnpj_contratada}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="8" className="form-group">
                         <label
                           className="grey-text"
-                          htmlFor="endereco_contratada"
+                          htmlFor="end_empresa_contratada"
                         >
                           Endereço:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="endereco_contratada"
+                          ref="end_empresa_contratada"
                         />
                       </MDBCol>
                       <MDBCol md="4" className="form-group">
+                        <label
+                          className="grey-text"
+                          htmlFor="cod_cep_contratada"
+                        >
+                          CEP:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control"
+                          type="text"
+                          ref="cod_cep_contratada"
+                          mask="99999-999"
+                        />
+                      </MDBCol>
+                      {/* <MDBCol md="4" className="form-group">
                         <label
                           className="grey-text"
                           htmlFor="bairro_contratada"
@@ -671,9 +748,9 @@ class AddContract extends Component {
                           type="text"
                           ref="bairro_contratada"
                         />
-                      </MDBCol>
+                      </MDBCol> */}
                     </MDBRow>
-                    <MDBRow className="mb-2">
+                    {/* <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
                         <label
                           className="grey-text"
@@ -718,7 +795,7 @@ class AddContract extends Component {
                           mask="99999-999"
                         />
                       </MDBCol>
-                    </MDBRow>
+                    </MDBRow> */}
                     <hr />
 
                     <div>
@@ -742,12 +819,12 @@ class AddContract extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
 
-                <MDBTabPane tabId="4" role="tabpanel">
+                {/* <MDBTabPane tabId="4" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       <MDBCol md="3" className="form-group">
@@ -756,19 +833,19 @@ class AddContract extends Component {
                         </label>
                         <input
                           className="form-control"
-                          //   {
-                          //     formErrors.cod_anexo.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.cod_anexo.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           type="text"
                           ref="cod_anexo"
                         />
-                        {/* {formErrors.cod_anexo.length > 0 && (
+                        {formErrors.cod_anexo.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cod_anexo}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cod_contrato_rp">
@@ -777,20 +854,20 @@ class AddContract extends Component {
                         </label>
                         <input
                           className="form-control"
-                          //   {
-                          //     formErrors.cod_contrato_rp.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.cod_contrato_rp.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           type="text"
                           ref="cod_contrato_rp"
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.cnpj_contratada.length > 0 && (
+                        {formErrors.cnpj_contratada.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cnpj_contratada}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="vigencia_anexo">
@@ -809,20 +886,20 @@ class AddContract extends Component {
                         </label>
                         <InputMask
                           className="form-control"
-                          //   {
-                          //     formErrors.codigo.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.codigo.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           type="text"
                           ref="dt_inicio_anexo"
                           mask="99/99/9999"
                         />
-                        {/* {formErrors.dt_inicio.length > 0 && (
+                        {formErrors.dt_inicio.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.dt_inicio}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="dt_fim_anexo">
@@ -844,19 +921,19 @@ class AddContract extends Component {
                         </label>
                         <textarea
                           className="form-control"
-                          //   {
-                          //     formErrors.objeto_anexo.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.objeto_anexo.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           ref="objeto_anexo"
                           rows="3"
                         />
-                        {/* {formErrors.objeto_anexo.length > 0 && (
+                        {formErrors.objeto_anexo.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.objeto_anexo}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                     </MDBRow>
                     <hr />
@@ -896,19 +973,19 @@ class AddContract extends Component {
                         </label>
                         <input
                           className="form-control"
-                          //   {
-                          //     formErrors.cod_anexo.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.cod_anexo.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           type="text"
                           ref="cod_aditivo"
                         />
-                        {/* {formErrors.cod_anexo.length > 0 && (
+                        {formErrors.cod_anexo.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cod_anexo}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cod_contrato_rp">
@@ -917,20 +994,20 @@ class AddContract extends Component {
                         </label>
                         <input
                           className="form-control"
-                          //   {
-                          //     formErrors.cod_contrato_rp.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.cod_contrato_rp.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           type="text"
                           ref="cod_contrato_rp"
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.cnpj_contratada.length > 0 && (
+                        {formErrors.cnpj_contratada.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cnpj_contratada}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="vigencia_aditivo">
@@ -952,20 +1029,20 @@ class AddContract extends Component {
                         </label>
                         <InputMask
                           className="form-control"
-                          //   {
-                          //     formErrors.codigo.length > 0
-                          //       ? "form-control error1"
-                          //       : "form-control"
-                          //   }
+                            {
+                              formErrors.codigo.length > 0
+                                ? "form-control error1"
+                                : "form-control"
+                            }
                           type="text"
                           ref="dt_inicio_aditivo"
                           mask="99/99/9999"
                         />
-                        {/* {formErrors.dt_inicio.length > 0 && (
+                        {formErrors.dt_inicio.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.dt_inicio}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="dt_fim_anexo">
@@ -1097,7 +1174,7 @@ class AddContract extends Component {
                       Voltar
                     </MDBBtn>
                   </form>
-                </MDBTabPane>
+                </MDBTabPane> */}
               </MDBTabContent>
             </MDBContainer>
           </MDBCardBody>

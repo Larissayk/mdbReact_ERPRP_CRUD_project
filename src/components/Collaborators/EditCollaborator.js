@@ -42,9 +42,9 @@ class EditCollaborator extends Component {
 
     this.state = {
       id: "",
-      cpf: null,
+      cpf: "",
       status: "",
-      nome: null,
+      nome: "",
       apelido: "",
       rg: "",
       orgao_emissor: "",
@@ -57,9 +57,8 @@ class EditCollaborator extends Component {
       estado: "",
       pais: "",
       telefone: "",
-      celular: null,
-      email: "",
-      email_pessoal: null,
+      celular: "",
+      email_pessoal: "",
       activeItem: "1",
       alertMessage: "",
       alertMessage1: "",
@@ -101,7 +100,6 @@ class EditCollaborator extends Component {
             pais: response.data.pais,
             telefone: response.data.telefone,
             celular: response.data.celular,
-            email: response.data.email,
             email_pessoal: response.data.email_pessoal
           },
           () => {
@@ -147,7 +145,6 @@ class EditCollaborator extends Component {
       estado: this.refs.collabState.value,
       telefone: this.refs.collabPhone.value,
       celular: this.refs.collabMobile.value,
-      email: this.refs.collabEmail.value,
       email_pessoal: this.refs.collabPEmail.value
     };
     // this.editCollaborator(newCollaborator);
@@ -325,7 +322,7 @@ class EditCollaborator extends Component {
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="3" className="form-group">
+                      {/* <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabEmail">
                           Email:{" "}
                         </label>
@@ -337,8 +334,8 @@ class EditCollaborator extends Component {
                           value={this.state.email}
                           onChange={this.handleChange}
                         />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      </MDBCol> */}
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabPEmail">
                           Email Pessoal: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
@@ -360,7 +357,7 @@ class EditCollaborator extends Component {
                           </span>
                         )}
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
@@ -374,7 +371,7 @@ class EditCollaborator extends Component {
                           mask="(99) 9999-9999"
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabMobile">
                           Celular: <span style={{ color: "red" }}>*</span>{" "}
                         </label>

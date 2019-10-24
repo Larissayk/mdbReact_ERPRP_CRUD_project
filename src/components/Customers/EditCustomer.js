@@ -42,32 +42,33 @@ class EditCustomer extends Component {
 
     this.state = {
       id: "",
-      cpf: null,
-      status: "",
-      nome: null,
-      apelido: "",
-      rg: "",
-      orgao_emissor: "",
-      ctps: "",
-      data_nascimento: "",
+      cnpj: null,
+      empresa: null,
+      insc_estadual: "",
+      insc_municipal: "",
+      insc_municipal: "",
+      insc_municipal: "",
+      data_inicio: null,
+      data_fim: "",
+      contato1: "",
       endereco: "",
       cep: "",
       bairro: "",
-      cidade: "",
+      municipio: "",
       estado: "",
       pais: "",
       telefone: "",
-      celular: null,
+      celular: "",
       email: "",
-      email_pessoal: null,
+      email_contato: "",
+      cargo1: "",
       activeItem: "1",
       alertMessage: "",
       alertMessage1: "",
       formErrors: {
-        nome: "",
+        empresa: "",
         cnpj: "",
-        status: "",
-        email: ""
+        data_inicio: ""
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -84,25 +85,26 @@ class EditCustomer extends Component {
       .then(response => {
         this.setState(
           {
-            // id: response.data.id,
-            // nome: response.data.nome,
-            // cpf: response.data.cpf,
-            // status: response.data.status,
-            // apelido: response.data.apelido,
-            // rg: response.data.rg,
-            // orgao_emissor: response.data.orgao_emissor,
-            // ctps: response.data.ctps,
-            // data_nascimento: response.data.data_nascimento,
-            // endereco: response.data.endereco,
-            // cep: response.data.cep,
-            // bairro: response.data.bairro,
-            // cidade: response.data.cidade,
-            // estado: response.data.estado,
-            // pais: response.data.pais,
-            // telefone: response.data.telefone,
-            // celular: response.data.celular,
-            // email: response.data.email,
-            // email_pessoal: response.data.email_pessoal
+            id: response.data.id,
+            cnpj: response.data.cnpj,
+            insc_estadual: response.data.insc_estadual,
+            insc_municipal: response.data.insc_municipal,
+            status: response.data.status,
+            empresa: response.data.empresa,
+            endereco: response.data.endereco,
+            cep: response.data.cep,
+            bairro: response.data.bairro,
+            municipio: response.data.municipio,
+            uf: response.data.uf,
+            pais: response.data.pais,
+            data_inicio: response.data.data_inicio,
+            data_fim: response.data.data_fim,
+            contato1: response.data.contato1,
+            cargo1: response.data.cargo1,
+            celular: response.data.celular,
+            email_contato: response.data.email_contato,
+            email: response.data.email,
+            telefone: response.data.telefone
           },
           () => {
             console.log("Get:", this.state);
@@ -116,7 +118,7 @@ class EditCustomer extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/colaboradores/${this.state.id}`,
+        url: `http://127.0.0.1:8000/api/clientes/${this.state.id}`,
         data: newCustomer
       })
       .then(response => {
@@ -131,24 +133,25 @@ class EditCustomer extends Component {
 
   onSubmit(e) {
     const newCustomer = {
-    //   cpf: this.refs.collabCpf.value,
-    //   status: this.refs.collabStatus.value,
-    //   nome: this.refs.collabName.value,
-    //   apelido: this.refs.collabNick.value,
-    //   rg: this.refs.collabRg.value,
-    //   orgao_emissor: this.refs.collabEmis.value,
-    //   ctps: this.refs.collabCtps.value,
-    //   data_nascimento: this.refs.collabBday.value,
-    //   endereco: this.refs.collabAddress.value,
-    //   cep: this.refs.collabZipcode.value,
-    //   bairro: this.refs.collabNeighborhood.value,
-    //   cidade: this.refs.collabCity.value,
-    //   pais: this.refs.collabCountry.value,
-    //   estado: this.refs.collabState.value,
-    //   telefone: this.refs.collabPhone.value,
-    //   celular: this.refs.collabMobile.value,
-    //   email: this.refs.collabEmail.value,
-    //   email_pessoal: this.refs.collabPEmail.value
+      cnpj: this.refs.cnpj.value,
+      insc_estadual: this.refs.insc_estadual.value,
+      insc_municipal: this.refs.insc_municipal.value,
+      status: this.refs.status.value,
+      empresa: this.refs.empresa.value,
+      endereco: this.refs.endereco.value,
+      cep: this.refs.cep.value,
+      bairro: this.refs.bairro.value,
+      municipio: this.refs.municipio.value,
+      uf: this.refs.uf.value,
+      pais: this.refs.pais.value,
+      data_inicio: this.refs.data_inicio.value,
+      data_fim: this.refs.data_fim.value,
+      contato1: this.refs.contato1.value,
+      cargo1: this.refs.cargo1.value,
+      celular: this.refs.celular.value,
+      email_contato: this.refs.email_contato.value,
+      email: this.refs.email.value,
+      telefone: this.refs.telefone.value
     };
     // this.editCollaborator(newCollaborator);
     e.preventDefault();
@@ -158,7 +161,7 @@ class EditCustomer extends Component {
       this.editCustomer(newCustomer);
       console.log(`
         --SUBMITTING--
-        Nome: ${this.state.nome}
+        Nome: ${this.state.empresa}
       `);
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -175,11 +178,11 @@ class EditCustomer extends Component {
     let formErrors = { ...this.state.formErrors };
 
     switch (name) {
-      case "nome":
-        formErrors.nome = value.length < 1 ? "Campo obrigatório." : "";
+      case "empresa":
+        formErrors.empresa = value.length < 1 ? "Campo obrigatório." : "";
         break;
-      case "email":
-        formErrors.email = value.length < 1 ? "Campo obrigatório." : "";
+      case "data_inicio":
+        formErrors.data_inicio = value.length < 1 ? "Campo obrigatório." : "";
         break;
       case "cnpj":
         formErrors.cnpj = value.length < 1 ? "Campo obrigatório." : "";
@@ -246,26 +249,26 @@ class EditCustomer extends Component {
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
                       <MDBCol md="5" className="form-group mb-0">
-                        <label className="grey-text" htmlFor="nome">
+                        <label className="grey-text" htmlFor="empresa">
                           Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <input
                           className={
-                            formErrors.nome.length > 0
+                            formErrors.empresa.length > 0
                               ? "form-control error1"
                               : "form-control"
                           }
                           type="text"
-                          ref="nome"
-                          name="nome"
-                          value={this.state.nome}
+                          ref="empresa"
+                          name="empresa"
+                          value={this.state.empresa}
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.nome.length > 0 && (
+                        {formErrors.empresa.length > 0 && (
                           <span className="errorMessageForm">
-                            {formErrors.nome}
+                            {formErrors.empresa}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cnpj">
@@ -284,11 +287,11 @@ class EditCustomer extends Component {
                           mask="99.999.999/9999-99"
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.cnpj.length > 0 && (
+                        {formErrors.cnpj.length > 0 && (
                           <span className="errorMessageForm">
                             {formErrors.cnpj}
                           </span>
-                        )} */}
+                        )}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
                         <label className="grey-text" htmlFor="status">
@@ -317,86 +320,87 @@ class EditCustomer extends Component {
                         /> */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="dt_inicio">
+                        <label className="grey-text" htmlFor="data_inicio">
                           Data de início:{" "}
+                          <span style={{ color: "red" }}>*</span>{" "}
                         </label>
                         <InputMask
-                          className="form-control"
+                          className={
+                            formErrors.data_inicio.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
                           type="text"
-                          ref="dt_inicio"
-                          name="dt_inicio"
-                          value={this.state.dt_inicio}
+                          ref="data_inicio"
+                          name="data_inicio"
+                          value={this.state.data_inicio}
                           onChange={this.handleChange}
                           mask="99/99/9999"
                         />
+                        {formErrors.data_inicio.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.data_inicio}
+                          </span>
+                        )}
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
                       <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="contato">
+                        <label className="grey-text" htmlFor="contato1">
                           Contato:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="contato"
-                          name="contato"
-                          value={this.state.contato}
+                          ref="contato1"
+                          name="contato1"
+                          value={this.state.contato1}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cargo">
-                          Cargo:{" "}
+                        <label className="grey-text" htmlFor="cargo1">
+                          Cargo do contato:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="cargo"
-                          name="cargo"
-                          value={this.state.cargo}
+                          ref="cargo1"
+                          name="cargo1"
+                          value={this.state.cargo1}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="email">
-                          Email: <span style={{ color: "red" }}>*</span>{" "}
+                        <label className="grey-text" htmlFor="email_contato">
+                          Email do contato:
                         </label>
                         <input
-                          className={
-                            formErrors.email.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
+                          className="form-control"
                           type="text"
-                          ref="email"
-                          name="email"
-                          value={this.state.email}
+                          ref="email_contato"
+                          name="email_contato"
+                          value={this.state.email_contato}
                           onChange={this.handleChange}
                         />
-                        {/* {formErrors.email.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.email}
-                          </span>
-                        )} */}
                       </MDBCol>
                       <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="dt_fim">
+                        <label className="grey-text" htmlFor="data_fim">
                           Data de término:{" "}
                         </label>
                         <InputMask
                           className="form-control"
                           type="text"
-                          ref="dt_inicio"
-                          name="dt_fim"
-                          value={this.state.dt_fim}
-                          onChange={this.handleChange}
+                          ref="data_fim"
+                          name="data_fim"
                           mask="99/99/9999"
+                          value={this.state.data_fim}
+                          onChange={this.handleChange}
                         />
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="telefone">
                           Telefone:{" "}
                         </label>
@@ -405,12 +409,12 @@ class EditCustomer extends Component {
                           type="text"
                           ref="telefone"
                           name="telefone"
+                          mask="(99) 9999-9999"
                           value={this.state.telefone}
                           onChange={this.handleChange}
-                          mask="(99) 9999-9999"
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="celular">
                           Celular:
                         </label>
@@ -419,34 +423,49 @@ class EditCustomer extends Component {
                           type="text"
                           ref="celular"
                           name="celular"
+                          mask="(99) 9 9999-9999"
                           value={this.state.celular}
                           onChange={this.handleChange}
-                          mask="(99) 9 9999-9999"
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="municipal">
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="email">
+                          Email:
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          ref="email"
+                          name="email"
+                          value={this.state.email}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="insc_municipal">
                           Insc. Municipal:
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="municipal"
-                          name="municipal"
-                          value={this.state.municipal}
+                          ref="insc_municipal"
+                          name="insc_municipal"
+                          value={this.state.insc_municipal}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="estadual">
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="insc_estadual">
                           Insc. Estadual:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="estadual"
-                          name="estadual"
-                          value={this.state.estadual}
+                          ref="insc_estadual"
+                          name="insc_estadual"
+                          value={this.state.insc_estadual}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
@@ -482,15 +501,15 @@ class EditCustomer extends Component {
                     </MDBRow>
                     <MDBRow className="mb-2">
                       <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cidade">
-                          Cidade:{" "}
+                        <label className="grey-text" htmlFor="municipio">
+                          Município:{" "}
                         </label>
                         <input
                           className="form-control"
                           type="text"
-                          ref="cidade"
-                          name="cidade"
-                          value={this.state.cidade}
+                          ref="municipio"
+                          name="municipio"
+                          value={this.state.municipio}
                           onChange={this.handleChange}
                         />
                       </MDBCol>
@@ -558,7 +577,7 @@ class EditCustomer extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>

@@ -55,19 +55,19 @@ class Customers extends Component {
     let filteredData = this.state.clientes.filter(clientes => {
       if (this.state.sort === "") {
         return (
-          clientes.nome
+          clientes.empresa
             .toLowerCase()
             .indexOf(this.state.search.toLowerCase()) !== -1 ||
           clientes.cnpj.indexOf(this.state.search) !== -1
         );
       } else {
         return (
-          clientes.nome
+          clientes.empresa
             .toLowerCase()
-            .indexOf(this.state.search.toLowerCase()) !== -1 &&
-          clientes.status
-            .toLowerCase()
-            .indexOf(this.state.sort.toLowerCase()) !== -1
+            .indexOf(this.state.search.toLowerCase()) !== -1 
+          // clientes.status
+          //   .toLowerCase()
+          //   .indexOf(this.state.sort.toLowerCase()) !== -1
           //  colaboradores.cpf.indexOf(this.state.search) !== -1
         );
       }
@@ -143,8 +143,8 @@ class Customers extends Component {
                       </td>
                       <td className="align-middle">{clientes.cnpj}</td>
                       <td className="align-middle">{clientes.email}</td>
-                      <td className="text-center">
-                        {clientes.status.toLowerCase() === "ativo" ? (
+                      <td className="text-center">{clientes.status}
+                        {/* {clientes.status.toLowerCase() === "ativo" ? (
                           <MDBBadge className="p-2" pill color="success">
                             Ativo
                           </MDBBadge>
@@ -152,7 +152,7 @@ class Customers extends Component {
                           <MDBBadge className="p-2" pill color="danger">
                             Desligado
                           </MDBBadge>
-                        )}
+                        )} */}
                       </td>
                     </tr>
                   );

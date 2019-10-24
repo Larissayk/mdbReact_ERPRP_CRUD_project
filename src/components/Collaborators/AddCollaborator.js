@@ -110,7 +110,7 @@ class AddCollaborator extends Component {
       estado: this.refs.collabState.value,
       telefone: this.refs.collabPhone.value,
       celular: this.refs.collabMobile.value,
-      email: this.refs.collabEmail.value,
+      // email: this.refs.collabEmail.value,
       email_pessoal: this.refs.collabPEmail.value
     };
     e.preventDefault();
@@ -278,7 +278,7 @@ class AddCollaborator extends Component {
                       </MDBCol>
                     </MDBRow>
                     <MDBRow>
-                      <MDBCol md="3" className="form-group">
+                      {/* <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabEmail">
                           Email:{" "}
                         </label>
@@ -287,8 +287,8 @@ class AddCollaborator extends Component {
                           type="text"
                           ref="collabEmail"
                         />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      </MDBCol> */}
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabPEmail">
                           Email Pessoal: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
@@ -309,7 +309,7 @@ class AddCollaborator extends Component {
                           </span>
                         )}
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabPhone">
                           Telefone:{" "}
                         </label>
@@ -320,7 +320,7 @@ class AddCollaborator extends Component {
                           mask="(99) 9999-9999"
                         />
                       </MDBCol>
-                      <MDBCol md="3" className="form-group">
+                      <MDBCol md="4" className="form-group">
                         <label className="grey-text" htmlFor="collabMobile">
                           Celular: <span style={{ color: "red" }}>*</span>{" "}
                         </label>

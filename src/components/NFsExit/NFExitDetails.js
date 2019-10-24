@@ -377,7 +377,7 @@ class NFExitDetails extends Component {
                   onClick={this.toggleDeleteNFexitModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="trash-alt" /> Excluir
+                   Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/NFsExit"

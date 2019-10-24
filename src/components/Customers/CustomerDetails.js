@@ -42,7 +42,7 @@ class CustomerDetails extends Component {
   getCustomer() {
     let customerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/colaboradores/${customerId}`)
+      .get(`http://127.0.0.1:8000/api/clientes/${customerId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -54,7 +54,7 @@ class CustomerDetails extends Component {
   onDelete() {
     let customerId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/colaboradores/${customerId}`)
+      .delete(`http://127.0.0.1:8000/api/clientes/${customerId}`)
       .then(response => {
         console.log(`ID excluído: ${customerId}`);
         this.setState({ alertMessage: "success" });
@@ -92,7 +92,7 @@ class CustomerDetails extends Component {
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
             <strong className="text-uppercase">
-              {this.state.details.nome}
+              {this.state.details.empresa}
             </strong>
           </MDBCardTitle>
           <hr className="mb-0" />
@@ -144,7 +144,7 @@ class CustomerDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="dt_inicio"
-                        value={this.state.details.dt_inicio}
+                        value={this.state.details.data_inicio}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -155,7 +155,7 @@ class CustomerDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="dt_fim"
-                        value={this.state.details.dt_fim}
+                        value={this.state.details.data_fim}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group ">
@@ -166,18 +166,53 @@ class CustomerDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="contato"
-                        value={this.state.details.contato}
+                        value={this.state.details.contato1}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group ">
                       <label className="grey-text" htmlFor="cargo">
-                        Cargo:{" "}
+                        Cargo do contato:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
                         id="cargo"
-                        value={this.state.details.cargo}
+                        value={this.state.details.cargo1}
+                      />
+                    </MDBCol>
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="email">
+                        Email do contato:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="email_contato"
+                        value={this.state.details.email_contato}
+                      />
+                    </MDBCol>
+                  </MDBRow>
+                  <MDBRow>
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="telefone">
+                        Telefone:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="telefone"
+                        value={this.state.details.telefone}
+                      />
+                    </MDBCol>
+                    <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="celular">
+                        Celular:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="celular"
+                        value={this.state.details.celular}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -193,29 +228,7 @@ class CustomerDetails extends Component {
                     </MDBCol>
                   </MDBRow>
                   <MDBRow>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="telefone">
-                        Telefone:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="telefone"
-                        value={this.state.details.telefone}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="celular">
-                        Celular:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="celular"
-                        value={this.state.details.celular}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="municipal">
                         Insc. Municipal:{" "}
                       </label>
@@ -223,10 +236,10 @@ class CustomerDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="municipal"
-                        value={this.state.details.municipal}
+                        value={this.state.details.insc_municipal}
                       />
                     </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="estadual">
                         Insc. Estadual:{" "}
                       </label>
@@ -234,7 +247,7 @@ class CustomerDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="estadual"
-                        value={this.state.details.estadual}
+                        value={this.state.details.insc_estadual}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -266,13 +279,13 @@ class CustomerDetails extends Component {
                   <MDBRow className="mb-2">
                     <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cidade">
-                        Cidade:{" "}
+                        Município:{" "}
                       </label>
                       <input
                         className="form-control disabled read-only"
                         type="text"
                         id="cidade"
-                        value={this.state.details.cidade}
+                        value={this.state.details.municipio}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group">
@@ -340,14 +353,14 @@ class CustomerDetails extends Component {
                   onClick={this.toggleDeleteCustomerModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="trash-alt" /> Excluir
+                   Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/Customers"
                   value="Return"
                   className="btn grey lighten-1 float-right"
                 >
-                   Voltar
+                  Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>

@@ -255,7 +255,7 @@ class NFInboundDetails extends Component {
                         Data Recebimento:{" "}
                       </label>
                       <input
-                        type="date"
+                        type="txt"
                         id="NFIReceivedDt"
                         className="form-control disabled read-only"
                         value={this.state.details.data_receber}
@@ -266,7 +266,7 @@ class NFInboundDetails extends Component {
                         Data Pagamento:{" "}
                       </label>
                       <input
-                        type="date"
+                        type="txt"
                         id="NFIPayingDt"
                         className="form-control disabled read-only"
                         value={this.state.details.data_pagar}
@@ -372,7 +372,7 @@ class NFInboundDetails extends Component {
                   onClick={this.toggleDeleteNFinboundModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="trash-alt" /> Excluir
+                  Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/NFsInbound"

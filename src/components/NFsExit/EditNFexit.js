@@ -428,7 +428,7 @@ class EditNFexit extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>
@@ -482,7 +482,7 @@ class EditNFexit extends Component {
                         <input
                           className="form-control"
                           type="text"
-                          name="order"
+                          name="ordem_compra"
                           ref="order"
                           value={this.state.ordem_compra}
                           onChange={this.handleChange}
@@ -597,7 +597,7 @@ class EditNFexit extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>

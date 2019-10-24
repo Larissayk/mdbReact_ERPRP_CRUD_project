@@ -92,7 +92,7 @@ class ContractDetails extends Component {
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle style={{ fontSize: 28 }}>
             <strong className="text-uppercase">
-              {this.state.details.codigo_RP}
+              Cód. RP: {this.state.details.cod_contrato_rp}
             </strong>
           </MDBCardTitle>
           <hr className="mb-0" />
@@ -129,7 +129,7 @@ class ContractDetails extends Component {
                     Dados Contratada
                   </MDBNavLink>
                 </MDBNavItem>
-                <MDBNavItem>
+                {/* <MDBNavItem>
                   <MDBNavLink
                     to="#"
                     active={this.state.activeItem === "4"}
@@ -148,7 +148,7 @@ class ContractDetails extends Component {
                   >
                     Aditivos
                   </MDBNavLink>
-                </MDBNavItem>
+                </MDBNavItem> */}
               </MDBNav>
 
               <MDBTabContent activeItem={this.state.activeItem}>
@@ -162,7 +162,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="codigo"
-                        value={this.state.details.codigo}
+                        value={this.state.details.cod_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="3" className="form-group ">
@@ -173,7 +173,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="tipo"
-                        value={this.state.details.tipo}
+                        value={this.state.details.tipo_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -184,7 +184,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="dt_assinatura"
-                        value={this.state.details.dt_assinatura}
+                        value={this.state.details.data_assinatura_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -195,7 +195,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="dt_inicio"
-                        value={this.state.details.dt_inicio}
+                        value={this.state.details.data_inicio_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="2" className="form-group">
@@ -206,7 +206,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="dt_fim"
-                        value={this.state.details.dt_fim}
+                        value={this.state.details.data_fim_contrato}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -219,7 +219,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="valor"
-                        value={this.state.details.valor}
+                        value={this.state.details.valor_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -230,7 +230,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="vigencia"
-                        value={this.state.details.vigencia}
+                        value={this.state.details.prazo_vigencia_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -241,7 +241,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="prorrogacao"
-                        value={this.state.details.prorrogacao}
+                        value={this.state.details.prorrogacao_contrato}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -254,7 +254,9 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="prazo_prorrogacao"
-                        value={this.state.details.prazo_prorrogacao}
+                        value={
+                          this.state.details.prazo_para_prorrogacao_contrato
+                        }
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -265,7 +267,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="reajuste"
-                        value={this.state.details.reajuste}
+                        value={this.state.details.reajuste_contrato}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
@@ -276,7 +278,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="cond_faturamento"
-                        value={this.state.details.cond_faturamento}
+                        value={this.state.details.condicao_fat_contrato}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -289,7 +291,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         id="obj_contrato"
                         rows="3"
-                        value={this.state.details.obj_contrato}
+                        value={this.state.details.objeto_contrato}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -349,7 +351,7 @@ class ContractDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow>
-                  <MDBRow>
+                  {/* <MDBRow>
                     <MDBCol md="8" className="form-group">
                       <label className="grey-text" htmlFor="endereco">
                         Endereço:{" "}
@@ -372,9 +374,9 @@ class ContractDetails extends Component {
                         value={this.state.details.bairro_contratante}
                       />
                     </MDBCol>
-                  </MDBRow>
+                  </MDBRow> */}
                   <MDBRow className="mb-2">
-                    <MDBCol md="3" className="form-group">
+                    {/* <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cidade">
                         Cidade:{" "}
                       </label>
@@ -406,8 +408,22 @@ class ContractDetails extends Component {
                         id="pais"
                         value={this.state.details.pais_contratante}
                       />
+                    </MDBCol> */}
+                    <MDBCol md="8" className="form-group">
+                      <label
+                        className="grey-text"
+                        htmlFor="endereco_contratada"
+                      >
+                        Endereço:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="endereco_contratada"
+                        value={this.state.details.end_empresa_contratada}
+                      />
                     </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="cep">
                         CEP:{" "}
                       </label>
@@ -415,7 +431,7 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="cep"
-                        value={this.state.details.cep_contratante}
+                        value={this.state.details.cod_cep_contratante}
                       />
                     </MDBCol>
                   </MDBRow>
@@ -470,10 +486,21 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="endereco_contratada"
-                        value={this.state.details.endereco_contratada}
+                        value={this.state.details.end_empresa_contratada}
                       />
                     </MDBCol>
                     <MDBCol md="4" className="form-group">
+                      <label className="grey-text" htmlFor="cep_contratada">
+                        CEP:{" "}
+                      </label>
+                      <input
+                        className="form-control disabled read-only"
+                        type="text"
+                        id="cep_contratada"
+                        value={this.state.details.cod_cep_contratada}
+                      />
+                    </MDBCol>
+                    {/* <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="bairro_contratada">
                         Bairro:{" "}
                       </label>
@@ -483,9 +510,9 @@ class ContractDetails extends Component {
                         id="bairro_contratada"
                         value={this.state.details.bairro_contratada}
                       />
-                    </MDBCol>
+                    </MDBCol> */}
                   </MDBRow>
-                  <MDBRow className="mb-2">
+                  {/* <MDBRow className="mb-2">
                     <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cidade_contratada">
                         Cidade:{" "}
@@ -527,12 +554,13 @@ class ContractDetails extends Component {
                         className="form-control disabled read-only"
                         type="text"
                         id="cep_contratada"
-                        value={this.state.details.cep_contratada}
+                        value={this.state.details.cod_cep_contratada}
                       />
                     </MDBCol>
-                  </MDBRow>
+                  </MDBRow> */}
+                  <hr/>
                 </MDBTabPane>
-                <MDBTabPane tabId="4" role="tabpanel">
+                {/* <MDBTabPane tabId="4" role="tabpanel">
                   <MDBRow className="mt-4">
                     <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cod_anexo">
@@ -771,8 +799,7 @@ class ContractDetails extends Component {
                   </MDBRow>
 
                   <hr />
-                </MDBTabPane>
-
+                </MDBTabPane> */}
                 <MDBBtn
                   href={`/Contracts/edit/${this.state.details.id}`}
                   className="light-blue darken-4 float-right"
@@ -784,7 +811,7 @@ class ContractDetails extends Component {
                   onClick={this.toggleDeleteContractModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="trash-alt" /> Excluir
+                  Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/Contracts"

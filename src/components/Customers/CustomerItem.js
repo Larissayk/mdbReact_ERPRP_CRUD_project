@@ -12,7 +12,7 @@ class CustomerItem extends Component {
     return (
       <p className="collection-item">
         <Link to={`/Customers/${this.state.item.id}`}>
-          {this.state.item.nome}
+          {this.state.item.empresa}
         </Link>
       </p>
     );

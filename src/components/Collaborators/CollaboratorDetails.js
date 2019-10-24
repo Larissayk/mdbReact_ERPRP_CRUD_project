@@ -149,7 +149,7 @@ class CollaboratorDetails extends Component {
                     </MDBCol>
                   </MDBRow>
                   <MDBRow>
-                    <MDBCol md="3" className="form-group">
+                    {/* <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="collabEmail">
                         Email:{" "}
                       </label>
@@ -159,8 +159,8 @@ class CollaboratorDetails extends Component {
                         id="collabEmail"
                         value={this.state.details.email}
                       />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    </MDBCol> */}
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="collabPEmail">
                         Email Pessoal:{" "}
                       </label>
@@ -171,7 +171,7 @@ class CollaboratorDetails extends Component {
                         value={this.state.details.email_pessoal}
                       />
                     </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="collabPhone">
                         Telefone:{" "}
                       </label>
@@ -182,7 +182,7 @@ class CollaboratorDetails extends Component {
                         value={this.state.details.telefone}
                       />
                     </MDBCol>
-                    <MDBCol md="3" className="form-group">
+                    <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="collabMobile">
                         Celular:{" "}
                       </label>
@@ -342,7 +342,7 @@ class CollaboratorDetails extends Component {
                   onClick={this.toggleDeleteCollaboratorModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                  <MDBIcon icon="trash-alt" /> Excluir
+                   Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/Collaborators"

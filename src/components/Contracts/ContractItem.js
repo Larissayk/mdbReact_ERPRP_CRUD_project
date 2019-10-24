@@ -11,8 +11,8 @@ class ContractItem extends Component {
   render() {
     return (
       <p className="collection-item">
-        <Link to={`/Contract/${this.state.item.id}`}>
-          {this.state.item.codigo_contrato}
+        <Link to={`/Contracts/${this.state.item.id}`}>
+          {this.state.item.cod_contrato_rp}
         </Link>
       </p>
     );

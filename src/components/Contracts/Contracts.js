@@ -56,17 +56,17 @@ class Contracts extends Component {
     let filteredData = this.state.contratos.filter(contratos => {
       if (this.state.sort === "") {
         return (
-          contratos.codigo_RP
+          contratos.cod_contrato_rp
             .toLowerCase()
-            .indexOf(this.state.search.toLowerCase()) !== -1 
-        //  || contratos.cnpj.indexOf(this.state.search) !== -1
+            .indexOf(this.state.search.toLowerCase()) !== -1 ||
+          contratos.cod_contrato.indexOf(this.state.search) !== -1
         );
       } else {
         return (
-          contratos.codigo_RP
+          contratos.cod_contrato_rp
             .toLowerCase()
             .indexOf(this.state.search.toLowerCase()) !== -1 &&
-          contratos.tipo
+          contratos.tipo_contrato
             .toLowerCase()
             .indexOf(this.state.sort.toLowerCase()) !== -1
         );
@@ -143,16 +143,16 @@ class Contracts extends Component {
                       <td className="align-middle">
                         <ContractItem key={contratos.id} item={contratos} />
                       </td>
-                      <td className="align-middle">{contratos.tipo}</td>
-                      <td className="align-middle">{contratos.contratante}</td>
-                      <td className="text-center">{contratos.contratada}</td>
+                      <td className="align-middle">{contratos.tipo_contrato}</td>
+                      <td className="align-middle">{contratos.nome_contratante}</td>
+                      <td className="text-center">{contratos.nome_contratada}</td>
                       <td className="align-middle">
                         <Moment
                           format="DD/MM/YYYY"
-                          date={contratos.dt_inicio}
+                          date={contratos.data_inicio_contrato}
                         />
                       </td>
-                      <td className="text-center">{contratos.vigencia}</td>
+                      <td className="text-center">{contratos.prazo_vigencia_contrato}</td>
                     </tr>
                   );
                 })}
