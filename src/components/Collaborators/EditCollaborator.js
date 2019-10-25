@@ -561,7 +561,7 @@ class EditCollaborator extends Component {
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="light-blue darken-4 float-right"
+                      className="cyan lighten-2 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
                     </MDBBtn>
@@ -570,7 +570,7 @@ class EditCollaborator extends Component {
                       value="Return"
                       className="btn grey lighten-1 float-right"
                     >
-                       Voltar
+                      Voltar
                     </MDBBtn>
                   </form>
                 </MDBTabPane>

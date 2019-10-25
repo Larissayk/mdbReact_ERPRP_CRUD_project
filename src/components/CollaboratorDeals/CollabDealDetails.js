@@ -255,7 +255,7 @@ class CollaboratorDealDetails extends Component {
 
               <MDBBtn
                 href={`/CollabDeals/edit/${this.state.details.id}`}
-                className="light-blue darken-4 float-right"
+                className="cyan lighten-2 float-right"
               >
                 <MDBIcon far icon="edit" /> Editar
               </MDBBtn>

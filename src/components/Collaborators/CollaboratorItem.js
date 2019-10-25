@@ -10,7 +10,7 @@ class CollaboratorItem extends Component {
   }
   render() {
     return (
-      <p className="collection-item">
+      <p className="align-middle ">
         <Link to={`/Collaborators/${this.state.item.id}`}>
           {this.state.item.nome}
         </Link>

@@ -105,22 +105,23 @@ class NFsExit extends Component {
               </MDBCol>
               <MDBCol md="4" className="p-0 m-0">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/NFsExit/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable hover small striped className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
                   <th>Nº</th>
-                  <th>Ano</th>
-                  <th>Tipo</th>
-                  <th>Data Emissão</th>
-                  <th>Empresa</th>
-                  <th className="text-center">Status Contr.</th>
+                  <th>ANO</th>
+                  <th>TIPO</th>
+                  <th>DATA EMISSÃO</th>
+                  <th>EMPRESA</th>
+                  <th className="text-center">STATUS CONTR.</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -132,13 +133,13 @@ class NFsExit extends Component {
                       </td>
                       <td className="align-middle">{nota_saida.ano}</td>
                       <td className="align-middle">{nota_saida.tipo_nf}</td>
-                      <td className="align-middle">
+                      <td style={{ width: 150 }} className="align-middle">
                         <Moment
                           format="DD/MM/YYYY"
                           date={nota_saida.data_de_emissao}
                         />
                       </td>
-                      <td style={{ width: 300 }} className="align-middle">
+                      <td style={{ width: 400 }} className="align-middle">
                         {nota_saida.empresa_emitente}
                       </td>
                       <td className="text-center">

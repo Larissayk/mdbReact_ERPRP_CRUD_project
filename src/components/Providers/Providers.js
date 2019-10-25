@@ -106,21 +106,22 @@ class Providers extends Component {
               </MDBCol>
               <MDBCol md="4" className="p-0 m-0 ">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/Providers/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable small striped hover className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
                   <th>#</th>
-                  <th>Nome</th>
+                  <th>NOME</th>
                   <th>CNPJ</th>
-                  <th>Data início</th>
-                  <th className="text-center">Status</th>
+                  <th>DATA INÍCIO</th>
+                  <th className="text-center">STATUS</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -128,7 +129,7 @@ class Providers extends Component {
                   return (
                     <tr key={fornecedores.id}>
                       <td className="align-middle">{fornecedores.id}</td>
-                      <td style={{ width: 350 }} className="align-middle">
+                      <td style={{ width: 500 }} className="align-middle">
                         <ProviderItem
                           key={fornecedores.id}
                           item={fornecedores}

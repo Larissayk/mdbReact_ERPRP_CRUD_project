@@ -369,7 +369,7 @@ class NFExitDetails extends Component {
                 </MDBTabPane>
                 <MDBBtn
                   href={`/NFsExit/edit/${this.state.details.id}`}
-                  className="light-blue darken-4 float-right"
+                  className="cyan lighten-2 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
@@ -377,14 +377,14 @@ class NFExitDetails extends Component {
                   onClick={this.toggleDeleteNFexitModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                   Excluir
+                  Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/NFsExit"
                   value="Return"
                   className="btn grey lighten-1 float-right"
                 >
-                  Voltar 
+                  Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>

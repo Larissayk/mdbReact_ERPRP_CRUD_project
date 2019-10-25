@@ -85,38 +85,41 @@ class NFsInbound extends Component {
               </MDBCol>
               <MDBCol md="8" className="p-0 m-0">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/NFsInbound/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable hover small striped className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
                   <th>Nº</th>
-                  <th>Tipo</th>
-                  <th>Data Emissão</th>
-                  <th>Empresa</th>
-                  <th>Serviço</th>
+                  <th>TIPO</th>
+                  <th>DATA EMISSÃO</th>
+                  <th>EMPRESA</th>
+                  <th>SERVIÇO</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
                 {filteredData.map(nota_entrada => {
                   return (
                     <tr key={nota_entrada.id}>
-                      <td className="align-middle">{nota_entrada.num_nf}</td>
+                      <td style={{ width: 100 }} className="align-middle">
+                        {nota_entrada.num_nf}
+                      </td>
                       <td className="align-middle">
                         {nota_entrada.tpnf_nfs_nfts_nd}
                       </td>
-                      <td className="align-middle">
+                      <td style={{ width: 150 }} className="align-middle">
                         <Moment
                           format="DD/MM/YYYY"
                           date={nota_entrada.data_emissao}
                         />
                       </td>
-                      <td style={{ width: 300 }} className="align-middle">
+                      <td style={{ width: 400 }} className="align-middle">
                         <NFInboundItem
                           key={nota_entrada.id}
                           item={nota_entrada}
@@ -130,7 +133,6 @@ class NFsInbound extends Component {
             </MDBTable>
           </MDBCardBody>
         </MDBCard>
-
       </MDBContainer>
     );
   }

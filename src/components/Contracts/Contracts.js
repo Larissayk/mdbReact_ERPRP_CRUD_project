@@ -118,22 +118,23 @@ class Contracts extends Component {
 
               <MDBCol md="4" className="p-0 m-0 ">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/Contracts/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable hover small striped className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
-                  <th>Cód. RP</th>
-                  <th>Tipo</th>
-                  <th>Contratante</th>
-                  <th>Contratada</th>
-                  <th>Data início</th>
-                  <th>Vigência</th>
+                  <th>CÓD. RP</th>
+                  <th>TIPO</th>
+                  <th>CONTRATANTE</th>
+                  <th>CONTRADA</th>
+                  <th>DATA INÍCIO</th>
+                  <th>VIGÊNCIA</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -143,16 +144,24 @@ class Contracts extends Component {
                       <td className="align-middle">
                         <ContractItem key={contratos.id} item={contratos} />
                       </td>
-                      <td className="align-middle">{contratos.tipo_contrato}</td>
-                      <td className="align-middle">{contratos.nome_contratante}</td>
-                      <td className="text-center">{contratos.nome_contratada}</td>
+                      <td className="align-middle">
+                        {contratos.tipo_contrato}
+                      </td>
+                      <td className="align-middle">
+                        {contratos.nome_contratante}
+                      </td>
+                      <td className="text-center">
+                        {contratos.nome_contratada}
+                      </td>
                       <td className="align-middle">
                         <Moment
                           format="DD/MM/YYYY"
                           date={contratos.data_inicio_contrato}
                         />
                       </td>
-                      <td className="text-center">{contratos.prazo_vigencia_contrato}</td>
+                      <td className="text-center">
+                        {contratos.prazo_vigencia_contrato}
+                      </td>
                     </tr>
                   );
                 })}

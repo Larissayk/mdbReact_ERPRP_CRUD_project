@@ -568,7 +568,7 @@ class EditCustomer extends Component {
                     <MDBBtn
                       type="submit"
                       value="Save"
-                      className="light-blue darken-4 float-right"
+                      className="cyan lighten-2 float-right"
                     >
                       <MDBIcon far icon="save" /> Salvar
                     </MDBBtn>

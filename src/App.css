@@ -5,7 +5,9 @@
 }
 
 body {
-  background-color: #e4e5e6;
+  /* background-color: #e4e5e6; */
+  background-color: #F5F5F5;
+
   /* background-image: url('https://media.istockphoto.com/vectors/abstract-gear-wheel-mechanism-background-machine-technology-vector-vector-id1022563038') */
 }
 
@@ -27,12 +29,17 @@ body {
 .card-body {
   align-items: center;
   flex-direction: column;
-  margin: 1.25rem;
+  margin: 1.25rem 1.25rem 0 1.25rem;
 }
 
 .card {
   width: 65rem;
+  box-shadow: none;
+  border: 0.5px solid #E1E1E2;
+  line-height: 0.5;
+  z-index: 0;
 }
+
 
 .card-header {
   /* background-color: #47bebe; */
@@ -81,11 +88,21 @@ body {
 table th {
   font-size: 1rem;
   font-weight: 400;
+  color: #A8A8A8;
+}
+
+table.table thead th {
+border-top: none;
 }
 
 table td {
-  font-size: 1rem;
+  font-size: 15px;
   font-weight: 300;
+  color: black;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+background-color: #F9F9F9;
 }
 
 .error-header {
@@ -145,35 +162,74 @@ table.table thead th {
   border-top: 2px solid #dee2e6;
 }
 
+.btn-color-table {
+  background-color: #3f3f3e;
+  color: #FFF
+}
+
 .md-form.input-group .input-group-text {
-  background-color: #01579b;
+  background-color: #3f3f3e;
 }
 
 .navbar {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
   padding: none ;
-  font-weight: 400;
-  font-size: medium;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+.navbar .breadcrumb {
+  /* margin-left:0.5rem; */
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.navbar .breadcrumb .breadcrumb-item a {
+    color: #63C2DE;
+}
+
+.navbar .breadcrumb .breadcrumb-item:before {
+    color: #777777;
+}
+
+.navbar .breadcrumb .breadcrumb-item.active {
+    color: #777777;
+}
+
+.btn-black {
+    background-color: #3f3f3e !important;
+    color: #fff;
+    margin-left:13rem;
+    padding: 12px 16px;
+    border-radius: 100px;
 }
 
 .navbar.navbar-dark .navbar-nav .nav-item .nav-link {
-  color: #FFF;
+  color: #777777;
 }
 
 .navbar.navbar-dark .navbar-nav .nav-item .nav-link:hover {
 color:#bac2cc;
 }
 
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 50;
+    left: 0;
+    z-index: 1;
+}
 
-.sidebar-fixed {
+.sidebar {
+  position:fixed;
   left: 0;
   top: 0;
   height: 100vh;
   width: 200px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  z-index: 1050;
   background-color: #3f3f3e;
   padding-top: 0;
+  z-index: 3;
 }
 
 .sidebar-fixed .logo-wrapper img {
@@ -181,9 +237,14 @@ color:#bac2cc;
   padding: 2.5rem;
 }
 
+.p-1 {
+    padding: .25rem .25rem 1rem !important;
+}
+
 .img-fluid {
   margin: 1rem;
   padding: 1rem;
+  border-bottom: 1px solid hsla(0,0%,100%,.2)
 }
 
 .list-group-item {
@@ -197,12 +258,12 @@ color:#bac2cc;
 .list-group .active {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   border-radius: 5px;
-  color: #61dafb;
+  color: #63C2DE;
   text-decoration: none;
 }
 
 li.list-group-item .list-group-item-undefined .list-group-item-action {
-  color: #61dafb;
+  color: #63C2DE;
 }
 
 .list-group .list-group-item:first-child {

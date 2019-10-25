@@ -333,7 +333,7 @@ class CollaboratorDetails extends Component {
 
                 <MDBBtn
                   href={`/Collaborators/edit/${this.state.details.id}`}
-                  className="light-blue darken-4 float-right"
+                  className="cyan lighten-2 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
@@ -342,14 +342,14 @@ class CollaboratorDetails extends Component {
                   onClick={this.toggleDeleteCollaboratorModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                   Excluir
+                  Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/Collaborators"
                   value="Return"
                   className="btn grey lighten-1 float-right"
                 >
-                   Voltar
+                  Voltar
                 </MDBBtn>
               </MDBTabContent>
             </MDBContainer>

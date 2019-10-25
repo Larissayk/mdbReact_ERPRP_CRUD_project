@@ -231,7 +231,9 @@ class EditCollaboratorDeal extends Component {
                       onChange={this.handleChange}
                     />
                     {formErrors.nome.length > 0 && (
-                      <span className="errorMessageForm">{formErrors.nome}</span>
+                      <span className="errorMessageForm">
+                        {formErrors.nome}
+                      </span>
                     )}
                   </MDBCol>
                   <MDBCol md="2.5" className="form-group mx-2">
@@ -485,7 +487,7 @@ class EditCollaboratorDeal extends Component {
                 <MDBBtn
                   type="submit"
                   value="Save"
-                  className="light-blue darken-4 float-right"
+                  className="cyan lighten-2 float-right"
                 >
                   <MDBIcon far icon="save" /> Salvar
                 </MDBBtn>

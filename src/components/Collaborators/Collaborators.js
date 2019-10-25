@@ -120,28 +120,29 @@ class Collaborators extends Component {
 
               <MDBCol md="4" className="p-0 m-0 ">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/Collaborators/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable small striped hover className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
-                  <th>Nome</th>
+                  <th>NOME</th>
                   <th>CPF</th>
-                  <th>Celular</th>
-                  <th>Email pessoal</th>
-                  <th className="text-center">Status</th>
+                  <th>CELULAR</th>
+                  <th>EMAIL PESSOAL</th>
+                  <th className="text-center">STATUS</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
                 {filteredData.map(colaboradores => {
                   return (
                     <tr key={colaboradores.id}>
-                      <td className="align-middle">
+                      <td className="align-middle ">
                         <CollaboratorItem
                           key={colaboradores.id}
                           item={colaboradores}

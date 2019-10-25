@@ -105,21 +105,22 @@ class CollaboratorDeals extends Component {
               </MDBCol>
               <MDBCol md="4" className="p-0 m-0 ">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/CollabDeals/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable hover small striped className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
                   <th>#</th>
-                  <th>Nome</th>
-                  <th>Função</th>
-                  <th>Tipo de contrato</th>
-                  <th className="text-center">Status</th>
+                  <th>NOME</th>
+                  <th>FUNÇÃO</th>
+                  <th>TIPO DE CONTRATO</th>
+                  <th className="text-center">STATUS</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>

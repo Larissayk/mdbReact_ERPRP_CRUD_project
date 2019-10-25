@@ -118,20 +118,21 @@ class Customers extends Component {
 
               <MDBCol md="4" className="p-0 m-0 ">
                 <MDBBtn
-                  className="pt-3 px-3 my-3 float-right light-blue darken-4"
+                  color="#FFF"
+                  className="pt-3 px-3 my-3 float-right btn-color-table"
                   href="/Customers/add"
                 >
                   <MDBIcon icon="plus" /> Novo Registro
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable hover className="mb-2 mt-0">
+            <MDBTable hover small striped className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
-                  <th>Nome</th>
+                  <th>NOME</th>
                   <th>CNPJ</th>
-                  <th>Email</th>
-                  <th className="text-center">Status</th>
+                  <th>EMAIL</th>
+                  <th className="text-center">STATUS</th>
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
@@ -143,7 +144,8 @@ class Customers extends Component {
                       </td>
                       <td className="align-middle">{clientes.cnpj}</td>
                       <td className="align-middle">{clientes.email}</td>
-                      <td className="text-center">{clientes.status}
+                      <td className="text-center">
+                        {clientes.status}
                         {/* {clientes.status.toLowerCase() === "ativo" ? (
                           <MDBBadge className="p-2" pill color="success">
                             Ativo

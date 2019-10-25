@@ -11,23 +11,30 @@ import {
   MDBListGroup,
   NavLink,
   MDBListGroupItem,
+  MDBBreadcrumb,
+  MDBBtn,
+  MDBBreadcrumbItem,
+  MDBAnimation
 } from "mdbreact";
-
-
+import { tsParameterProperty } from "@babel/types";
+import { Link, Switch, Route, withRouter } from "react-router-dom";
 
 class NavbarUpdate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
-      isWideEnough: false
+      isWideEnough: false,
+      collapseID: ""
     };
     this.onClick = this.onClick.bind(this);
   }
 
   toggleCollapse = collapseID => () => {
-  this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));
-}
+    this.setState(prevState => ({
+      collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+    }));
+  };
 
   onClick() {
     this.setState({
@@ -35,15 +42,19 @@ class NavbarUpdate extends React.Component {
     });
   }
 
+
   render() {
-    const bgDarkGrey = { backgroundColor: "#3f3f3e" };
+    const bgDarkGrey = { backgroundColor: "#FFF" };
     const container = { height: 0, width: 400 };
     return (
       <div>
-        <div className="sidebar-fixed position-fixed">
+        {/* <MDBCollapse id="basicCollapse" isOpen={true}>
+          <MDBAnimation type="slideInLeft"> */}
+        <div className="sidebar">
           <a href="#!" className="logo-wrapper waves-effect">
             <img
               src="http://www.rperformancegroup.com/img/logo-rperformance-group-white-200-80.png"
+              // src="http://www.rperformancegroup.com/img/logo-rperformance-group-color-150-60.png"
               style={{ width: 170 }}
               className="img-fluid p-1"
               alt="Company's Logo"
@@ -56,36 +67,64 @@ class NavbarUpdate extends React.Component {
                 Dashboard
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/Collaborators" className="activeClass">
+            <NavLink
+              to="#"
+              className="activeClass"
+              onClick={this.toggleCollapse("basicCollapse")}
+            >
               <MDBListGroupItem hover>
-                <MDBIcon icon="address-card" className="mr-3" fixed />
-                Colaboradores
+                <MDBIcon icon="edit" className="mr-3" fixed />
+                Cadastros
+                <MDBIcon icon="angle-down" className="ml-4" fixed />
               </MDBListGroupItem>
             </NavLink>
-            <NavLink to="/Providers" className="activeClass">
-              <MDBListGroupItem hover>
-                <MDBIcon icon="briefcase" className="mr-3" fixed />
-                Fornecedores
-              </MDBListGroupItem>
-            </NavLink>
-            <NavLink to="/CollabDeals" className="activeClass">
-              <MDBListGroupItem hover>
-                <i class="fas fa-hand-holding-usd mr-3 pl-1" />
-                Negociação
-              </MDBListGroupItem>
-            </NavLink>
-            <NavLink to="/NFsInbound" className="activeClass">
-              <MDBListGroupItem hover>
-                <i class="fas fa-file-import mr-3 pl-1" />
-                NF-Entrada
-              </MDBListGroupItem>
-            </NavLink>
-            <NavLink to="/NFsExit" className="activeClass">
-              <MDBListGroupItem>
-                <i class="fas fa-file-export mr-3 pl-1" />
-                NF-Saída
-              </MDBListGroupItem>
-            </NavLink>
+            <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
+              <NavLink to="/Collaborators" className="activeClass">
+                <MDBListGroupItem
+                  style={{ fontWeight: "300", fontSize: "15px" }}
+                  hover
+                >
+                  <MDBIcon icon="address-card" className="mr-3" fixed />
+                  Colaboradores
+                </MDBListGroupItem>
+              </NavLink>
+              <NavLink to="/Providers" className="activeClass">
+                <MDBListGroupItem
+                  style={{ fontWeight: "300", fontSize: "15px" }}
+                  hover
+                >
+                  <MDBIcon icon="briefcase" className="mr-3" fixed />
+                  Fornecedores
+                </MDBListGroupItem>
+              </NavLink>
+              <NavLink to="/CollabDeals" className="activeClass">
+                <MDBListGroupItem
+                  style={{ fontWeight: "300", fontSize: "15px" }}
+                  hover
+                >
+                  <i class="fas fa-hand-holding-usd mr-3 pl-1" />
+                  Negociação
+                </MDBListGroupItem>
+              </NavLink>
+              <NavLink to="/NFsInbound" className="activeClass">
+                <MDBListGroupItem
+                  style={{ fontWeight: "300", fontSize: "15px" }}
+                  hover
+                >
+                  <i class="fas fa-file-import mr-3 pl-1" />
+                  NF-Entrada
+                </MDBListGroupItem>
+              </NavLink>
+              <NavLink to="/NFsExit" className="activeClass">
+                <MDBListGroupItem
+                  style={{ fontWeight: "300", fontSize: "14px" }}
+                >
+                  <i class="fas fa-file-export mr-3 pl-1" />
+                  NF-Saída
+                </MDBListGroupItem>
+              </NavLink>
+            </MDBCollapse>
+
             <NavLink to="/Customers" className="activeClass">
               <MDBListGroupItem>
                 <MDBIcon far icon="building" className="mr-3" fixed />
@@ -100,21 +139,37 @@ class NavbarUpdate extends React.Component {
             </NavLink>
           </MDBListGroup>
         </div>
+        {/* </MDBAnimation>
+        </MDBCollapse> */}
 
         <header>
           <MDBNavbar style={bgDarkGrey} dark expand="sm" fixed="top">
             <MDBNavbarToggler onClick={this.onClick} />
-            {!this.state.isWideEnough && (
-              <MDBNavbarToggler onClick={this.onClick} />
-            )}
+            {/* <a href="#!" className="logo-wrapper waves-effect">
+              <img
+                // src="http://www.rperformancegroup.com/img/logo-rperformance-group-white-200-80.png"
+                src="http://www.rperformancegroup.com/img/logo-rperformance-group-color-150-60.png"
+                style={{ width: 150 }}
+                className="img-fluid p-1"
+                alt="Company's Logo"
+              />{" "}
+            </a> */}
+
             <MDBCollapse isOpen={this.state.collapse} navbar>
-              <MDBNavbarNav left>
-                <MDBNavItem>
-                  <MDBNavLink to="#">
-                    <MDBIcon icon="bars" color="white" size="1x" />
-                  </MDBNavLink>
-                </MDBNavItem>
-              </MDBNavbarNav>
+              <MDBBtn
+                color="black"
+                // onClick={this.toggleSidebar("basicCollapse")}
+              >
+                <MDBIcon icon="bars" color="white" size="1x" />
+              </MDBBtn>
+
+              <MDBBreadcrumb>
+                <MDBBreadcrumbItem>
+                  <Link to="/">Home</Link>
+                </MDBBreadcrumbItem>
+                <MDBBreadcrumbItem active>Página atual</MDBBreadcrumbItem>
+              </MDBBreadcrumb>
+
               <MDBNavbarNav right>
                 <MDBNavItem>
                   <MDBNavLink to="#">

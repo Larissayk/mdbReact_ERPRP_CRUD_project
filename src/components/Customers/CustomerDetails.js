@@ -344,7 +344,7 @@ class CustomerDetails extends Component {
 
                 <MDBBtn
                   href={`/Customers/edit/${this.state.details.id}`}
-                  className="light-blue darken-4 float-right"
+                  className="cyan lighten-2 float-right"
                 >
                   <MDBIcon far icon="edit" /> Editar
                 </MDBBtn>
@@ -353,7 +353,7 @@ class CustomerDetails extends Component {
                   onClick={this.toggleDeleteCustomerModal(1)}
                   className="btn grey lighten-1 float-right"
                 >
-                   Excluir
+                  Excluir
                 </MDBBtn>
                 <MDBBtn
                   href="/Customers"

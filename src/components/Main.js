@@ -40,7 +40,8 @@ const Main = withRouter(({ location }) => {
     <main>
       {location.pathname !== "/Login" &&
         location.pathname !== "/SignUp" &&
-        location.pathname !== "/FieldValidation" && <NavbarUpdate />}
+       <NavbarUpdate />}
+      
       <Switch>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
@@ -76,7 +77,6 @@ const Main = withRouter(({ location }) => {
 
 
 
-        <Route exact path="/FieldValidation" component={FieldValidation} />
       </Switch>
     </main>
   );
