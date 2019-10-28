@@ -155,7 +155,7 @@ class Collaborators extends Component {
                       </td>
                       <td className="text-center">
                         {colaboradores.status.toLowerCase() === "ativo" ? (
-                          <MDBBadge className="p-2" pill color="red lighten-1">
+                          <MDBBadge className="p-2" pill color="success">
                             Ativo
                           </MDBBadge>
                         ) : (
