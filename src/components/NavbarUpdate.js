@@ -42,10 +42,12 @@ class NavbarUpdate extends React.Component {
     });
   }
 
+  
 
   render() {
     const bgDarkGrey = { backgroundColor: "#FFF" };
     const container = { height: 0, width: 400 };
+    console.log("ROta",window.location.pathname);
     return (
       <div>
         {/* <MDBCollapse id="basicCollapse" isOpen={true}>
@@ -163,12 +165,29 @@ class NavbarUpdate extends React.Component {
                 <MDBIcon icon="bars" color="white" size="1x" />
               </MDBBtn>
 
+              {/* Breadcrumps */}
               <MDBBreadcrumb>
                 <MDBBreadcrumbItem>
                   <Link to="/">Home</Link>
                 </MDBBreadcrumbItem>
-                <MDBBreadcrumbItem active>Página atual</MDBBreadcrumbItem>
+                {window.location.pathname == "/Collaborators" ? (
+                  <MDBBreadcrumbItem active>Colaboradores</MDBBreadcrumbItem>
+                ) : window.location.pathname == "/Providers" ? (
+                  <MDBBreadcrumbItem active>Fornecedores</MDBBreadcrumbItem>
+                ) : window.location.pathname == "/CollabDeals" ? (
+                  <MDBBreadcrumbItem active>Negociação</MDBBreadcrumbItem>
+                ) : window.location.pathname == "/NFsInbound" ? (
+                  <MDBBreadcrumbItem active>NF-Entrada</MDBBreadcrumbItem>
+                ) : window.location.pathname == "/NFsExit" ? (
+                  <MDBBreadcrumbItem active>NF-Saída</MDBBreadcrumbItem>
+                ) : window.location.pathname == "/Customers" ? (
+                  <MDBBreadcrumbItem active>Clientes</MDBBreadcrumbItem>
+                ) : window.location.pathname == "/Contracts" ? (
+                  <MDBBreadcrumbItem active>Contratos</MDBBreadcrumbItem>
+                ) : null
+                }
               </MDBBreadcrumb>
+
 
               <MDBNavbarNav right>
                 <MDBNavItem>
