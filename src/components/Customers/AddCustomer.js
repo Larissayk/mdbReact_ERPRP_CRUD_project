@@ -173,7 +173,7 @@ class AddCustomer extends Component {
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
-                      <MDBCol md="5" className="form-group mb-0">
+                      <MDBCol md="5" className="form-group">
                         <label className="grey-text" htmlFor="empresa">
                           Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>

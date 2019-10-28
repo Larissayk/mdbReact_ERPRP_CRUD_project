@@ -233,7 +233,7 @@ class AddContract extends Component {
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
-                      <MDBCol md="3" className="form-group mb-0">
+                      <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="cod_contrato_rp">
                           Código RP: <span style={{ color: "red" }}>*</span>{" "}
                         </label>

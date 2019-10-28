@@ -145,7 +145,7 @@ class AddCollaboratorDeal extends Component {
             <MDBContainer>
               <form onSubmit={this.onSubmit.bind(this)} noValidate>
                 <MDBRow>
-                  <MDBCol md="5" className="form-group mb-0">
+                  <MDBCol md="5" className="form-group">
                     <label className="grey-text" htmlFor="nome">
                       Nome: <span style={{ color: "red" }}>*</span>{" "}
                     </label>

@@ -21,7 +21,7 @@ import ErrorMessage from "../AlertModals/ErrorMessage";
 import SuccessMessage from "../AlertModals/SuccessMessage";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+import moment, { now } from "moment";
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -45,22 +45,9 @@ class AddCollaborator extends Component {
 
     this.state = {
       cpf: null,
-      // status: "",
       nome: null,
-      // apelido: "",
-      // rg: "",
-      // orgao_emissor: "",
-      // ctps: "",
-      data_nascimento: new Date(),
-      // endereco: "",
-      // cep: "",
-      // bairro: "",
-      // cidade: "",
-      // estado: "",
-      // pais: "",
-      // telefone: "",
+      data_nascimento: "",
       celular: null,
-      // email: "",
       email_pessoal: null,
       activeItem: "1",
       alertMessage: "",
@@ -110,11 +97,9 @@ class AddCollaborator extends Component {
       estado: this.refs.collabState.value,
       telefone: this.refs.collabPhone.value,
       celular: this.refs.collabMobile.value,
-      // email: this.refs.collabEmail.value,
       email_pessoal: this.refs.collabPEmail.value
     };
     e.preventDefault();
-    // console.log(newCollaborator);
 
     if (formValid(this.state)) {
       this.AddCollaborator(newCollaborator);
@@ -166,15 +151,14 @@ class AddCollaborator extends Component {
 
   // dateHandleChange = date => {
   //   this.setState({
-  //     data_nascimento: date
+  //     data_nascimento: date.format()
   //   });
-  //   console.log(this.state);
   // };
-
 
 
   render() {
     const { formErrors } = this.state;
+
     return (
       <MDBContainer className="main-body">
         <div>
@@ -205,7 +189,7 @@ class AddCollaborator extends Component {
                 <MDBTabPane tabId="1" role="tabpanel">
                   <form onSubmit={this.onSubmit.bind(this)} noValidate>
                     <MDBRow className="mt-4">
-                      <MDBCol md="5" className="form-group mb-0">
+                      <MDBCol md="5" className="form-group">
                         <label className="grey-text" htmlFor="collabName">
                           Nome: <span style={{ color: "red" }}>*</span>{" "}
                         </label>
@@ -246,6 +230,7 @@ class AddCollaborator extends Component {
                           selected={this.state.data_nascimento}
                           onChange={this.dateHandleChange}
                           dateFormat="dd/MM/yyyy"
+                          isClearable
                           ref="collabBday"
                         /> */}
 
