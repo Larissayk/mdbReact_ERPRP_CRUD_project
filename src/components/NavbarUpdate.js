@@ -42,12 +42,12 @@ class NavbarUpdate extends React.Component {
     });
   }
 
-  
-
   render() {
     const bgDarkGrey = { backgroundColor: "#FFF" };
     const container = { height: 0, width: 400 };
-    console.log("ROta",window.location.pathname);
+    console.log("ROta", window.location.pathname);
+    const path = window.location.pathname;
+
     return (
       <div>
         {/* <MDBCollapse id="basicCollapse" isOpen={true}>
@@ -74,10 +74,14 @@ class NavbarUpdate extends React.Component {
               className="activeClass"
               onClick={this.toggleCollapse("basicCollapse")}
             >
-              <MDBListGroupItem hover>
+              <MDBListGroupItem id="Cadastro" hover>
                 <MDBIcon icon="edit" className="mr-3" fixed />
                 Cadastros
-                <MDBIcon icon="angle-down" className="ml-4" fixed />
+                {this.state.collapseID ? (
+                  <MDBIcon icon="angle-up" className="ml-4" fixed />
+                ) : (
+                  <MDBIcon icon="angle-down" className="ml-4" fixed />
+                )}
               </MDBListGroupItem>
             </NavLink>
             <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
@@ -165,29 +169,27 @@ class NavbarUpdate extends React.Component {
                 <MDBIcon icon="bars" color="white" size="1x" />
               </MDBBtn>
 
-              {/* Breadcrumps */}
+              {/* Breadcrumbs */}
               <MDBBreadcrumb>
                 <MDBBreadcrumbItem>
                   <Link to="/">Home</Link>
                 </MDBBreadcrumbItem>
-                {window.location.pathname == "/Collaborators" ? (
+                {path.startsWith("/Collaborators") ? (
                   <MDBBreadcrumbItem active>Colaboradores</MDBBreadcrumbItem>
-                ) : window.location.pathname == "/Providers" ? (
+                ) : path.startsWith("/Providers") ? (
                   <MDBBreadcrumbItem active>Fornecedores</MDBBreadcrumbItem>
-                ) : window.location.pathname == "/CollabDeals" ? (
+                ) : path.startsWith("/CollabDeals") ? (
                   <MDBBreadcrumbItem active>Negociação</MDBBreadcrumbItem>
-                ) : window.location.pathname == "/NFsInbound" ? (
+                ) : path.startsWith("/NFsInbound") ? (
                   <MDBBreadcrumbItem active>NF-Entrada</MDBBreadcrumbItem>
-                ) : window.location.pathname == "/NFsExit" ? (
+                ) : path.startsWith("/NFsExit") ? (
                   <MDBBreadcrumbItem active>NF-Saída</MDBBreadcrumbItem>
-                ) : window.location.pathname == "/Customers" ? (
+                ) : path.startsWith("/Customers") ? (
                   <MDBBreadcrumbItem active>Clientes</MDBBreadcrumbItem>
-                ) : window.location.pathname == "/Contracts" ? (
+                ) : path.startsWith("/Contracts") ? (
                   <MDBBreadcrumbItem active>Contratos</MDBBreadcrumbItem>
-                ) : null
-                }
+                ) : null}
               </MDBBreadcrumb>
-
 
               <MDBNavbarNav right>
                 <MDBNavItem>
