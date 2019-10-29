@@ -76,7 +76,7 @@ class Collaborators extends Component {
     });
 
     return (
-      <MDBContainer className="main-body">
+      <MDBContainer id="content" className="p-5">
         <MDBCard className="mt-3 mb-4 px-2 card">
           <MDBCardTitle style={{ fontSize: 28 }}>
             <strong>COLABORADORES</strong>
@@ -128,7 +128,7 @@ class Collaborators extends Component {
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
-            <MDBTable small striped hover className="mb-2 mt-0">
+            <MDBTable responsive small striped hover className="mb-2 mt-0">
               <MDBTableHead>
                 <tr>
                   <th>NOME</th>

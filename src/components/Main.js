@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
+import Footer from "./Navigation/Footer"
 import Home from "./Home";
 import Collaborators from "./Collaborators/Collaborators";
 import CollaboratorDetails from "./Collaborators/CollaboratorDetails";
@@ -32,8 +33,7 @@ import ContractDetails from "./Contracts/ContractDetails";
 import AddContract from "./Contracts/AddContract";
 import EditContract from "./Contracts/EditContract";
 
-import NavbarUpdate from "./NavbarUpdate";
-import FieldValidation from "../FieldValidation";
+import NavbarUpdate from "./Navigation/NavbarUpdate";
 
 const Main = withRouter(({ location }) => {
   return (
