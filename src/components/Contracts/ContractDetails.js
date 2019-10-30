@@ -84,52 +84,56 @@ class ContractDetails extends Component {
 
   render() {
     return (
-      <MDBContainer className="main-body">
-        <div>
-          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
-        </div>
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardTitle style={{ fontSize: 28 }}>
-            <strong className="text-uppercase">
-              Cód. RP: {this.state.details.cod_contrato_rp}
-            </strong>
-          </MDBCardTitle>
-          <hr className="mb-0" />
-          <MDBCardBody className="mt-0">
-            <MDBContainer>
-              <MDBNav className="nav-tabs mx-0">
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "1"}
-                    onClick={this.toggle("1")}
-                    role="tab"
-                  >
-                    Dados Gerais
-                  </MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "2"}
-                    onClick={this.toggle("2")}
-                    role="tab"
-                  >
-                    Dados Contratante
-                  </MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "3"}
-                    onClick={this.toggle("3")}
-                    role="tab"
-                  >
-                    Dados Contratada
-                  </MDBNavLink>
-                </MDBNavItem>
-                {/* <MDBNavItem>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="12">
+            <div>
+              {this.state.alertMessage === "success" ? (
+                <SuccessMessage />
+              ) : null}
+              {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
+            </div>
+            <MDBCard className="mt-3 mb-4">
+              <MDBCardTitle style={{ fontSize: 28 }}>
+                <strong className="text-uppercase">
+                  Cód. RP: {this.state.details.cod_contrato_rp}
+                </strong>
+              </MDBCardTitle>
+              <hr className="mb-0" />
+              <MDBCardBody className="mt-0">
+                <MDBContainer>
+                  <MDBNav className="nav-tabs mx-0">
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "1"}
+                        onClick={this.toggle("1")}
+                        role="tab"
+                      >
+                        Dados Gerais
+                      </MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "2"}
+                        onClick={this.toggle("2")}
+                        role="tab"
+                      >
+                        Dados Contratante
+                      </MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "3"}
+                        onClick={this.toggle("3")}
+                        role="tab"
+                      >
+                        Dados Contratada
+                      </MDBNavLink>
+                    </MDBNavItem>
+                    {/* <MDBNavItem>
                   <MDBNavLink
                     to="#"
                     active={this.state.activeItem === "4"}
@@ -149,209 +153,218 @@ class ContractDetails extends Component {
                     Aditivos
                   </MDBNavLink>
                 </MDBNavItem> */}
-              </MDBNav>
+                  </MDBNav>
 
-              <MDBTabContent activeItem={this.state.activeItem}>
-                <MDBTabPane tabId="1" role="tabpanel">
-                  <MDBRow className="mt-4">
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="codigo">
-                        Cód. Contrato:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="codigo"
-                        value={this.state.details.cod_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group ">
-                      <label className="grey-text" htmlFor="tipo">
-                        Tipo:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="tipo"
-                        value={this.state.details.tipo_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="dt_assinatura">
-                        Data assinatura:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="dt_assinatura"
-                        value={this.state.details.data_assinatura_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="dt_inicio">
-                        Data de início:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="dt_inicio"
-                        value={this.state.details.data_inicio_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="2" className="form-group">
-                      <label className="grey-text" htmlFor="dt_fim">
-                        Data de término:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="dt_fim"
-                        value={this.state.details.data_fim_contrato}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="4" className="form-group ">
-                      <label className="grey-text" htmlFor="valor">
-                        Valor:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="valor"
-                        value={this.state.details.valor_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="vigencia">
-                        Vigência:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="vigencia"
-                        value={this.state.details.prazo_vigencia_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="prorrogacao">
-                        Prorrogação:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="prorrogacao"
-                        value={this.state.details.prorrogacao_contrato}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="prazo_prorrogacao">
-                        Prazo Prorrogação:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="prazo_prorrogacao"
-                        value={
-                          this.state.details.prazo_para_prorrogacao_contrato
-                        }
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="reajuste">
-                        Reajuste:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="reajuste"
-                        value={this.state.details.reajuste_contrato}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="cond_faturamento">
-                        Cond. Faturamento:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="cond_faturamento"
-                        value={this.state.details.condicao_fat_contrato}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="12" className="form-group ">
-                      <label className="grey-text" htmlFor="obj_contrato">
-                        Descrição do Contrato:{" "}
-                      </label>
-                      <textarea
-                        className="form-control disabled read-only"
-                        id="obj_contrato"
-                        rows="3"
-                        value={this.state.details.objeto_contrato}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <hr />
-                  <div className="float-left">
-                    <label className="grey-text">
-                      Criado em:
-                      <Moment
-                        format="DD/MM/YYYY"
-                        date={this.state.details.created_at}
-                      />
-                    </label>
-                    <br />
-                    <label className="grey-text">
-                      Última atualização:
-                      <Moment
-                        format="DD/MM/YYYY"
-                        date={this.state.details.updated_at}
-                      />
-                    </label>
-                  </div>
-                </MDBTabPane>
+                  <MDBTabContent activeItem={this.state.activeItem}>
+                    <MDBTabPane tabId="1" role="tabpanel">
+                      <MDBRow className="mt-4">
+                        <MDBCol md="3" className="form-group">
+                          <label className="grey-text" htmlFor="codigo">
+                            Cód. Contrato:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="codigo"
+                            value={this.state.details.cod_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="3" className="form-group ">
+                          <label className="grey-text" htmlFor="tipo">
+                            Tipo:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="tipo"
+                            value={this.state.details.tipo_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="2" className="form-group">
+                          <label className="grey-text" htmlFor="dt_assinatura">
+                            Data assinatura:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="dt_assinatura"
+                            value={this.state.details.data_assinatura_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="2" className="form-group">
+                          <label className="grey-text" htmlFor="dt_inicio">
+                            Data de início:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="dt_inicio"
+                            value={this.state.details.data_inicio_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="2" className="form-group">
+                          <label className="grey-text" htmlFor="dt_fim">
+                            Data de término:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="dt_fim"
+                            value={this.state.details.data_fim_contrato}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      <MDBRow>
+                        <MDBCol md="4" className="form-group ">
+                          <label className="grey-text" htmlFor="valor">
+                            Valor:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="valor"
+                            value={this.state.details.valor_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label className="grey-text" htmlFor="vigencia">
+                            Vigência:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="vigencia"
+                            value={this.state.details.prazo_vigencia_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label className="grey-text" htmlFor="prorrogacao">
+                            Prorrogação:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="prorrogacao"
+                            value={this.state.details.prorrogacao_contrato}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      <MDBRow>
+                        <MDBCol md="4" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="prazo_prorrogacao"
+                          >
+                            Prazo Prorrogação:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="prazo_prorrogacao"
+                            value={
+                              this.state.details.prazo_para_prorrogacao_contrato
+                            }
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label className="grey-text" htmlFor="reajuste">
+                            Reajuste:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="reajuste"
+                            value={this.state.details.reajuste_contrato}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="cond_faturamento"
+                          >
+                            Cond. Faturamento:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="cond_faturamento"
+                            value={this.state.details.condicao_fat_contrato}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      <MDBRow>
+                        <MDBCol md="12" className="form-group ">
+                          <label className="grey-text" htmlFor="obj_contrato">
+                            Descrição do Contrato:{" "}
+                          </label>
+                          <textarea
+                            className="form-control disabled read-only"
+                            id="obj_contrato"
+                            rows="3"
+                            value={this.state.details.objeto_contrato}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      <hr />
+                      <div className="float-left">
+                        <label className="grey-text">
+                          Criado em:
+                          <Moment
+                            format="DD/MM/YYYY"
+                            date={this.state.details.created_at}
+                          />
+                        </label>
+                        <br />
+                        <label className="grey-text">
+                          Última atualização:
+                          <Moment
+                            format="DD/MM/YYYY"
+                            date={this.state.details.updated_at}
+                          />
+                        </label>
+                      </div>
+                    </MDBTabPane>
 
-                <MDBTabPane tabId="2" role="tabpanel">
-                  <MDBRow className="mt-4">
-                    <MDBCol md="5" className="form-group">
-                      <label className="grey-text" htmlFor="nome_contratante">
-                        Nome:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="nome_contratante "
-                        value={this.state.details.nome_contratante}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="apelido">
-                        Apelido:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="apelido"
-                        value={this.state.details.apelido_contratante}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="cnpj">
-                        CNPJ:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="cnpj"
-                        value={this.state.details.cnpj_contratante}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  {/* <MDBRow>
+                    <MDBTabPane tabId="2" role="tabpanel">
+                      <MDBRow className="mt-4">
+                        <MDBCol md="5" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="nome_contratante"
+                          >
+                            Nome:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="nome_contratante "
+                            value={this.state.details.nome_contratante}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label className="grey-text" htmlFor="apelido">
+                            Apelido:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="apelido"
+                            value={this.state.details.apelido_contratante}
+                          />
+                        </MDBCol>
+                        <MDBCol md="3" className="form-group">
+                          <label className="grey-text" htmlFor="cnpj">
+                            CNPJ:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="cnpj"
+                            value={this.state.details.cnpj_contratante}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      {/* <MDBRow>
                     <MDBCol md="8" className="form-group">
                       <label className="grey-text" htmlFor="endereco">
                         Endereço:{" "}
@@ -375,8 +388,8 @@ class ContractDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow> */}
-                  <MDBRow className="mb-2">
-                    {/* <MDBCol md="3" className="form-group">
+                      <MDBRow className="mb-2">
+                        {/* <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cidade">
                         Cidade:{" "}
                       </label>
@@ -409,98 +422,107 @@ class ContractDetails extends Component {
                         value={this.state.details.pais_contratante}
                       />
                     </MDBCol> */}
-                    <MDBCol md="8" className="form-group">
-                      <label
-                        className="grey-text"
-                        htmlFor="endereco_contratada"
-                      >
-                        Endereço:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="endereco_contratada"
-                        value={this.state.details.end_empresa_contratada}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="cep">
-                        CEP:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="cep"
-                        value={this.state.details.cod_cep_contratante}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <hr />
-                </MDBTabPane>
+                        <MDBCol md="8" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="endereco_contratada"
+                          >
+                            Endereço:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="endereco_contratada"
+                            value={this.state.details.end_empresa_contratada}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label className="grey-text" htmlFor="cep">
+                            CEP:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="cep"
+                            value={this.state.details.cod_cep_contratante}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      <hr />
+                    </MDBTabPane>
 
-                <MDBTabPane tabId="3" role="tabpanel">
-                  <MDBRow className="mt-4">
-                    <MDBCol md="5" className="form-group">
-                      <label className="grey-text" htmlFor="nome_contratada">
-                        Nome:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="nome_contratada "
-                        value={this.state.details.nome_contratada}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="apelido_contratada">
-                        Apelido:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="apelido_contratada"
-                        value={this.state.details.apelido_contratada}
-                      />
-                    </MDBCol>
-                    <MDBCol md="3" className="form-group">
-                      <label className="grey-text" htmlFor="cnpj_contratada">
-                        CNPJ:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="cnpj_contratada"
-                        value={this.state.details.cnpj_contratada}
-                      />
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow>
-                    <MDBCol md="8" className="form-group">
-                      <label
-                        className="grey-text"
-                        htmlFor="endereco_contratada"
-                      >
-                        Endereço:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="endereco_contratada"
-                        value={this.state.details.end_empresa_contratada}
-                      />
-                    </MDBCol>
-                    <MDBCol md="4" className="form-group">
-                      <label className="grey-text" htmlFor="cep_contratada">
-                        CEP:{" "}
-                      </label>
-                      <input
-                        className="form-control disabled read-only"
-                        type="text"
-                        id="cep_contratada"
-                        value={this.state.details.cod_cep_contratada}
-                      />
-                    </MDBCol>
-                    {/* <MDBCol md="4" className="form-group">
+                    <MDBTabPane tabId="3" role="tabpanel">
+                      <MDBRow className="mt-4">
+                        <MDBCol md="5" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="nome_contratada"
+                          >
+                            Nome:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="nome_contratada "
+                            value={this.state.details.nome_contratada}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="apelido_contratada"
+                          >
+                            Apelido:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="apelido_contratada"
+                            value={this.state.details.apelido_contratada}
+                          />
+                        </MDBCol>
+                        <MDBCol md="3" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="cnpj_contratada"
+                          >
+                            CNPJ:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="cnpj_contratada"
+                            value={this.state.details.cnpj_contratada}
+                          />
+                        </MDBCol>
+                      </MDBRow>
+                      <MDBRow>
+                        <MDBCol md="8" className="form-group">
+                          <label
+                            className="grey-text"
+                            htmlFor="endereco_contratada"
+                          >
+                            Endereço:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="endereco_contratada"
+                            value={this.state.details.end_empresa_contratada}
+                          />
+                        </MDBCol>
+                        <MDBCol md="4" className="form-group">
+                          <label className="grey-text" htmlFor="cep_contratada">
+                            CEP:{" "}
+                          </label>
+                          <input
+                            className="form-control disabled read-only"
+                            type="text"
+                            id="cep_contratada"
+                            value={this.state.details.cod_cep_contratada}
+                          />
+                        </MDBCol>
+                        {/* <MDBCol md="4" className="form-group">
                       <label className="grey-text" htmlFor="bairro_contratada">
                         Bairro:{" "}
                       </label>
@@ -511,8 +533,8 @@ class ContractDetails extends Component {
                         value={this.state.details.bairro_contratada}
                       />
                     </MDBCol> */}
-                  </MDBRow>
-                  {/* <MDBRow className="mb-2">
+                      </MDBRow>
+                      {/* <MDBRow className="mb-2">
                     <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cidade_contratada">
                         Cidade:{" "}
@@ -558,9 +580,9 @@ class ContractDetails extends Component {
                       />
                     </MDBCol>
                   </MDBRow> */}
-                  <hr/>
-                </MDBTabPane>
-                {/* <MDBTabPane tabId="4" role="tabpanel">
+                      <hr />
+                    </MDBTabPane>
+                    {/* <MDBTabPane tabId="4" role="tabpanel">
                   <MDBRow className="mt-4">
                     <MDBCol md="3" className="form-group">
                       <label className="grey-text" htmlFor="cod_anexo">
@@ -800,68 +822,68 @@ class ContractDetails extends Component {
 
                   <hr />
                 </MDBTabPane> */}
-                <MDBBtn
-                  href={`/Contracts/edit/${this.state.details.id}`}
-                  className="light-blue darken-4 float-right"
-                >
-                  <MDBIcon far icon="edit" /> Editar
-                </MDBBtn>
-                <MDBBtn
-                  // onClick={this.onDelete.bind(this)}
-                  onClick={this.toggleDeleteContractModal(1)}
-                  className="btn grey lighten-1 float-right"
-                >
-                  Excluir
-                </MDBBtn>
-                <MDBBtn
-                  href="/Contracts"
-                  value="Return"
-                  className="btn grey lighten-1 float-right"
-                >
-                  Voltar
-                </MDBBtn>
-              </MDBTabContent>
-            </MDBContainer>
-          </MDBCardBody>
-        </MDBCard>
-        <MDBBtn
-          size="lg"
-          href="/Contracts/add"
-          className="px-3 py-3 light-blue darken-4 circle-btn"
-        >
-          <MDBIcon size="lg" className="text-white" icon="plus" />
-        </MDBBtn>
+                    <MDBBtn
+                      href={`/Contracts/edit/${this.state.details.id}`}
+                      className="light-blue darken-4 float-right"
+                    >
+                      <MDBIcon far icon="edit" /> Editar
+                    </MDBBtn>
+                    <MDBBtn
+                      // onClick={this.onDelete.bind(this)}
+                      onClick={this.toggleDeleteContractModal(1)}
+                      className="btn grey lighten-1 float-right"
+                    >
+                      Excluir
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/Contracts"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      Voltar
+                    </MDBBtn>
+                  </MDBTabContent>
+                </MDBContainer>
+              </MDBCardBody>
+            </MDBCard>
+            <MDBBtn
+              size="lg"
+              href="/Contracts/add"
+              className="px-3 py-3 light-blue darken-4 circle-btn"
+            >
+              <MDBIcon size="lg" className="text-white" icon="plus" />
+            </MDBBtn>
 
-        {/* Delete Confirmation Modal */}
-        <div>
-          <MDBModal
-            isOpen={this.state.modal1}
-            toggle={this.toggleDeleteContractModal(1)}
-            centered
-          >
-            <MDBModalHeader toggle={this.toggleDeleteContractModal(1)}>
-              Deletar registro
-            </MDBModalHeader>
-            <MDBModalBody>
-              Esta ação irá excluir o registro permanentemente. Deseja
-              prosseguir?
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn
-                className="btn grey lighten-1"
-                onClick={this.toggleDeleteContractModal(1)}
-              >
-                Não
-              </MDBBtn>
-              <MDBBtn
-                className="btn deep-orange darken-4"
-                onClick={this.onDelete.bind(this)}
-              >
-                Sim
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModal>
-        </div>
+            {/* Delete Confirmation Modal */}
+            <MDBModal
+              isOpen={this.state.modal1}
+              toggle={this.toggleDeleteContractModal(1)}
+              centered
+            >
+              <MDBModalHeader toggle={this.toggleDeleteContractModal(1)}>
+                Deletar registro
+              </MDBModalHeader>
+              <MDBModalBody>
+                Esta ação irá excluir o registro permanentemente. Deseja
+                prosseguir?
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn
+                  className="btn grey lighten-1"
+                  onClick={this.toggleDeleteContractModal(1)}
+                >
+                  Não
+                </MDBBtn>
+                <MDBBtn
+                  className="btn deep-orange darken-4"
+                  onClick={this.onDelete.bind(this)}
+                >
+                  Sim
+                </MDBBtn>
+              </MDBModalFooter>
+            </MDBModal>
+          </MDBCol>
+        </MDBRow>
       </MDBContainer>
     );
   }

@@ -76,7 +76,8 @@ class Collaborators extends Component {
     });
 
     return (
-      <MDBContainer >
+      <MDBRow>
+      <MDBCol md="12">
         <MDBCard className="mt-3 mb-4 px-2 card">
           <MDBCardTitle style={{ fontSize: 28 }}>
             <strong>COLABORADORES</strong>
@@ -171,7 +172,8 @@ class Collaborators extends Component {
             </MDBTable>
           </MDBCardBody>
         </MDBCard>
-      </MDBContainer>
+         </MDBCol>
+    </MDBRow>
     );
   }
 }

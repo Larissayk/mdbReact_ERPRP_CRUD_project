@@ -93,7 +93,7 @@ class SideNavigation extends React.Component {
               </NavLink>
               <NavLink to="/NFsInbound" className="activeClass">
                 <MDBListGroupItem
-                  style={{ fontWeight: "300", fontSize: "15px" }}
+                  style={{ fontWeight: "300", fontSize: "14px" }}
                   hover
                 >
                   <i class="fas fa-file-import mr-3 pl-1" />

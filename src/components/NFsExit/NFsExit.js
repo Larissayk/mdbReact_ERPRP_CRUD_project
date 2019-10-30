@@ -62,105 +62,106 @@ class NFsExit extends Component {
       );
     });
 
-
     return (
-      <MDBContainer>
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-            <strong>NF-SAÍDA</strong>
-          </MDBCardTitle>
-          <hr className="mb-0" />
-          <MDBCardBody className="pt-0 mt-0">
-            <MDBRow>
-              <MDBCol md="4" className="float-right p-0 m-0">
-                <div className="input-group md-form form-sm form-1 pl-0">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="basic-text1">
-                      <MDBIcon className="text-white" icon="search" />
-                    </span>
+      <MDBRow>
+        <MDBCol md="12">
+          <MDBCard className="mt-3 mb-4">
+            <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+              <strong>NF-SAÍDA</strong>
+            </MDBCardTitle>
+            <hr className="mb-0" />
+            <MDBCardBody className="pt-0 mt-0">
+              <MDBRow>
+                <MDBCol md="4" className="float-right p-0 m-0">
+                  <div className="input-group md-form form-sm form-1 pl-0">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text" id="basic-text1">
+                        <MDBIcon className="text-white" icon="search" />
+                      </span>
+                    </div>
+                    <input
+                      className="form-control my-0 py-1"
+                      type="text"
+                      placeholder="Busque pelo número"
+                      aria-label="Search"
+                      value={this.state.search}
+                      onChange={this.updateSearch.bind(this)}
+                    />
                   </div>
-                  <input
-                    className="form-control my-0 py-1"
-                    type="text"
-                    placeholder="Busque pelo número"
-                    aria-label="Search"
-                    value={this.state.search}
-                    onChange={this.updateSearch.bind(this)}
-                  />
-                </div>
-              </MDBCol>
-              <MDBCol md="4" className=" p-0 my-4 ">
-                <div>
-                  <select
-                    defaultValue=" "
-                    onChange={this.handleSort.bind(this)}
-                    style={{ width: 130 }}
-                    className="form-control my-0 py-1 custom-select"
+                </MDBCol>
+                <MDBCol md="4" className=" p-0 my-4 ">
+                  <div>
+                    <select
+                      defaultValue=" "
+                      onChange={this.handleSort.bind(this)}
+                      style={{ width: 130 }}
+                      className="form-control my-0 py-1 custom-select"
+                    >
+                      <option value="">Status</option>
+                      <option value="OK">OK</option>
+                      <option value="canc">Cancelado</option>
+                    </select>
+                  </div>
+                </MDBCol>
+                <MDBCol md="4" className="p-0 m-0">
+                  <MDBBtn
+                    color="#FFF"
+                    className="pt-3 px-3 my-3 float-right btn-color-table"
+                    href="/NFsExit/add"
                   >
-                    <option value="">Status</option>
-                    <option value="OK">OK</option>
-                    <option value="canc">Cancelado</option>
-                  </select>
-                </div>
-              </MDBCol>
-              <MDBCol md="4" className="p-0 m-0">
-                <MDBBtn
-                  color="#FFF"
-                  className="pt-3 px-3 my-3 float-right btn-color-table"
-                  href="/NFsExit/add"
-                >
-                  <MDBIcon icon="plus" /> Novo Registro
-                </MDBBtn>
-              </MDBCol>
-            </MDBRow>
-            <MDBTable hover small striped className="mb-2 mt-0">
-              <MDBTableHead>
-                <tr>
-                  <th>Nº</th>
-                  <th>ANO</th>
-                  <th>TIPO</th>
-                  <th>DATA EMISSÃO</th>
-                  <th>EMPRESA</th>
-                  <th className="text-center">STATUS CONTR.</th>
-                </tr>
-              </MDBTableHead>
-              <MDBTableBody>
-                {filteredData.map(nota_saida => {
-                  return (
-                    <tr key={nota_saida.id}>
-                      <td className="align-middle">
-                        <NFExitItem key={nota_saida.id} item={nota_saida} />
-                      </td>
-                      <td className="align-middle">{nota_saida.ano}</td>
-                      <td className="align-middle">{nota_saida.tipo_nf}</td>
-                      <td style={{ width: 150 }} className="align-middle">
-                        <Moment
-                          format="DD/MM/YYYY"
-                          date={nota_saida.data_de_emissao}
-                        />
-                      </td>
-                      <td style={{ width: 400 }} className="align-middle">
-                        {nota_saida.empresa_emitente}
-                      </td>
-                      <td className="text-center">
-                        {nota_saida.status.toLowerCase() === "ok" ? (
-                          <MDBBadge className="p-2" pill color="success">
-                            OK
-                          </MDBBadge>
-                        ) : (
-                          <MDBBadge className="p-2" pill color="danger">
-                            Cancelado
-                          </MDBBadge>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </MDBTableBody>
-            </MDBTable>
-          </MDBCardBody>
-        </MDBCard>
-      </MDBContainer>
+                    <MDBIcon icon="plus" /> Novo Registro
+                  </MDBBtn>
+                </MDBCol>
+              </MDBRow>
+              <MDBTable hover small striped className="mb-2 mt-0">
+                <MDBTableHead>
+                  <tr>
+                    <th>Nº</th>
+                    <th>ANO</th>
+                    <th>TIPO</th>
+                    <th>DATA EMISSÃO</th>
+                    <th>EMPRESA</th>
+                    <th className="text-center">STATUS CONTR.</th>
+                  </tr>
+                </MDBTableHead>
+                <MDBTableBody>
+                  {filteredData.map(nota_saida => {
+                    return (
+                      <tr key={nota_saida.id}>
+                        <td className="align-middle">
+                          <NFExitItem key={nota_saida.id} item={nota_saida} />
+                        </td>
+                        <td className="align-middle">{nota_saida.ano}</td>
+                        <td className="align-middle">{nota_saida.tipo_nf}</td>
+                        <td style={{ width: 150 }} className="align-middle">
+                          <Moment
+                            format="DD/MM/YYYY"
+                            date={nota_saida.data_de_emissao}
+                          />
+                        </td>
+                        <td style={{ width: 400 }} className="align-middle">
+                          {nota_saida.empresa_emitente}
+                        </td>
+                        <td className="text-center">
+                          {nota_saida.status.toLowerCase() === "ok" ? (
+                            <MDBBadge className="p-2" pill color="success">
+                              OK
+                            </MDBBadge>
+                          ) : (
+                            <MDBBadge className="p-2" pill color="danger">
+                              Cancelado
+                            </MDBBadge>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </MDBTableBody>
+              </MDBTable>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
     );
   }
 }

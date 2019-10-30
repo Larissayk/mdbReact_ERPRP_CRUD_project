@@ -144,319 +144,338 @@ class AddCustomer extends Component {
   render() {
     const { formErrors } = this.state;
     return (
-      <MDBContainer className="main-body">
-        <div>
-          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
-        </div>
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardTitle style={{ fontSize: 28 }}>
-            <strong>NOVO CLIENTE</strong>
-          </MDBCardTitle>
-          <hr className="mb-0" />
-          <MDBCardBody className="mt-0">
-            <MDBContainer>
-              <MDBNav className="nav-tabs mx-0">
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "1"}
-                    onClick={this.toggle("1")}
-                    role="tab"
-                  >
-                    Dados Gerais
-                  </MDBNavLink>
-                </MDBNavItem>
-              </MDBNav>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="12">
+            <div>
+              {this.state.alertMessage === "success" ? (
+                <SuccessMessage />
+              ) : null}
+              {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
+            </div>
+            <MDBCard className="mt-3 mb-4">
+              <MDBCardTitle style={{ fontSize: 28 }}>
+                <strong>NOVO CLIENTE</strong>
+              </MDBCardTitle>
+              <hr className="mb-0" />
+              <MDBCardBody className="mt-0">
+                <MDBContainer>
+                  <MDBNav className="nav-tabs mx-0">
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "1"}
+                        onClick={this.toggle("1")}
+                        role="tab"
+                      >
+                        Dados Gerais
+                      </MDBNavLink>
+                    </MDBNavItem>
+                  </MDBNav>
 
-              <MDBTabContent activeItem={this.state.activeItem}>
-                <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
-                    <MDBRow className="mt-4">
-                      <MDBCol md="5" className="form-group mb-0">
-                        <label className="grey-text" htmlFor="empresa">
-                          Nome: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <input
-                          name="empresa"
-                          className={
-                            formErrors.empresa.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="empresa"
-                          autoFocus
-                          onChange={this.handleChange}
-                        />
-                        {formErrors.empresa.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.empresa}
-                          </span>
-                        )}
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cnpj">
-                          CNPJ: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <InputMask
-                          className={
-                            formErrors.cnpj.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="cnpj"
-                          mask="99.999.999/9999-99"
-                          onChange={this.handleChange}
-                          name="cnpj"
-                        />
-                        {formErrors.cnpj.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.cnpj}
-                          </span>
-                        )}
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="status">
-                          Status: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <div>
-                          <select
-                            className="browser-default custom-select"
-                            ref="status"
-                          >
-                            <option value="Ativo">Ativo</option>
-                            <option value="Desligado">Desligado</option>
-                          </select>
-                        </div>
-                        {/* <input
+                  <MDBTabContent activeItem={this.state.activeItem}>
+                    <MDBTabPane tabId="1" role="tabpanel">
+                      <form onSubmit={this.onSubmit.bind(this)} noValidate>
+                        <MDBRow className="mt-4">
+                          <MDBCol md="5" className="form-group mb-0">
+                            <label className="grey-text" htmlFor="empresa">
+                              Nome: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <input
+                              name="empresa"
+                              className={
+                                formErrors.empresa.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="empresa"
+                              autoFocus
+                              onChange={this.handleChange}
+                            />
+                            {formErrors.empresa.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.empresa}
+                              </span>
+                            )}
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="cnpj">
+                              CNPJ: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <InputMask
+                              className={
+                                formErrors.cnpj.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="cnpj"
+                              mask="99.999.999/9999-99"
+                              onChange={this.handleChange}
+                              name="cnpj"
+                            />
+                            {formErrors.cnpj.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.cnpj}
+                              </span>
+                            )}
+                          </MDBCol>
+                          <MDBCol md="2" className="form-group ">
+                            <label className="grey-text" htmlFor="status">
+                              Status: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <div>
+                              <select
+                                className="browser-default custom-select"
+                                ref="status"
+                              >
+                                <option value="Ativo">Ativo</option>
+                                <option value="Desligado">Desligado</option>
+                              </select>
+                            </div>
+                            {/* <input
                           className="form-control"
                           type="text"
                           ref="collabStatus"
                           required
                         /> */}
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="data_inicio">
-                          Data de início:{" "}
-                          <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <InputMask
-                          className={
-                            formErrors.data_inicio.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="data_inicio"
-                          mask="99/99/9999"
-                          onChange={this.handleChange}
-                          name="data_inicio"
-                        />
-                        {formErrors.data_inicio.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.data_inicio}
-                          </span>
-                        )}
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="4" className="form-group ">
-                        <label className="grey-text" htmlFor="contato1">
-                          Contato:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="contato1"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group ">
-                        <label className="grey-text" htmlFor="cargo1">
-                          Cargo do contato:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="cargo1"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="email_contato">
-                          Email do contato:
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="email_contato"
-                          name="email_contato"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="data_fim">
-                          Data de término:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="data_fim"
-                          mask="99/99/9999"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="telefone">
-                          Telefone:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="telefone"
-                          mask="(99) 9999-9999"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="celular">
-                          Celular:
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="celular"
-                          mask="(99) 9 9999-9999"
-                          name="celular"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="email">
-                          Email:
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="email"
-                          name="email"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="insc_municipal">
-                          Insc. Municipal:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="insc_municipal"
-                          name="insc_municipal"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="insc_estadual">
-                          Insc. Estadual:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="insc_estadual"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <hr />
-                    <MDBRow>
-                      <MDBCol md="8" className="form-group">
-                        <label className="grey-text" htmlFor="endereco">
-                          Endereço:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="endereco"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="bairro">
-                          Bairro:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="bairro"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow className="mb-2">
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="municipio">
-                          Município:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="municipio"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="uf">
-                          UF:{" "}
-                        </label>
-                        <input className="form-control" type="text" ref="uf" />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="pais">
-                          País:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="pais"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="cep">
-                          CEP:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="cep"
-                          mask="99999-999"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <hr />
+                          </MDBCol>
+                          <MDBCol md="2" className="form-group">
+                            <label className="grey-text" htmlFor="data_inicio">
+                              Data de início:{" "}
+                              <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <InputMask
+                              className={
+                                formErrors.data_inicio.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="data_inicio"
+                              mask="99/99/9999"
+                              onChange={this.handleChange}
+                              name="data_inicio"
+                            />
+                            {formErrors.data_inicio.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.data_inicio}
+                              </span>
+                            )}
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                          <MDBCol md="4" className="form-group ">
+                            <label className="grey-text" htmlFor="contato1">
+                              Contato:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="contato1"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group ">
+                            <label className="grey-text" htmlFor="cargo1">
+                              Cargo do contato:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="cargo1"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="email_contato"
+                            >
+                              Email do contato:
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="email_contato"
+                              name="email_contato"
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="form-group">
+                            <label className="grey-text" htmlFor="data_fim">
+                              Data de término:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="data_fim"
+                              mask="99/99/9999"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="telefone">
+                              Telefone:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="telefone"
+                              mask="(99) 9999-9999"
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="celular">
+                              Celular:
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="celular"
+                              mask="(99) 9 9999-9999"
+                              name="celular"
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="email">
+                              Email:
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="email"
+                              name="email"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                          <MDBCol md="4" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="insc_municipal"
+                            >
+                              Insc. Municipal:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="insc_municipal"
+                              name="insc_municipal"
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="insc_estadual"
+                            >
+                              Insc. Estadual:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="insc_estadual"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <hr />
+                        <MDBRow>
+                          <MDBCol md="8" className="form-group">
+                            <label className="grey-text" htmlFor="endereco">
+                              Endereço:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="endereco"
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="bairro">
+                              Bairro:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="bairro"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow className="mb-2">
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="municipio">
+                              Município:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="municipio"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="uf">
+                              UF:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="uf"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="pais">
+                              País:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="pais"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="cep">
+                              CEP:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="cep"
+                              mask="99999-999"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <hr />
 
-                    <div>
-                      {this.state.alertMessage1 === "error1" ? (
-                        <MDBAlert color="danger">
-                          Certifique-se de que os campos foram preenchidos
-                          corretamente.
-                        </MDBAlert>
-                      ) : null}
-                    </div>
+                        <div>
+                          {this.state.alertMessage1 === "error1" ? (
+                            <MDBAlert color="danger">
+                              Certifique-se de que os campos foram preenchidos
+                              corretamente.
+                            </MDBAlert>
+                          ) : null}
+                        </div>
 
-                    <MDBBtn
-                      type="submit"
-                      value="Save"
-                      className="cyan lighten-2 float-right"
-                    >
-                      <MDBIcon far icon="save" /> Salvar
-                    </MDBBtn>
-                    <MDBBtn
-                      href="/Customers"
-                      value="Return"
-                      className="btn grey lighten-1 float-right"
-                    >
-                      Voltar
-                    </MDBBtn>
-                  </form>
-                </MDBTabPane>
-              </MDBTabContent>
-            </MDBContainer>
-          </MDBCardBody>
-        </MDBCard>
+                        <MDBBtn
+                          type="submit"
+                          value="Save"
+                          className="cyan lighten-2 float-right"
+                        >
+                          <MDBIcon far icon="save" /> Salvar
+                        </MDBBtn>
+                        <MDBBtn
+                          href="/Customers"
+                          value="Return"
+                          className="btn grey lighten-1 float-right"
+                        >
+                          Voltar
+                        </MDBBtn>
+                      </form>
+                    </MDBTabPane>
+                  </MDBTabContent>
+                </MDBContainer>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
       </MDBContainer>
     );
   }
