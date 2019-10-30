@@ -1,8 +1,7 @@
 import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Login from "./Login/Login";
 import SignUp from "./Login/SignUp";
-import Footer from "./Navigation/Footer"
 import Home from "./Home";
 import Collaborators from "./Collaborators/Collaborators";
 import CollaboratorDetails from "./Collaborators/CollaboratorDetails";
@@ -33,15 +32,10 @@ import ContractDetails from "./Contracts/ContractDetails";
 import AddContract from "./Contracts/AddContract";
 import EditContract from "./Contracts/EditContract";
 
-import NavbarUpdate from "./Navigation/NavbarUpdate";
-
-const Main = withRouter(({ location }) => {
+class Routes extends React.Component {
+  render() {
   return (
-    <main>
-      {location.pathname !== "/Login" &&
-        location.pathname !== "/SignUp" &&
-       <NavbarUpdate />}
-      
+     
       <Switch>
         <Route exact path="/Login" component={Login} />
         <Route exact path="/SignUp" component={SignUp} />
@@ -74,12 +68,9 @@ const Main = withRouter(({ location }) => {
         <Route exact path="/Contracts/add" component={AddContract} />
         <Route exact path="/Contracts/edit/:id" component={EditContract} />
         <Route exact path="/Contracts/:id" component={ContractDetails} />
-
-
-
       </Switch>
-    </main>
-  );
-});
+    );
+  };
+}
 
-export default Main;
+export default Routes;

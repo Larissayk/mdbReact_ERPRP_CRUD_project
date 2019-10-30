@@ -64,7 +64,7 @@ class NFsExit extends Component {
 
 
     return (
-      <MDBContainer className="main-body">
+      <MDBContainer>
         <MDBCard className="mt-3 mb-4">
           <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
             <strong>NF-SAÍDA</strong>

@@ -74,7 +74,7 @@ class Customers extends Component {
     });
 
     return (
-      <MDBContainer className="main-body">
+      <MDBContainer>
         <MDBCard className="mt-3 mb-4 px-2 card">
           <MDBCardTitle style={{ fontSize: 28 }}>
             <strong>CLIENTES</strong>

@@ -5,8 +5,12 @@ import SideNavigation from "./SideNavigation";
 const NavbarUpdate = () => {
   return (
     <div>
-      <TopNavigation />
-      <SideNavigation />
+      <header>
+        <TopNavigation />
+      </header>
+      <aside>
+        <SideNavigation />
+      </aside>
     </div>
   );
 };
