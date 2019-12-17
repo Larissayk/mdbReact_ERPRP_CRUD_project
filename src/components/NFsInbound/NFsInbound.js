@@ -31,7 +31,7 @@ class NFsInbound extends Component {
 
   getNFsExit() {
     axios
-      .get("http://127.0.0.1:8000/api/nota_entrada")
+      .get("API URL NFENTRADA")
       .then(response => {
         this.setState({ nfsInbound: response.data }, () => {
           console.log(this.state);

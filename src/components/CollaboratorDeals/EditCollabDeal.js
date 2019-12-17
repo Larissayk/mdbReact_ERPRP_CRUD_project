@@ -70,7 +70,7 @@ class EditCollaboratorDeal extends Component {
   getCollaboratorsDeal() {
     let collabDealId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/negociacoes/${collabDealId}`)
+      .get(`API URL NEGOCIACOES/${collabDealId}`)
       .then(response => {
         this.setState(
           {
@@ -103,7 +103,7 @@ class EditCollaboratorDeal extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/negociacoes/${this.state.id}`,
+        url: `API URL NEGOCIACOES/${this.state.id}`,
         data: newCollabDeal
       })
       .then(response => {

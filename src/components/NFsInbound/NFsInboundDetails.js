@@ -41,7 +41,7 @@ class NFInboundDetails extends Component {
   getNFInbound() {
     let NFInboundId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/nota_entrada/${NFInboundId}`)
+      .get(`API URL NFENTRADA/${NFInboundId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -53,7 +53,7 @@ class NFInboundDetails extends Component {
   onDelete() {
     let NFInboundId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/nota_entrada/${NFInboundId}`)
+      .delete(`API URL NFENTRADA/${NFInboundId}`)
       .then(response => {
         console.log(`ID excluído: ${NFInboundId}`);
         this.setState({ alertMessage: "success" });

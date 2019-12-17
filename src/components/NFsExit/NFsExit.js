@@ -33,7 +33,7 @@ class NFsExit extends Component {
 
   getNFsExit() {
     axios
-      .get("http://127.0.0.1:8000/api/nota_saida")
+      .get("API URL NFSAIDA")
       .then(response => {
         this.setState({ nfsExit: response.data }, () => {
           console.log(this.state);

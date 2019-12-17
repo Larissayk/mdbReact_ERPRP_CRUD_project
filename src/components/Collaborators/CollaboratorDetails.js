@@ -42,7 +42,7 @@ class CollaboratorDetails extends Component {
   getCollaborator() {
     let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/colaboradores/${collaboratorId}`)
+      .get(`API URL COLABORADORES/${collaboratorId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -54,7 +54,7 @@ class CollaboratorDetails extends Component {
   onDelete() {
     let collaboratorId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/colaboradores/${collaboratorId}`)
+      .delete(`API URL COLABORADORES/${collaboratorId}`)
       .then(response => {
         console.log(`ID excluído: ${collaboratorId}`);
         this.setState({ alertMessage: "success" });

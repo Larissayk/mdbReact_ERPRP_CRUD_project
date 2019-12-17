@@ -63,7 +63,7 @@ class AddContract extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/contratos/",
+        url: "API URL CONTRATOS",
         data: newContract
       })
       .then(response => {

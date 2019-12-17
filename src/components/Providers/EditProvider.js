@@ -86,7 +86,7 @@ class EditProvider extends Component {
   getProviderDetails() {
     let providerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/fornecedores/${providerId}`)
+      .get(`API URL FORNECEDORES/${providerId}`)
       .then(response => {
         this.setState(
           {
@@ -130,7 +130,7 @@ class EditProvider extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/fornecedores/${this.state.id}`,
+        url: `API URL FORNECEDORES/${this.state.id}`,
         data: newProvider
       })
       .then(response => {

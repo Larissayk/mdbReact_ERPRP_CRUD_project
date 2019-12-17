@@ -59,7 +59,7 @@ class AddCustomer extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/clientes/",
+        url: "API URL CLIENTES",
         data: newCustomer
       })
       .then(response => {

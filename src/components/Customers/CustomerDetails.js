@@ -42,7 +42,7 @@ class CustomerDetails extends Component {
   getCustomer() {
     let customerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/clientes/${customerId}`)
+      .get(`API URL CLIENTES/${customerId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -54,7 +54,7 @@ class CustomerDetails extends Component {
   onDelete() {
     let customerId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/clientes/${customerId}`)
+      .delete(`API URL CLIENTES/${customerId}`)
       .then(response => {
         console.log(`ID excluído: ${customerId}`);
         this.setState({ alertMessage: "success" });

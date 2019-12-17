@@ -31,6 +31,7 @@ import Contracts from "./Contracts/Contracts";
 import ContractDetails from "./Contracts/ContractDetails";
 import AddContract from "./Contracts/AddContract";
 import EditContract from "./Contracts/EditContract";
+import NotFoundPage from "./AlertModals/NotFoundPage";
 
 class Routes extends React.Component {
   render() {
@@ -68,6 +69,7 @@ class Routes extends React.Component {
         <Route exact path="/Contracts/add" component={AddContract} />
         <Route exact path="/Contracts/edit/:id" component={EditContract} />
         <Route exact path="/Contracts/:id" component={ContractDetails} />
+        <Route component={NotFoundPage}/>
       </Switch>
     );
   };

@@ -78,7 +78,7 @@ class AddCollaborator extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/colaboradores/",
+        url: "API URL COLABORADORES",
         data: newCollaborator
       })
       .then(response => {

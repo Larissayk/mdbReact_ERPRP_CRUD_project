@@ -6,7 +6,7 @@ import NavbarUpdate from "./components/Navigation/NavbarUpdate";
 
 const App = () => (
   <div className="flexible-content">
-    {window.location.pathname === "/Login" ||
+    {window.location.pathname === "/Login"  ||
     window.location.pathname === "/SignUp" ? null : (
       <NavbarUpdate />
     )}

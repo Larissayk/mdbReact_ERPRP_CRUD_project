@@ -32,7 +32,7 @@ class Contracts extends Component {
 
   getContracts() {
     axios
-      .get("http://127.0.0.1:8000/api/contratos")
+      .get("API URL CONTRATOS")
       .then(response => {
         this.setState({ contratos: response.data }, () => {
           console.log(this.state);

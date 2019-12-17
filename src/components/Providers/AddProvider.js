@@ -62,7 +62,7 @@ class AddProvider extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/fornecedores/",
+        url: "API URL FORNECEDORES",
         data: newProvider
       })
       .then(response => {

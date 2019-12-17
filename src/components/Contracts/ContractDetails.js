@@ -42,7 +42,7 @@ class ContractDetails extends Component {
   getContract() {
     let contractId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/contratos/${contractId}`)
+      .get(`API URL CONTRATOS/${contractId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -54,7 +54,7 @@ class ContractDetails extends Component {
   onDelete() {
     let contractId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/contratos/${contractId}`)
+      .delete(`API URL CONTRATOS/${contractId}`)
       .then(response => {
         console.log(`ID excluído: ${contractId}`);
         this.setState({ alertMessage: "success" });

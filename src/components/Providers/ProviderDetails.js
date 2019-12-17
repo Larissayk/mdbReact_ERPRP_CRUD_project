@@ -40,7 +40,7 @@ class ProviderDetails extends Component {
   getProvider() {
     let providerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/fornecedores/${providerId}`)
+      .get(`API URL FORNECEDORES/${providerId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -52,7 +52,7 @@ class ProviderDetails extends Component {
   onDelete() {
     let providerId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/fornecedores/${providerId}`)
+      .delete(`API URL FORNECEDORES/${providerId}`)
       .then(response => {
         console.log(`ID excluído: ${providerId}`);
         this.setState({ alertMessage: "success" });

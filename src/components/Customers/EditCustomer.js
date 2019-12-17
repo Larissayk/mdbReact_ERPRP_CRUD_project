@@ -81,7 +81,7 @@ class EditCustomer extends Component {
   getCustomersDetails() {
     let customerId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/clientes/${customerId}`)
+      .get(`API URL CLIENTES/${customerId}`)
       .then(response => {
         this.setState(
           {
@@ -118,7 +118,7 @@ class EditCustomer extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/clientes/${this.state.id}`,
+        url: `API URL CLIENTES/${this.state.id}`,
         data: newCustomer
       })
       .then(response => {

@@ -41,7 +41,7 @@ class NFExitDetails extends Component {
   getNFExit() {
     let NFExitId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/nota_saida/${NFExitId}`)
+      .get(`API URL NFSAIDA/${NFExitId}`)
       .then(response => {
         this.setState({ details: response.data }, () => {
           console.log(this.state);
@@ -53,7 +53,7 @@ class NFExitDetails extends Component {
   onDelete() {
     let NFExitId = this.state.details.id;
     axios
-      .delete(`http://127.0.0.1:8000/api/nota_saida/${NFExitId}`)
+      .delete(`API URL NFSAIDA/${NFExitId}`)
       .then(response => {
         console.log(`ID excluído: ${NFExitId}`);
         this.setState({ alertMessage: "success" });

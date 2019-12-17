@@ -32,7 +32,7 @@ class CollaboratorDeals extends Component {
 
   getCollaboratorsDeal() {
     axios
-      .get("http://127.0.0.1:8000/api/negociacoes")
+      .get("API URL NEGOCIACOES")
       .then(response => {
         this.setState({ collaboratorsDeal: response.data }, () => {
           console.log(this.state);

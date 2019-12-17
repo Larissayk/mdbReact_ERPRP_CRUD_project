@@ -54,7 +54,7 @@ class AddCollaboratorDeal extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/negociacoes/",
+        url: "API URL NEGOCIACOES",
         data: newCollabDeal
       })
       .then(response => {

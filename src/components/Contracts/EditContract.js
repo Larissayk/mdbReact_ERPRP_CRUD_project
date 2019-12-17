@@ -85,7 +85,7 @@ class EditContract extends Component {
   getContractDetails() {
     let contractId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/contratos/${contractId}`)
+      .get(`API URL CONTRATOS/${contractId}`)
       .then(response => {
         this.setState(
           {
@@ -132,7 +132,7 @@ class EditContract extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/contratos/${this.state.id}`,
+        url: `API URL CONTRATOS/${this.state.id}`,
         data: newContract
       })
       .then(response => {

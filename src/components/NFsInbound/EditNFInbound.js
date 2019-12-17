@@ -73,7 +73,7 @@ class EditNFInbound extends Component {
   getNFInboundDetails() {
     let NFInboundId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/nota_entrada/${NFInboundId}`)
+      .get(`API URL NFENTRADA/${NFInboundId}`)
       .then(response => {
         this.setState(
           {
@@ -105,7 +105,7 @@ class EditNFInbound extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/nota_entrada/${this.state.id}`,
+        url: `API URL NFENTRADA/${this.state.id}`,
         data: newNFInbound
       })
       .then(response => {

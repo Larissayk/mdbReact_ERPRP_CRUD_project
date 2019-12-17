@@ -32,7 +32,7 @@ class Customers extends Component {
 
   getCustomers() {
     axios
-      .get("http://127.0.0.1:8000/api/clientes")
+      .get("API URL CLIENTES")
       .then(response => {
         this.setState({ clientes: response.data }, () => {
           console.log(this.state);

@@ -79,7 +79,7 @@ class EditNFexit extends Component {
   getNFExitDetails() {
     let NFExitId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/nota_saida/${NFExitId}`)
+      .get(`API URL NFSAIDA/${NFExitId}`)
       .then(response => {
         this.setState(
           {
@@ -119,7 +119,7 @@ class EditNFexit extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/nota_saida/${this.state.id}`,
+        url: `API URL NFSAIDA/${this.state.id}`,
         data: newNFExit
       })
       .then(response => {
