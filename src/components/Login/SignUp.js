@@ -202,7 +202,7 @@ class SignUp extends Component {
                   </MDBAlert>
                 ) : null}
                 <div className="text-center py-4 mt-3">
-                  <MDBBtn className="btn blue darken-1" type="submit">
+                  <MDBBtn className="cyan lighten-2" type="submit">
                     Registrar
                   </MDBBtn>
                 </div>

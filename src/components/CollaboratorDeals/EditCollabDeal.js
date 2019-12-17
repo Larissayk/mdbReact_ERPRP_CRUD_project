@@ -70,7 +70,7 @@ class EditCollaboratorDeal extends Component {
   getCollaboratorsDeal() {
     let collabDealId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/negociacoes/${collabDealId}`)
+      .get(`API URL NEGOCIACOES/${collabDealId}`)
       .then(response => {
         this.setState(
           {
@@ -103,7 +103,7 @@ class EditCollaboratorDeal extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/negociacoes/${this.state.id}`,
+        url: `API URL NEGOCIACOES/${this.state.id}`,
         data: newCollabDeal
       })
       .then(response => {
@@ -159,16 +159,13 @@ class EditCollaboratorDeal extends Component {
 
     switch (name) {
       case "nome":
-        formErrors.nome =
-          value.length < 1 ? "Campo obrigatório." : "";
+        formErrors.nome = value.length < 1 ? "Campo obrigatório." : "";
         break;
-        case "funcao":
-        formErrors.funcao =
-          value.length < 1 ? "Campo obrigatório." : "";
+      case "funcao":
+        formErrors.funcao = value.length < 1 ? "Campo obrigatório." : "";
         break;
-        case "tipo":
-        formErrors.tipo =
-          value.length < 1 ? "Campo obrigatório." : "";
+      case "tipo":
+        formErrors.tipo = value.length < 1 ? "Campo obrigatório." : "";
         break;
       default:
         break;
@@ -200,59 +197,63 @@ class EditCollaboratorDeal extends Component {
   render() {
     const { formErrors } = this.state;
     return (
-      <MDBContainer className="main-body">
-        <div>
-          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
-        </div>
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-            EDITAR DADOS DE NEGOCIAÇÃO
-          </MDBCardTitle>
-          <hr className="mb-0" />
-          <MDBCardBody className="pt-0">
-            <MDBContainer>
-              <form onSubmit={this.onSubmit.bind(this)} noValidate>
-                <MDBRow>
-                  <MDBCol md="4" className="form-group mb-0">
-                    <label className="grey-text" htmlFor="nome">
-                      Nome: <span style={{ color: "red" }}>*</span>{" "}
-                    </label>
-                    <input
-                      className={
-                        formErrors.nome.length > 0
-                          ? "form-control error1"
-                          : "form-control"
-                      }
-                      type="text"
-                      name="nome"
-                      ref="nome1"
-                      value={this.state.nome}
-                      onChange={this.handleChange}
-                    />
-                    {formErrors.nome.length > 0 && (
-                      <span className="errorMessageForm">
-                        {formErrors.nome}
-                      </span>
-                    )}
-                  </MDBCol>
-                  <MDBCol md="2.5" className="form-group mx-2">
-                    <label className="grey-text" htmlFor="status">
-                      Status: <span style={{ color: "red" }}>*</span>{" "}
-                    </label>
-                    <div>
-                      <select
-                        className="browser-default custom-select"
-                        name="status"
-                        ref="status1"
-                        value={this.state.status}
-                        onChange={this.handleChange}
-                      >
-                        <option value="Ativo">Ativo</option>
-                        <option value="Interrompido">Interrompido</option>
-                      </select>
-                    </div>
-                    {/* <input
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="12">
+            <div>
+              {this.state.alertMessage === "success" ? (
+                <SuccessMessage />
+              ) : null}
+              {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
+            </div>
+            <MDBCard className="mt-3 mb-4">
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+                EDITAR DADOS DE NEGOCIAÇÃO
+              </MDBCardTitle>
+              <hr className="mb-0" />
+              <MDBCardBody className="pt-0">
+                <MDBContainer>
+                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
+                    <MDBRow>
+                      <MDBCol md="4" className="form-group mb-0">
+                        <label className="grey-text" htmlFor="nome">
+                          Nome: <span style={{ color: "red" }}>*</span>{" "}
+                        </label>
+                        <input
+                          className={
+                            formErrors.nome.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
+                          type="text"
+                          name="nome"
+                          ref="nome1"
+                          value={this.state.nome}
+                          onChange={this.handleChange}
+                        />
+                        {formErrors.nome.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.nome}
+                          </span>
+                        )}
+                      </MDBCol>
+                      <MDBCol md="2.5" className="form-group mx-2">
+                        <label className="grey-text" htmlFor="status">
+                          Status: <span style={{ color: "red" }}>*</span>{" "}
+                        </label>
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            name="status"
+                            ref="status1"
+                            value={this.state.status}
+                            onChange={this.handleChange}
+                          >
+                            <option value="Ativo">Ativo</option>
+                            <option value="Interrompido">Interrompido</option>
+                          </select>
+                        </div>
+                        {/* <input
                       className="form-control"
                       type="text"
                       name="status"
@@ -260,143 +261,143 @@ class EditCollaboratorDeal extends Component {
                       value={this.state.status}
                       onChange={this.handleInputChange}
                     /> */}
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="seq_neg">
-                      Seq. Negociação:{" "}
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="seq_neg"
-                      ref="seq_neg1"
-                      value={this.state.seq_neg}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="data_neg">
-                      Dt. Negociação:{" "}
-                    </label>
-                    <input
-                      className="form-control "
-                      type="text"
-                      name="data_neg"
-                      ref="data_neg1"
-                      value={this.state.data_neg}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="data_inicio">
-                      Data de início:{" "}
-                    </label>
-                    <input
-                      className="form-control "
-                      type="text"
-                      name="data_inicio"
-                      ref="data_inicio1"
-                      value={this.state.data_inicio}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                </MDBRow>
-                <MDBRow>
-                  <MDBCol md="4" className="form-group">
-                    <label className="grey-text" htmlFor="funcao">
-                      Função: <span style={{ color: "red" }}>*</span>{" "}
-                    </label>
-                    <input
-                      className={
-                        formErrors.funcao.length > 0
-                          ? "form-control error1"
-                          : "form-control"
-                      }
-                      type="text"
-                      name="funcao"
-                      ref="funcao1"
-                      value={this.state.funcao}
-                      onChange={this.handleChange}
-                    />
-                    {formErrors.funcao.length > 0 && (
-                      <span className="errorMessageForm">
-                        {formErrors.funcao}
-                      </span>
-                    )}
-                  </MDBCol>
-                  <MDBCol md="3" className="form-group">
-                    <label className="grey-text" htmlFor="cpf">
-                      CPF:{" "}
-                    </label>
-                    <InputMask
-                      className="form-control "
-                      type="text"
-                      name="cpf"
-                      ref="cpf1"
-                      value={this.state.cpf}
-                      onChange={this.handleChange}
-                      mask="999.999.999-99"
-                    />
-                  </MDBCol>
-                  <MDBCol md="3" className="form-group">
-                    <label className="grey-text" htmlFor="cnpj_do_pj">
-                      CNPJ:{" "}
-                    </label>
-                    <InputMask
-                      className="form-control "
-                      type="text"
-                      name="cnpj_do_pj"
-                      ref="cnpj_do_pj1"
-                      value={this.state.cnpj_do_pj}
-                      onChange={this.handleChange}
-                      mask="99.999.999/9999-99"
-                    />
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="data_fim">
-                      Data de término:{" "}
-                    </label>
-                    <input
-                      className="form-control "
-                      type="text"
-                      name="data_fim"
-                      ref="data_fim1"
-                      value={this.state.data_fim}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow className="mb-2">
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="tipo">
-                      Tipo: <span style={{ color: "red" }}>*</span>{" "}
-                    </label>
-                    <div>
-                      <select
-                        className={
-                          formErrors.tipo.length > 0
-                            ? "browser-default custom-select error1"
-                            : "browser-default custom-select"
-                        }
-                        type="text"
-                        name="tipo"
-                        ref="tipo1"
-                        value={this.state.tipo}
-                        onChange={this.handleChange}
-                      >
-                        <option value="">Selecione...</option>
-                        <option value="PJ">PJ</option>
-                        <option value="CLT">CLT</option>
-                        <option value="CLT FLEX">CLT FLEX</option>
-                      </select>
-                    </div>
-                    {formErrors.tipo.length > 0 && (
-                      <span className="errorMessageForm">
-                        {formErrors.tipo}
-                      </span>
-                    )}
-                    {/* <input
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="seq_neg">
+                          Seq. Negociação:{" "}
+                        </label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="seq_neg"
+                          ref="seq_neg1"
+                          value={this.state.seq_neg}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="data_neg">
+                          Dt. Negociação:{" "}
+                        </label>
+                        <input
+                          className="form-control "
+                          type="text"
+                          name="data_neg"
+                          ref="data_neg1"
+                          value={this.state.data_neg}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="data_inicio">
+                          Data de início:{" "}
+                        </label>
+                        <input
+                          className="form-control "
+                          type="text"
+                          name="data_inicio"
+                          ref="data_inicio1"
+                          value={this.state.data_inicio}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="funcao">
+                          Função: <span style={{ color: "red" }}>*</span>{" "}
+                        </label>
+                        <input
+                          className={
+                            formErrors.funcao.length > 0
+                              ? "form-control error1"
+                              : "form-control"
+                          }
+                          type="text"
+                          name="funcao"
+                          ref="funcao1"
+                          value={this.state.funcao}
+                          onChange={this.handleChange}
+                        />
+                        {formErrors.funcao.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.funcao}
+                          </span>
+                        )}
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="cpf">
+                          CPF:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control "
+                          type="text"
+                          name="cpf"
+                          ref="cpf1"
+                          value={this.state.cpf}
+                          onChange={this.handleChange}
+                          mask="999.999.999-99"
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="form-group">
+                        <label className="grey-text" htmlFor="cnpj_do_pj">
+                          CNPJ:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control "
+                          type="text"
+                          name="cnpj_do_pj"
+                          ref="cnpj_do_pj1"
+                          value={this.state.cnpj_do_pj}
+                          onChange={this.handleChange}
+                          mask="99.999.999/9999-99"
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="data_fim">
+                          Data de término:{" "}
+                        </label>
+                        <input
+                          className="form-control "
+                          type="text"
+                          name="data_fim"
+                          ref="data_fim1"
+                          value={this.state.data_fim}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <hr />
+                    <MDBRow className="mb-2">
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="tipo">
+                          Tipo: <span style={{ color: "red" }}>*</span>{" "}
+                        </label>
+                        <div>
+                          <select
+                            className={
+                              formErrors.tipo.length > 0
+                                ? "browser-default custom-select error1"
+                                : "browser-default custom-select"
+                            }
+                            type="text"
+                            name="tipo"
+                            ref="tipo1"
+                            value={this.state.tipo}
+                            onChange={this.handleChange}
+                          >
+                            <option value="">Selecione...</option>
+                            <option value="PJ">PJ</option>
+                            <option value="CLT">CLT</option>
+                            <option value="CLT FLEX">CLT FLEX</option>
+                          </select>
+                        </div>
+                        {formErrors.tipo.length > 0 && (
+                          <span className="errorMessageForm">
+                            {formErrors.tipo}
+                          </span>
+                        )}
+                        {/* <input
                       className="form-control "
                       type="text"
                       name="tipo"
@@ -404,39 +405,39 @@ class EditCollaboratorDeal extends Component {
                       value={this.state.tipo}
                       onChange={this.handleInputChange}
                     /> */}
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="vlr_hr_pj">
-                      Valor/hora PJ:{" "}
-                    </label>
-                    <input
-                      className="form-control "
-                      type="text"
-                      name="vlr_hr_pj"
-                      ref="vlr_hr_pj1"
-                      value={this.state.vlr_hr_pj}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="fechado_aberto">
-                      Aberto/Fechado:{" "}
-                    </label>
-                    <div>
-                      <select
-                        className="browser-default custom-select"
-                        type="text"
-                        name="Tipo"
-                        ref="fechado_aberto1"
-                        value={this.state.fechado_aberto}
-                        onChange={this.handleChange}
-                      >
-                        <option>Selecione...</option>
-                        <option value="Aberto">Aberto</option>
-                        <option value="Fechado">Fechado</option>
-                      </select>
-                    </div>
-                    {/* <input
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="vlr_hr_pj">
+                          Valor/hora PJ:{" "}
+                        </label>
+                        <input
+                          className="form-control "
+                          type="text"
+                          name="vlr_hr_pj"
+                          ref="vlr_hr_pj1"
+                          value={this.state.vlr_hr_pj}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="fechado_aberto">
+                          Aberto/Fechado:{" "}
+                        </label>
+                        <div>
+                          <select
+                            className="browser-default custom-select"
+                            type="text"
+                            name="Tipo"
+                            ref="fechado_aberto1"
+                            value={this.state.fechado_aberto}
+                            onChange={this.handleChange}
+                          >
+                            <option>Selecione...</option>
+                            <option value="Aberto">Aberto</option>
+                            <option value="Fechado">Fechado</option>
+                          </select>
+                        </div>
+                        {/* <input
                       className="form-control "
                       type="text"
                       name="fechado_aberto"
@@ -444,71 +445,73 @@ class EditCollaboratorDeal extends Component {
                       value={this.state.fechado_aberto}
                       onChange={this.handleInputChange}
                     /> */}
-                  </MDBCol>
-                  <MDBCol md="2" className="form-group">
-                    <label className="grey-text" htmlFor="vlr_clt">
-                      Valor CLT:{" "}
-                    </label>
-                    <input
-                      className="form-control "
-                      type="text"
-                      name="vlr_clt"
-                      ref="vlr_clt1"
-                      value={this.state.vlr_clt}
-                      onChange={this.handleChange}
-                    />
-                  </MDBCol>
-                  <MDBCol md="4" className="form-group">
-                    <label className="grey-text" htmlFor="cpf_aprovador">
-                      CPF Aprovador:{" "}
-                    </label>
-                    <InputMask
-                      className="form-control "
-                      type="text"
-                      name="cpf_aprovador"
-                      ref="cpf_aprovador1"
-                      value={this.state.cpf_aprovador}
-                      onChange={this.handleChange}
-                      mask="999.999.999-99"
-                    />
-                  </MDBCol>
-                </MDBRow>
-                <hr />
+                      </MDBCol>
+                      <MDBCol md="2" className="form-group">
+                        <label className="grey-text" htmlFor="vlr_clt">
+                          Valor CLT:{" "}
+                        </label>
+                        <input
+                          className="form-control "
+                          type="text"
+                          name="vlr_clt"
+                          ref="vlr_clt1"
+                          value={this.state.vlr_clt}
+                          onChange={this.handleChange}
+                        />
+                      </MDBCol>
+                      <MDBCol md="4" className="form-group">
+                        <label className="grey-text" htmlFor="cpf_aprovador">
+                          CPF Aprovador:{" "}
+                        </label>
+                        <InputMask
+                          className="form-control "
+                          type="text"
+                          name="cpf_aprovador"
+                          ref="cpf_aprovador1"
+                          value={this.state.cpf_aprovador}
+                          onChange={this.handleChange}
+                          mask="999.999.999-99"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <hr />
 
-                <div>
-                  {this.state.alertMessage1 === "error1" ? (
-                    <MDBAlert color="danger">
-                      Certifique-se de que os campos foram preenchidos
-                      corretamente.
-                    </MDBAlert>
-                  ) : null}
-                </div>
+                    <div>
+                      {this.state.alertMessage1 === "error1" ? (
+                        <MDBAlert color="danger">
+                          Certifique-se de que os campos foram preenchidos
+                          corretamente.
+                        </MDBAlert>
+                      ) : null}
+                    </div>
 
-                <MDBBtn
-                  type="submit"
-                  value="Save"
-                  className="cyan lighten-2 float-right"
-                >
-                  <MDBIcon far icon="save" /> Salvar
-                </MDBBtn>
-                <MDBBtn
-                  href="/CollabDeals"
-                  value="Return"
-                  className="btn grey lighten-1 float-right"
-                >
-                  Voltar
-                </MDBBtn>
-              </form>
-            </MDBContainer>
-          </MDBCardBody>
-        </MDBCard>
-        <MDBBtn
-          size="lg"
-          href="/CollabDeals/add"
-          className="px-3 py-3 btn light-blue darken-4 circle-btn"
-        >
-          <MDBIcon size="lg" className="text-white" icon="plus" />
-        </MDBBtn>
+                    <MDBBtn
+                      type="submit"
+                      value="Save"
+                      className="cyan lighten-2 float-right"
+                    >
+                      <MDBIcon far icon="save" /> Salvar
+                    </MDBBtn>
+                    <MDBBtn
+                      href="/CollabDeals"
+                      value="Return"
+                      className="btn grey lighten-1 float-right"
+                    >
+                      Voltar
+                    </MDBBtn>
+                  </form>
+                </MDBContainer>
+              </MDBCardBody>
+            </MDBCard>
+            <MDBBtn
+              size="lg"
+              href="/CollabDeals/add"
+              className="px-3 py-3 btn light-blue darken-4 circle-btn"
+            >
+              <MDBIcon size="lg" className="text-white" icon="plus" />
+            </MDBBtn>
+          </MDBCol>
+        </MDBRow>
       </MDBContainer>
     );
   }

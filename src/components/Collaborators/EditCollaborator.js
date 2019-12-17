@@ -29,10 +29,10 @@ const formValid = ({ formErrors, ...rest }) => {
   });
 
   //validate the form was filled out
-//   Object.values(rest).forEach(val => {
-//     val === "" && (valid = false);
-//   });
-// console.log("rest",rest)
+  //   Object.values(rest).forEach(val => {
+  //     val === "" && (valid = false);
+  //   });
+  // console.log("rest",rest)
   return valid;
 };
 
@@ -79,7 +79,7 @@ class EditCollaborator extends Component {
   getCollaboratorDetails() {
     let collaboratorId = this.props.match.params.id;
     axios
-      .get(`http://127.0.0.1:8000/api/colaboradores/${collaboratorId}`)
+      .get(`API URL COLABORADORES/${collaboratorId}`)
       .then(response => {
         this.setState(
           {
@@ -114,7 +114,7 @@ class EditCollaborator extends Component {
     axios
       .request({
         method: "PUT",
-        url: `http://127.0.0.1:8000/api/colaboradores/${this.state.id}`,
+        url: `API URL COLABORADORES/${this.state.id}`,
         data: newCollaborator
       })
       .then(response => {
@@ -123,7 +123,7 @@ class EditCollaborator extends Component {
       })
       .catch(err => {
         this.setState({ alertMessage: "error" });
-        console.log('Erro:', err);
+        console.log("Erro:", err);
       });
   }
 
@@ -213,105 +213,109 @@ class EditCollaborator extends Component {
 
   render() {
     const { formErrors } = this.state;
-    console.log("formErrors",formErrors);
+    console.log("formErrors", formErrors);
 
     return (
-      <MDBContainer className="main-body">
-        <div>
-          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
-        </div>
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
-            <strong>EDITAR COLABORADOR</strong>
-          </MDBCardTitle>
-          <hr className="mb-0" />
-          <MDBCardBody className="mt-0">
-            <MDBContainer>
-              <MDBNav className="nav-tabs mx-0">
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "1"}
-                    onClick={this.toggle("1")}
-                    role="tab"
-                  >
-                    Dados Gerais
-                  </MDBNavLink>
-                </MDBNavItem>
-              </MDBNav>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="12">
+            <div>
+              {this.state.alertMessage === "success" ? (
+                <SuccessMessage />
+              ) : null}
+              {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
+            </div>
+            <MDBCard className="mt-3 mb-4">
+              <MDBCardTitle className="mb-0" style={{ fontSize: 28 }}>
+                <strong>EDITAR COLABORADOR</strong>
+              </MDBCardTitle>
+              <hr className="mb-0" />
+              <MDBCardBody className="mt-0">
+                <MDBContainer>
+                  <MDBNav className="nav-tabs mx-0">
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "1"}
+                        onClick={this.toggle("1")}
+                        role="tab"
+                      >
+                        Dados Gerais
+                      </MDBNavLink>
+                    </MDBNavItem>
+                  </MDBNav>
 
-              <MDBTabContent activeItem={this.state.activeItem}>
-                <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
-                    <MDBRow className="mt-4">
-                      <MDBCol md="5" className="form-group mb-0">
-                        <label className="grey-text" htmlFor="collabName">
-                          Nome: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <input
-                          className={
-                            formErrors.nome.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="collabName"
-                          name="nome"
-                          value={this.state.nome}
-                          onChange={this.handleChange}
-                        />
-                        {formErrors.nome.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.nome}
-                          </span>
-                        )}
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabNick">
-                          Apelido:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabNick"
-                          name="apelido"
-                          value={this.state.apelido}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="collabBday">
-                          Data Nascimento:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="collabBday"
-                          name="data_nascimento"
-                          value={this.state.data_nascimento}
-                          onChange={this.handleChange}
-                          mask="99/99/9999"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="collabStatus">
-                          Status: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <div>
-                          <select
-                            className="browser-default custom-select"
-                            ref="collabStatus"
-                            name="status"
-                            value={this.state.status}
-                            onChange={this.handleChange}
-                          >
-                            <option value="Ativo">Ativo</option>
-                            <option value="Desligado">Desligado</option>
-                          </select>
-                        </div>
+                  <MDBTabContent activeItem={this.state.activeItem}>
+                    <MDBTabPane tabId="1" role="tabpanel">
+                      <form onSubmit={this.onSubmit.bind(this)} noValidate>
+                        <MDBRow className="mt-4">
+                          <MDBCol md="5" className="form-group mb-0">
+                            <label className="grey-text" htmlFor="collabName">
+                              Nome: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <input
+                              className={
+                                formErrors.nome.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="collabName"
+                              name="nome"
+                              value={this.state.nome}
+                              onChange={this.handleChange}
+                            />
+                            {formErrors.nome.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.nome}
+                              </span>
+                            )}
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="collabNick">
+                              Apelido:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabNick"
+                              name="apelido"
+                              value={this.state.apelido}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="form-group ">
+                            <label className="grey-text" htmlFor="collabBday">
+                              Data Nascimento:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="collabBday"
+                              name="data_nascimento"
+                              value={this.state.data_nascimento}
+                              onChange={this.handleChange}
+                              mask="99/99/9999"
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="form-group ">
+                            <label className="grey-text" htmlFor="collabStatus">
+                              Status: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <div>
+                              <select
+                                className="browser-default custom-select"
+                                ref="collabStatus"
+                                name="status"
+                                value={this.state.status}
+                                onChange={this.handleChange}
+                              >
+                                <option value="Ativo">Ativo</option>
+                                <option value="Desligado">Desligado</option>
+                              </select>
+                            </div>
 
-                        {/* <input
+                            {/* <input
                           className="form-control"
                           type="text"
                           ref="collabStatus"
@@ -319,10 +323,10 @@ class EditCollaborator extends Component {
                           value={this.state.status}
                           onChange={this.handleInputChange}
                         /> */}
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      {/* <MDBCol md="3" className="form-group">
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                          {/* <MDBCol md="3" className="form-group">
                         <label className="grey-text" htmlFor="collabEmail">
                           Email:{" "}
                         </label>
@@ -335,256 +339,268 @@ class EditCollaborator extends Component {
                           onChange={this.handleChange}
                         />
                       </MDBCol> */}
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="collabPEmail">
-                          Email Pessoal: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <input
-                          className={
-                            formErrors.email_pessoal.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="collabPEmail"
-                          name="email_pessoal"
-                          value={this.state.email_pessoal}
-                          onChange={this.handleChange}
-                        />
-                        {formErrors.email_pessoal.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.email_pessoal}
-                          </span>
-                        )}
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="collabPhone">
-                          Telefone:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="collabPhone"
-                          name="telefone"
-                          value={this.state.telefone}
-                          onChange={this.handleChange}
-                          mask="(99) 9999-9999"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="collabMobile">
-                          Celular: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <InputMask
-                          className={
-                            formErrors.celular.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="collabMobile"
-                          name="celular"
-                          value={this.state.celular}
-                          onChange={this.handleChange}
-                          mask="(99) 9 9999-9999"
-                        />
-                        {formErrors.celular.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.celular}
-                          </span>
-                        )}
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCpf">
-                          CPF: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <InputMask
-                          className={
-                            formErrors.cpf.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          type="text"
-                          ref="collabCpf"
-                          name="cpf"
-                          value={this.state.cpf}
-                          onChange={this.handleChange}
-                          mask="999.999.999-99"
-                        />
-                        {formErrors.cpf.length > 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.cpf}
-                          </span>
-                        )}
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabRg">
-                          RG:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="collabRg"
-                          name="rg"
-                          value={this.state.rg}
-                          onChange={this.handleChange}
-                          mask="99.999.999-**"
-                        />
-                      </MDBCol>
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="collabEmis">
-                          Órgão Emis.:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabEmis"
-                          name="orgao_emissor"
-                          value={this.state.orgao_emissor}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="collabCtps">
-                          CTPS:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabCtps"
-                          name="ctps"
-                          value={this.state.ctps}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <hr />
-                    <MDBRow>
-                      <MDBCol md="8" className="form-group">
-                        <label className="grey-text" htmlFor="collabAddress">
-                          Endereço:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabAddress"
-                          name="endereco"
-                          value={this.state.endereco}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label
-                          className="grey-text"
-                          htmlFor="collabNeighborhood"
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="collabPEmail">
+                              Email Pessoal:{" "}
+                              <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <input
+                              className={
+                                formErrors.email_pessoal.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="collabPEmail"
+                              name="email_pessoal"
+                              value={this.state.email_pessoal}
+                              onChange={this.handleChange}
+                            />
+                            {formErrors.email_pessoal.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.email_pessoal}
+                              </span>
+                            )}
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="collabPhone">
+                              Telefone:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="collabPhone"
+                              name="telefone"
+                              value={this.state.telefone}
+                              onChange={this.handleChange}
+                              mask="(99) 9999-9999"
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="collabMobile">
+                              Celular: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <InputMask
+                              className={
+                                formErrors.celular.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="collabMobile"
+                              name="celular"
+                              value={this.state.celular}
+                              onChange={this.handleChange}
+                              mask="(99) 9 9999-9999"
+                            />
+                            {formErrors.celular.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.celular}
+                              </span>
+                            )}
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="collabCpf">
+                              CPF: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <InputMask
+                              className={
+                                formErrors.cpf.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              type="text"
+                              ref="collabCpf"
+                              name="cpf"
+                              value={this.state.cpf}
+                              onChange={this.handleChange}
+                              mask="999.999.999-99"
+                            />
+                            {formErrors.cpf.length > 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.cpf}
+                              </span>
+                            )}
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="collabRg">
+                              RG:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="collabRg"
+                              name="rg"
+                              value={this.state.rg}
+                              onChange={this.handleChange}
+                              mask="99.999.999-**"
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="form-group">
+                            <label className="grey-text" htmlFor="collabEmis">
+                              Órgão Emis.:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabEmis"
+                              name="orgao_emissor"
+                              value={this.state.orgao_emissor}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="collabCtps">
+                              CTPS:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabCtps"
+                              name="ctps"
+                              value={this.state.ctps}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <hr />
+                        <MDBRow>
+                          <MDBCol md="8" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="collabAddress"
+                            >
+                              Endereço:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabAddress"
+                              name="endereco"
+                              value={this.state.endereco}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="collabNeighborhood"
+                            >
+                              Bairro:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabNeighborhood"
+                              name="bairro"
+                              value={this.state.bairro}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow className="mb-2">
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="collabCity">
+                              Cidade:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabCity"
+                              name="cidade"
+                              value={this.state.cidade}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="collabState">
+                              Estado:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabState"
+                              name="estado"
+                              value={this.state.estado}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="collabCountry"
+                            >
+                              País:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collabCountry"
+                              name="pais"
+                              value={this.state.pais}
+                              onChange={this.handleChange}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label
+                              className="grey-text"
+                              htmlFor="collabZipcode"
+                            >
+                              CEP:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="collabZipcode"
+                              name="cep"
+                              value={this.state.cep}
+                              onChange={this.handleChange}
+                              mask="99999-999"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <hr />
+
+                        <div>
+                          {this.state.alertMessage1 === "error1" ? (
+                            <MDBAlert color="danger">
+                              Certifique-se de que os campos foram preenchidos
+                              corretamente.
+                            </MDBAlert>
+                          ) : null}
+                        </div>
+
+                        <MDBBtn
+                          type="submit"
+                          value="Save"
+                          className="cyan lighten-2 float-right"
                         >
-                          Bairro:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabNeighborhood"
-                          name="bairro"
-                          value={this.state.bairro}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow className="mb-2">
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCity">
-                          Cidade:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabCity"
-                          name="cidade"
-                          value={this.state.cidade}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabState">
-                          Estado:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabState"
-                          name="estado"
-                          value={this.state.estado}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabCountry">
-                          País:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collabCountry"
-                          name="pais"
-                          value={this.state.pais}
-                          onChange={this.handleChange}
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="collabZipcode">
-                          CEP:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="collabZipcode"
-                          name="cep"
-                          value={this.state.cep}
-                          onChange={this.handleChange}
-                          mask="99999-999"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <hr />
-
-                    <div>
-                      {this.state.alertMessage1 === "error1" ? (
-                        <MDBAlert color="danger">
-                          Certifique-se de que os campos foram preenchidos
-                          corretamente.
-                        </MDBAlert>
-                      ) : null}
-                    </div>
-
-                    <MDBBtn
-                      type="submit"
-                      value="Save"
-                      className="cyan lighten-2 float-right"
-                    >
-                      <MDBIcon far icon="save" /> Salvar
-                    </MDBBtn>
-                    <MDBBtn
-                      href="/Collaborators"
-                      value="Return"
-                      className="btn grey lighten-1 float-right"
-                    >
-                      Voltar
-                    </MDBBtn>
-                  </form>
-                </MDBTabPane>
-              </MDBTabContent>
-            </MDBContainer>
-          </MDBCardBody>
-        </MDBCard>
-        <MDBBtn
-          size="lg"
-          href="/Collaborators/add"
-          className="px-3 py-3 light-blue darken-4 circle-btn"
-        >
-          <MDBIcon size="lg" className="text-white" icon="plus" />
-        </MDBBtn>
+                          <MDBIcon far icon="save" /> Salvar
+                        </MDBBtn>
+                        <MDBBtn
+                          href="/Collaborators"
+                          value="Return"
+                          className="btn grey lighten-1 float-right"
+                        >
+                          Voltar
+                        </MDBBtn>
+                      </form>
+                    </MDBTabPane>
+                  </MDBTabContent>
+                </MDBContainer>
+              </MDBCardBody>
+            </MDBCard>
+            <MDBBtn
+              size="lg"
+              href="/Collaborators/add"
+              className="px-3 py-3 light-blue darken-4 circle-btn"
+            >
+              <MDBIcon size="lg" className="text-white" icon="plus" />
+            </MDBBtn>
+          </MDBCol>
+        </MDBRow>
       </MDBContainer>
     );
   }

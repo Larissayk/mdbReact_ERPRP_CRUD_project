@@ -55,7 +55,7 @@ class AddNFInbound extends Component {
     axios
       .request({
         method: "POST",
-        url: "http://127.0.0.1:8000/api/nota_entrada/",
+        url: "API URL NFENTRADA",
         data: newNFInbound
       })
       .then(response => {
@@ -132,46 +132,50 @@ class AddNFInbound extends Component {
   render() {
     const { formErrors } = this.state;
     return (
-      <MDBContainer className="main-body">
-        <div>
-          {this.state.alertMessage === "success" ? <SuccessMessage /> : null}
-          {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
-        </div>
-        <MDBCard className="mt-3 mb-4">
-          <MDBCardTitle style={{ fontSize: 28 }}>
-            <strong>NOVA NF-ENTRADA</strong>
-          </MDBCardTitle>
-          <hr className="mb-0" />
-          <MDBCardBody className="mt-0">
-            <MDBContainer>
-              <MDBNav className="nav-tabs mx-0">
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "1"}
-                    onClick={this.toggle("1")}
-                    role="tab"
-                  >
-                    Dados Gerais
-                  </MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                  <MDBNavLink
-                    to="#"
-                    active={this.state.activeItem === "2"}
-                    onClick={this.toggle("2")}
-                    role="tab"
-                  >
-                    Dados de Pagamento
-                  </MDBNavLink>
-                </MDBNavItem>
-              </MDBNav>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol md="12">
+            <div>
+              {this.state.alertMessage === "success" ? (
+                <SuccessMessage />
+              ) : null}
+              {this.state.alertMessage === "error" ? <ErrorMessage /> : null}
+            </div>
+            <MDBCard className="mt-3 mb-4">
+              <MDBCardTitle style={{ fontSize: 28 }}>
+                <strong>NOVA NF-ENTRADA</strong>
+              </MDBCardTitle>
+              <hr className="mb-0" />
+              <MDBCardBody className="mt-0">
+                <MDBContainer>
+                  <MDBNav className="nav-tabs mx-0">
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "1"}
+                        onClick={this.toggle("1")}
+                        role="tab"
+                      >
+                        Dados Gerais
+                      </MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                      <MDBNavLink
+                        to="#"
+                        active={this.state.activeItem === "2"}
+                        onClick={this.toggle("2")}
+                        role="tab"
+                      >
+                        Dados de Pagamento
+                      </MDBNavLink>
+                    </MDBNavItem>
+                  </MDBNav>
 
-              <MDBTabContent activeItem={this.state.activeItem}>
-                <MDBTabPane tabId="1" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)} noValidate>
-                    <MDBRow className="mt-4">
-                      {/* <MDBCol md="2" className="form-group">
+                  <MDBTabContent activeItem={this.state.activeItem}>
+                    <MDBTabPane tabId="1" role="tabpanel">
+                      <form onSubmit={this.onSubmit.bind(this)} noValidate>
+                        <MDBRow className="mt-4">
+                          {/* <MDBCol md="2" className="form-group">
                         <label className="grey-text" htmlFor="NFIyear">
                           Ano:{" "}
                         </label>
@@ -181,216 +185,219 @@ class AddNFInbound extends Component {
                           ref="NFIyear"
                         />
                       </MDBCol> */}
-                      <MDBCol md="2" className="form-group ">
-                        <label className="grey-text" htmlFor="NFINumber">
-                          Nº NF:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="number"
-                          autoFocus
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group ">
-                        <label className="grey-text" htmlFor="NFIType">
-                          Tipo:{" "}
-                        </label>
-                        <div>
-                          <select
-                            className="browser-default custom-select"
-                            type="text"
-                            ref="type"
-                          >
-                            <option>Selecione...</option>
-                            <option value="ND">ND</option>
-                            <option value="NFS">NFS</option>
-                            <option value="NFTS">NFTS</option>
-                          </select>
-                        </div>
-                        {/* <input
+                          <MDBCol md="2" className="form-group ">
+                            <label className="grey-text" htmlFor="NFINumber">
+                              Nº NF:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="number"
+                              autoFocus
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group ">
+                            <label className="grey-text" htmlFor="NFIType">
+                              Tipo:{" "}
+                            </label>
+                            <div>
+                              <select
+                                className="browser-default custom-select"
+                                type="text"
+                                ref="type"
+                              >
+                                <option>Selecione...</option>
+                                <option value="ND">ND</option>
+                                <option value="NFS">NFS</option>
+                                <option value="NFTS">NFTS</option>
+                              </select>
+                            </div>
+                            {/* <input
                           className="form-control"
                           type="text"
                           ref="type"
                         /> */}
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="NFIEmissor">
-                          Empresa: <span style={{ color: "red" }}>*</span>{" "}
-                        </label>
-                        <input
-                          className={
-                            formErrors.empresa.length > 0
-                              ? "form-control error1"
-                              : "form-control"
-                          }
-                          name="empresa"
-                          type="text"
-                          ref="company"
-                          onChange={this.handleChange}
-                        />
-                        {formErrors.empresa.length === 0 && (
-                          <span className="errorMessageForm">
-                            {formErrors.empresa}
-                          </span>
-                        )}
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFICnpj">
-                          CNPJ:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="cnpj"
-                          mask="99.999.999/9999-99"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <hr />
-                    <MDBRow>
-                      <h5 className="grey-text mb-3 ml-3">Identificação</h5>
-                    </MDBRow>
-                    <MDBRow className="mb-2">
-                      <MDBCol md="2" className="form-group">
-                        <label className="grey-text" htmlFor="NFIDt">
-                          Data de Emissão:{" "}
-                        </label>
-                        <InputMask
-                          className="form-control"
-                          type="text"
-                          ref="emissionDt"
-                          mask="99/99/9999"
-                        />
-                      </MDBCol>
-                      <MDBCol md="6" className="form-group">
-                        <label className="grey-text" htmlFor="NFICollab">
-                          Colaborador:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="collab"
-                        />
-                      </MDBCol>
-                      <MDBCol md="4" className="form-group">
-                        <label className="grey-text" htmlFor="NFIService">
-                          Serviço:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="service"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <hr />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="NFIEmissor">
+                              Empresa: <span style={{ color: "red" }}>*</span>{" "}
+                            </label>
+                            <input
+                              className={
+                                formErrors.empresa.length > 0
+                                  ? "form-control error1"
+                                  : "form-control"
+                              }
+                              name="empresa"
+                              type="text"
+                              ref="company"
+                              onChange={this.handleChange}
+                            />
+                            {formErrors.empresa.length === 0 && (
+                              <span className="errorMessageForm">
+                                {formErrors.empresa}
+                              </span>
+                            )}
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="NFICnpj">
+                              CNPJ:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="cnpj"
+                              mask="99.999.999/9999-99"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <hr />
+                        <MDBRow>
+                          <h5 className="grey-text mb-3 ml-3">Identificação</h5>
+                        </MDBRow>
+                        <MDBRow className="mb-2">
+                          <MDBCol md="2" className="form-group">
+                            <label className="grey-text" htmlFor="NFIDt">
+                              Data de Emissão:{" "}
+                            </label>
+                            <InputMask
+                              className="form-control"
+                              type="text"
+                              ref="emissionDt"
+                              mask="99/99/9999"
+                            />
+                          </MDBCol>
+                          <MDBCol md="6" className="form-group">
+                            <label className="grey-text" htmlFor="NFICollab">
+                              Colaborador:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="collab"
+                            />
+                          </MDBCol>
+                          <MDBCol md="4" className="form-group">
+                            <label className="grey-text" htmlFor="NFIService">
+                              Serviço:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="service"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <hr />
 
-                    <div>
-                      {this.state.alertMessage1 === "error1" ? (
-                        <MDBAlert color="danger">
-                          Certifique-se de que os campos foram preenchidos
-                          corretamente.
-                        </MDBAlert>
-                      ) : null}
-                    </div>
+                        <div>
+                          {this.state.alertMessage1 === "error1" ? (
+                            <MDBAlert color="danger">
+                              Certifique-se de que os campos foram preenchidos
+                              corretamente.
+                            </MDBAlert>
+                          ) : null}
+                        </div>
 
-                    <MDBBtn
-                      type="submit"
-                      value="Save"
-                      className="cyan lighten-2 float-right"
-                    >
-                      <MDBIcon far icon="save" /> Salvar
-                    </MDBBtn>
-                    <MDBBtn
-                      href="/NFsInbound"
-                      value="Return"
-                      className="btn grey lighten-1 float-right"
-                    >
-                      Voltar
-                    </MDBBtn>
-                  </form>
-                </MDBTabPane>
+                        <MDBBtn
+                          type="submit"
+                          value="Save"
+                          className="cyan lighten-2 float-right"
+                        >
+                          <MDBIcon far icon="save" /> Salvar
+                        </MDBBtn>
+                        <MDBBtn
+                          href="/NFsInbound"
+                          value="Return"
+                          className="btn grey lighten-1 float-right"
+                        >
+                          Voltar
+                        </MDBBtn>
+                      </form>
+                    </MDBTabPane>
 
-                <MDBTabPane tabId="2" role="tabpanel">
-                  <form onSubmit={this.onSubmit.bind(this)}>
-                    <MDBRow className="mt-4">
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFIAmount">
-                          Valor Bruto:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="value"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label htmlFor="NFIReceivedDt" className="grey-text">
-                          Data Recebimento:{" "}
-                        </label>
-                        <InputMask
-                          type="text"
-                          ref="receivingDt"
-                          className="form-control"
-                          mask="99/99/9999"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label htmlFor="NFIPayingDt" className="grey-text">
-                          Data Pagamento:{" "}
-                        </label>
-                        <InputMask
-                          type="text"
-                          ref="payDt"
-                          className="form-control"
-                          mask="99/99/9999"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="iss_sp">
-                          ISS-SP:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="iss_sp"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="irrf">
-                          IRRF (15%):{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="irrf"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="pis_cofins">
-                          PIS/COFINS (4,65%):{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="pis_cofins"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="form-group">
-                        <label className="grey-text" htmlFor="NFINetValue">
-                          Valor Líquido:{" "}
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref="totalValue"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    {/* <MDBRow className="mb-2">
+                    <MDBTabPane tabId="2" role="tabpanel">
+                      <form onSubmit={this.onSubmit.bind(this)}>
+                        <MDBRow className="mt-4">
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="NFIAmount">
+                              Valor Bruto:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="value"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label
+                              htmlFor="NFIReceivedDt"
+                              className="grey-text"
+                            >
+                              Data Recebimento:{" "}
+                            </label>
+                            <InputMask
+                              type="text"
+                              ref="receivingDt"
+                              className="form-control"
+                              mask="99/99/9999"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label htmlFor="NFIPayingDt" className="grey-text">
+                              Data Pagamento:{" "}
+                            </label>
+                            <InputMask
+                              type="text"
+                              ref="payDt"
+                              className="form-control"
+                              mask="99/99/9999"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="iss_sp">
+                              ISS-SP:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="iss_sp"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="irrf">
+                              IRRF (15%):{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="irrf"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="pis_cofins">
+                              PIS/COFINS (4,65%):{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="pis_cofins"
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="form-group">
+                            <label className="grey-text" htmlFor="NFINetValue">
+                              Valor Líquido:{" "}
+                            </label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              ref="totalValue"
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        {/* <MDBRow className="mb-2">
                       <MDBCol md="2">
                         <MDBRow>
                           <MDBCol>
@@ -421,7 +428,7 @@ class AddNFInbound extends Component {
                           </MDBCol>
                         </MDBRow>
                       </MDBCol> */}
-                    {/* <MDBCol md="10">
+                        {/* <MDBCol md="10">
                         <div className="form-group grey-text">
                           <label htmlFor="NFIComments">Comentários: </label>
                           <textarea
@@ -431,38 +438,40 @@ class AddNFInbound extends Component {
                           />
                         </div>
                       </MDBCol> */}
-                    {/* </MDBRow> */}
-                    <hr />
+                        {/* </MDBRow> */}
+                        <hr />
 
-                    <div>
-                      {this.state.alertMessage1 === "error1" ? (
-                        <MDBAlert color="danger">
-                          Certifique-se de que os campos foram preenchidos
-                          corretamente.
-                        </MDBAlert>
-                      ) : null}
-                    </div>
+                        <div>
+                          {this.state.alertMessage1 === "error1" ? (
+                            <MDBAlert color="danger">
+                              Certifique-se de que os campos foram preenchidos
+                              corretamente.
+                            </MDBAlert>
+                          ) : null}
+                        </div>
 
-                    <MDBBtn
-                      type="submit"
-                      value="Save"
-                      className="cyan lighten-2 float-right"
-                    >
-                      <MDBIcon far icon="save" /> Salvar
-                    </MDBBtn>
-                    <MDBBtn
-                      href="/NFsInbound"
-                      value="Return"
-                      className="btn grey lighten-1 float-right"
-                    >
-                      Voltar
-                    </MDBBtn>
-                  </form>
-                </MDBTabPane>
-              </MDBTabContent>
-            </MDBContainer>
-          </MDBCardBody>
-        </MDBCard>
+                        <MDBBtn
+                          type="submit"
+                          value="Save"
+                          className="cyan lighten-2 float-right"
+                        >
+                          <MDBIcon far icon="save" /> Salvar
+                        </MDBBtn>
+                        <MDBBtn
+                          href="/NFsInbound"
+                          value="Return"
+                          className="btn grey lighten-1 float-right"
+                        >
+                          Voltar
+                        </MDBBtn>
+                      </form>
+                    </MDBTabPane>
+                  </MDBTabContent>
+                </MDBContainer>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
       </MDBContainer>
     );
   }

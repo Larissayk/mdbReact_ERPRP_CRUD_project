@@ -322,6 +322,16 @@ select.browser-default.custom-select.error1 {
   top: 5px;
 }
 
+.alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    line-height: 1.2rem;
+    text-align: center;
+}
+
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -333,7 +343,7 @@ select.browser-default.custom-select.error1 {
   margin-left: auto;
 }
 
-#content {
+.content {
   margin-left: 210px;
   margin-top: 40px;
   margin-bottom:none;
@@ -354,7 +364,7 @@ footer.page-footer .footer-copyright {
 
 
 #footer a {
-  color: #20a8d8;
+  color: #63c2de;
     text-decoration: none;
 }
 

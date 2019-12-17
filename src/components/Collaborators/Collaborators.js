@@ -34,7 +34,7 @@ class Collaborators extends Component {
 
   getCollaborators() {
     axios
-      .get("http://127.0.0.1:8000/api/colaboradores")
+      .get("API URL NEGOCIACOES")
       .then(response => {
         this.setState({ colaboradores: response.data }, () => {
           console.log(this.state);
@@ -76,7 +76,8 @@ class Collaborators extends Component {
     });
 
     return (
-      <MDBContainer >
+      <MDBRow>
+      <MDBCol md="12">
         <MDBCard className="mt-3 mb-4 px-2 card">
           <MDBCardTitle style={{ fontSize: 28 }}>
             <strong>COLABORADORES</strong>
@@ -171,7 +172,8 @@ class Collaborators extends Component {
             </MDBTable>
           </MDBCardBody>
         </MDBCard>
-      </MDBContainer>
+         </MDBCol>
+    </MDBRow>
     );
   }
 }
