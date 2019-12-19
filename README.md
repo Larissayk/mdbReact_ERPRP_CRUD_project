@@ -1,22 +1,44 @@
-# React Bootstrap with Material Design
-MDBootstrap for React
+# CRUD PROJECT
+
+Project to practice the development of the frontend pages using React and to test the API connections with the company's employee database.
 
 ## Getting Started
-To test, contribute or just see what we did follow few easy steps:
-- clone the repository
-- cd to the directory with the repository
-- run `yarn install` (or `npm install` if you don't use yarn)
-- run the app using `yarn start` (or `npm start`)
-- to build project use `yarn run build` (od `npm run build`)
-- `yarn run remove-demo` (or `npm run remove-demo`) removes demo app pages
-- enjoy!
 
-## Bugs
-If you want to report a bug or submit your idea feel fre to open an issue
+These instructions will get you a copy of the project up and running on your local machine for development.
 
-Before you report a bug, please take your time to find if an issue hasn't been reported yet
+### Prerequisites
 
-We're also open to pull requests
+* Node.js - Download and install Node.js
+* React - Download and install React
+* MDBootstrap - Download and install MDBootstrap
 
-## Something Missing?
-If you still have some questions do not hesitate to ask us. Open an issue or [visit our Slack](https://mdbbetatest.slack.com)
+### Cloning
+
+Getting a copy of the project
+
+```
+$git clone https://github.com/Larissayk/mdbReact_ERPRP_CRUD_project.git
+```
+
+### Installing
+
+Install dependencies on package.json
+
+```
+npm install
+```
+
+## Running the app
+
+Initialize the server with npm
+
+```
+npm run dev
+```
+
+## Built With
+
+* [React](https://reactjs.org/) - Javascript Library
+* [MDBootstrap](https://mdbootstrap.com/) - Framework used
+* [Axios](https://www.npmjs.com/package/axios) -  Promise-based HTTP client
+
